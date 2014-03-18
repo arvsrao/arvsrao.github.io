@@ -9,11 +9,12 @@ permalink:        pretty
 title:            Arvind Rao
 tagline:          'Mathematician / Image Scientist / Software Engineer'
 description:      'Mathematician / Image Scientist / Software Engineer. <a href="https://twitter.com/arvindsnotes" target="_blank">@arvindsnotes</a>.'
-url:              http://hyd
+url:              
 
 author:
   name:           'Arvind Rao'
   url:            https://twitter.com/arvsrao
+  cv:             /assets/resume_for_web.pdf
 
 paginate:         3
 
