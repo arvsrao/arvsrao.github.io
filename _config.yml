@@ -14,7 +14,7 @@ url:
 author:
   name:           'Arvind Rao'
   url:            https://twitter.com/arvsrao
-  cv:             /assets/resume_for_web.pdf
+  cv:             /cv/
 
 paginate:         3
 
