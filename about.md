@@ -2,29 +2,12 @@
 layout: page
 title: About
 ---
+![space_partition](./assets/IMG_0509.JPG)
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+I'm a mathematician / software engineer / runner living in San Francisco. I work @Riviera Partners as a Data Scientist. Here's my <a href="http://www.rao.im/files/resume_for_web.pdf">resume</a>. 
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+A mathematician by training, specifically in differential geometry and geometric analysis, I have broad interests that span pure and applied mathematics, electrical engineering, and computer science. Particularly, machine learning; topics in computer science, like computational geometry, and numerical methods for solving PDEs; quantitative finance and stochastic PDE; and more...This blog is an attempt to record my musings on these and other topics. 
 
-There are currently two themes built on Poole:
-
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
-
-Learn more and contribute on [GitHub](https://github.com/poole).
-
-## Setup
-
-Some fun facts about the setup of this project include:
-
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.com), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
-
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
+I love discussions, so please don't hesitate to drop me a line. Your message will be sent directly to my e-mail, and I’ll write back to you as quickly as possible. 
 
 Thanks for reading!
