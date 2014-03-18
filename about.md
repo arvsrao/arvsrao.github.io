@@ -2,7 +2,7 @@
 layout: page
 title: About
 ---
-![space_partition](./assets/IMG_0509.JPG)
+![space_partition](/assets/IMG_0509.JPG)
 
 I'm a mathematician / software engineer / runner living in San Francisco. I work @Riviera Partners as a Data Scientist. Here's my <a href="http://www.rao.im/files/resume_for_web.pdf">resume</a>. 
 
