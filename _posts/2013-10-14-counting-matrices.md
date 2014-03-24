@@ -13,14 +13,14 @@ Counting problems abound in mathematics. Often, they are easy to state, but hard
 
 What do these matrices look like? Let $A = [a_{ij}]:$ 
 
-\[
+\\[
 	A = \begin{pmatrix}
 		0  & 1  & \cdots & 1 \\
 		1  & 1 &  \cdots & 0 \\
 		\vdots & \vdots & \ddots & \vdots \\
 		1  & 1 &  \cdots & 0 \\
 	\end{pmatrix}		
-\]
+\\]
 
 The row and column sums are odd: 
 \[
