@@ -7,9 +7,9 @@ tags: puzzles
 
 Counting problems abound in mathematics. Often, they are easy to state, but hard to solve. Being easy to understand is what makes them so attractive, and that much more vexing when one gets stuck trying to solve them. Here's a matrix counting problem I recently encountered.
 
-<h2 id="problem">Problem:</h2>
-<p><strong><em>How many $ N $ by $ N $ matrices with entries $ 0 $ or $1$, and odd row and column sums, are there?
-</strong></em></p>	
+##Problem:
+*How many $ N $ by $ N $ matrices with entries $ 0 $ or $1$, and odd row and column sums, are there?*
+
 
 What do these matrices look like? Let $A = [a_{ij}]:$ 
 
