@@ -26,6 +26,7 @@ The row and column sums are odd:
 $$
 	\sum_{i} a_{ij} \mod 2  \equiv 1  \quad \& \quad \sum_{j} a_{ij}\mod 2 \equiv 1 \text{ for each } i, j
 $$
+
 Starting with a blank $N \times N$ matrix, populate the $N-1 \times N-1$, $(1,1)$-minor with any matrix with zeros and ones: 
 
 $$
@@ -61,7 +62,9 @@ $$
 								& \equiv \sum_{j} \sum_{i} (a_{ij} \mod 2). \\  
 \end{align*}
 $$
+
 Which is the same as the bit-wise sum of the $y_i$'s
+
 $$
 \begin{align*}
 	\sum y_j  \mod 2 &  \equiv \sum (y_j  \mod 2)  \\
@@ -69,11 +72,13 @@ $$
 								& \equiv \sum_{i} \sum_{j} (a_{ij} \mod 2) \\  
 \end{align*}
 $$
+
 And we get, 
 
 $$ 
 	\sum x_i \mod 2 \equiv \sum y_j \mod 2. 
 $$
+
 <div align="right">
 	<p><em>q.e.d.</em></p>
 </div>
