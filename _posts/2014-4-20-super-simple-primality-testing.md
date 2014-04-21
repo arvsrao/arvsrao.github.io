@@ -1,3 +1,10 @@
+---
+layout: post
+title: Super Simple Primality Testing
+category: mathematics 
+tags: prime numbers, algorithms
+---
+
 *Awhile ago I was asked how to determine if an integer is prime*. Which is an important problem. Much of todays internet security relies on primes numbers--for generating public & private encryption keys. There are [other uses][2]. So, labeling a number *prime* is well studied. What I want to do in this post is to cover basic algorithms, which rely on searching a list of possible divisors--a search space. And if no divisor is found we label a given number *prime*. Investigating the relationship between a number and its divisors we can reduce the space of possible divisors, and write down a nice sub-linear primality testing algorithm.  
 
 Following first principles, an integer $N$ is prime if $\exists a < N$ so that $a\ \|\ N$. We could then simply try dividing $N$ by all numbers less than $N$. Here's our version $0$ algorithm:
