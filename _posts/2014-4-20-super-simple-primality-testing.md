@@ -20,7 +20,7 @@ Following first principles, an integer $N$ is prime if $\exists a < N$ so that $
 				return False
 		return True
 
-Run this code on few a low integer values, and you'll see that *isPrime* is correct and fast. But for large integers 
+Run this code on a few low integer values, and you'll see that *isPrime* is correct and fast. But for large integers 
 not so fast--*just try it on 12312345451*. Your IPyhon shell will hang. But no worries, we can reduce the search space. Consider the number
 $12$ and its divisors $\{1,2,3,4,6\}$, or $25$ and its divisors $\{1, 5\}$. The divisors for each number are all less than half the numbers' value. 
 Lets formalize this.
