@@ -32,7 +32,7 @@ by the [inclusion-exclusion principle][1].
 
 $$
 \begin{align*}
-    P( l_1 > x, \text{ and } \ldots, \text{ and } l_k > x) & = \text{probability of } n-1 \text{ cuts in a } \frac{2\pi - kx}{2\pi} \text{ long arc}\\
+    P( l_1 > x, \text{ and } \ldots, \text{ and } l_k > x) & = \text{probability of } n-1 \text{ cuts in a } 2\pi - kx \text{ long arc}\\
         & = \left( \frac{2 \pi - kx}{2\pi}\right)^{n-1}
 \end{align*}
 $$
@@ -76,7 +76,7 @@ $$
 \end{align*}
 $$
 
-Focusing on the integral. Set $u = \frac{2\pi - kx}{2\pi}$, 
+Focusing on the integral, set $u = \frac{2\pi - kx}{2\pi}$, 
 
 $$
     \frac{2 \pi - kx}{2\pi} \geq 0 \quad \Longrightarrow \quad \frac{2\pi}{k} \geq x
@@ -101,8 +101,20 @@ $$
 \end{align*}
 $$
 
-The last step applies a known [binomial sum identity][2]. But hey. Lets check our work, by generating the
-empirical distribution of max-segment lengths. By finding the sample average. Here's the [python code][3]
+The last step applies a known [binomial sum identity][2]. 
+
+Awesome! We have an answer! But is it right? Lets check our work, by generating the
+empirical distribution of max-segment lengths. I wrote up some [code][3] to do this. 
+
+	In [16]: data = array([ MaxArc(10) for x in range(10000)])
+
+	In [17]: data.mean()
+	Out[17]: 1.8404203486925401
+
+	In [18]: 2 * pi * harmonic(10)/10
+	Out[18]: 1.8403250298528779
+
+Both sample mean and true mean are within a few thousands of each other, which I think validates the analysis above. I took $N = 10$, but other choices will yield similar results.  
 
 [1]: http://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle#Special_case
 [2]: http://en.wikipedia.org/wiki/Harmonic_number#Calculation

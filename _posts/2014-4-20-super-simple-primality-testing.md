@@ -53,7 +53,7 @@ Now this is great! The preceding lemma reduces our search space considerably--e.
 			raise ValueError("N must be a positive integer")
 		if N < 2:
 			return False
-		x = 1
+		x = 2
 		while x*x <= N:
 			if N % x == 0: 
 				return False
