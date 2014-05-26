@@ -39,7 +39,8 @@ $$
 
 But why!! The simple graphic below should make this clear. Essentially, we can transform the circle problem to 
 one on a line, after the first cut: the unit circle problem with $n$ points is the same problem with $n-1$ points
-on a $2 \pi$ long line segment. The first cut is superfluous. 
+on a $2 \pi$ long line segment. The first cut is superfluous. From there, [the argument][4] boils down to recognizing that 
+each cut is made in segments of total length <MTMarkdownOptions output='raw'> $2\pi - kx$</MTMarkdownOptions>.
 
 ![helpful graphic]({{ site.url }}/assets/cuts_sequence.jpg)
  
@@ -119,3 +120,4 @@ Both sample mean and true mean are within a few thousands of each other, which I
 [1]: http://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle#Special_case
 [2]: http://en.wikipedia.org/wiki/Harmonic_number#Calculation
 [3]: https://gist.github.com/arvsrao/fdceb1ec794a8796a991
+[4]: {{ site.url }}/assets/appendix_for_post.pdf
