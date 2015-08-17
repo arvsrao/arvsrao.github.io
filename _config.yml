@@ -7,13 +7,13 @@ permalink:        pretty
 
 # Setup
 title:            Arvind Rao
-tagline:          'Mathematician / Image Scientist / Software Engineer'
-description:      'Mathematician / Image Scientist / Software Engineer. <a href="https://twitter.com/arvindsnotes" target="_blank">@arvindsnotes</a>.'
+tagline:          'Mathematician / Software Engineer'
+description:      'Mathematician / Software Engineer. <a href="https://twitter.com/6sphere" target="_blank">@6sphere</a>.'
 url:              
 
 author:
   name:           'Arvind Rao'
-  url:            https://twitter.com/arvsrao
+  url:            https://twitter.com/6spher
   cv:             /assets/resume_for_web.pdf
   linkedin:       http://www.linkedin.com/in/asrao
 
