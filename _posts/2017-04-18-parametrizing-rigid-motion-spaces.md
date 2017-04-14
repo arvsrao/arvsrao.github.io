@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Parametrizing Rigid Motion Spaces. 
+title: Parametrizing Rigid Motion Spaces
 category: mathematics 
 tags: mathematics, topology
 ---
