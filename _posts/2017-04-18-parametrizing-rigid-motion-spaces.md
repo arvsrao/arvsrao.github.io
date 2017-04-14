@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Parametrizing Rigid Motion Spaces. 
+title: Parametrizing Rigid Motion Spaces
 category: mathematics 
 tags: mathematics, topology
 ---
@@ -19,5 +19,5 @@ $$
 \end{equation*}
 $$
 
-[1] : https://nifti.nimh.nih.gov/pub/dist/src/niftilib/nifti1.h
-[2] : https://nifti.nimh.nih.gov/nifti-1/documentation/faq#Q17
+[1]: https://nifti.nimh.nih.gov/pub/dist/src/niftilib/nifti1.h
+[2]: https://nifti.nimh.nih.gov/nifti-1/documentation/faq#Q17
