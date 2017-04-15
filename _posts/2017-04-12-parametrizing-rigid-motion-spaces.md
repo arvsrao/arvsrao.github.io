@@ -67,7 +67,7 @@ $$
 	\end{pmatrix}.
 $$
 
-$P$, itself, can be thought of as a rotation of $A$'s axis of rotation into the $zx$-plane, followed by rotation about the $y-axis$ taking the axis of rotation into the $z$-axis.
+$P$, itself, can be thought of as a rotation of $A$'s axis of rotation into the $zx$-plane, followed by rotation about the $y$-axis taking the axis of rotation into the $z$-axis.
 
 $$
 	P = R_{y}R_{x} \quad \text{where} \
@@ -88,11 +88,43 @@ $$
 
 $$
 
-It should be clear that $R_x,\ R_y,\ R_z$ generate $SO(3)$, that angles $\theta, \ \phi, \ \alpha$ parametrize $SO(3)$. Said differently, there's a surjective continuous map from the flat 3-torus into $SO(3)$.
+It should be clear that $R_x,\ R_y,\ R_z$ generate $SO(3)$, and that angles $\theta, \ \phi, \ \alpha$ parametrize $SO(3)$. Said differently, there's a continuous map from the flat 3-torus onto (read surjective) $SO(3)$.
 
 $$
 \mathbb{T}^3 \longrightarrow SO(3).
 $$
+
+Continuous yes, but it isn't full rank everywhere; and hence not locally homeomorphic everywhere. With the aid of [SymPy][6] the listing below verifies this.
+
+	from sympy import *
+
+	theta = Symbol('theta', real=true)
+	alpha = Symbol('alpha', real=true)
+	phi = Symbol('phi', real=true)
+
+	rz = Matrix([[cos(theta), -sin(theta),0],[sin(theta), cos(theta), 0],[0,0,1]])
+	rx = Matrix([[1,0,0],[0,cos(phi), -sin(phi)],[0,sin(phi), cos(phi)]])
+	ry = Matrix([[cos(alpha), 0, -sin(alpha)],[0,1,0],[sin(alpha), 0, cos(alpha)]])
+
+	P = rx *ry
+	A = trigsimp(P* rz* P.transpose())
+	dA = trigsimp(diff(A,theta))
+
+	# so that A is Not a local homeomorphism.
+	assert det(dA.subs(theta, 0)) == 0, "full rank !!"
+
+And evaluating the derivative at $\theta = 0$ gives, 
+
+	In [55]: dA.subs(theta, 0)
+	Out[55]:
+	Matrix([
+	[                  0, -cos(alpha)*cos(phi), -sin(phi)*cos(alpha)],
+	[cos(alpha)*cos(phi),                    0,           sin(alpha)],
+	[sin(phi)*cos(alpha),          -sin(alpha),                    0]])
+
+	In [56]: det(dA.subs(theta, 0))
+	Out[56]: 0
+
 
 
 
@@ -102,6 +134,7 @@ $$
 [3]: https://www.cbica.upenn.edu
 [4]: https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem#Euler.27s_theorem_.281776.29
 [5]: https://en.wikipedia.org/wiki/Normal_matrix
+[6]: http://docs.sympy.org/latest/index.html
 
 
 
