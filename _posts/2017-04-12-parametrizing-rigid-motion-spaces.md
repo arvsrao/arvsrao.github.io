@@ -34,9 +34,9 @@ $$
 
 We can, it seems, represent a rotation by a point in $S^3$. Pretty amazing:) But what's going on here? To understand more we need to explore the structure of $SO(3)$ a bit. 
 
-Lenorad Euler, [so long ago][4], discovered that if $A \in SO(3)$ fixes a vector, this is called the *axis of rotation*.
+Lenorad Euler, [so long ago][4], discovered that if $A \in SO(3)$ fixes a vector, which is called the *axis of rotation*.
 
-<p><strong>Lemma. A</strong> <em>Suppose $A \in SO(N)$ where $N$ is odd. Then $\exists x \in \mathbb{R}^N$ so that $Ax = x$. $\lambda = 1$ is an eigenvalue of $A$. 
+<p><strong>Lemma. A</strong><em>Suppose $A \in SO(N)$ where $N$ is odd. Then $\exists x \in \mathbb{R}^N$ so that $Ax = x$. $\lambda = 1$ is an eigenvalue of $A$. 
 </em></p>
 <p><em>proof:</em></p>
 Consider $A - I$. Because $N$ is odd $\det(-(A-I)) = -\det(A-I)$. Then 
@@ -55,8 +55,75 @@ Consequently, $\det(A-I) = 0$ and $A$ has a non-trival kernal.
 	<p><em>$\Box$</em></p>
 </div>
 
+Applying **Lemma A** to $A \in SO(3)$, $\det(A) = 1 \times \lambda_2 \lambda_3 = 1$. Incidently, $A$ is [diagonalizable, because it is normal][5]. The immediate implication is that both eigenvalues are unit complex numbers and conjugates of each other; in general, the eigenvalues of any rotation are $1, \omega, \bar{\omega}$, where $\omega \bar{\omega} = 1$. In lay terms this means that $A \in SO(3)$ is a rotation of $\mathbb{R}^3$ about an axis by some fixed angle. Furthermore, we can decompose $A$ so that its axis of rotation is rotated up to the $z-$axis by some $P^T \in SO(3)$, followed by a rotation about the $z-axis$ by some angle $\theta$, then the $z$-axis is rotated back to the original axis of rotation by $P$. 
+
+$$
+	A = P R_{z} P^T \quad \text{where} \quad 
+
+	R_z = \begin{pmatrix}
+		\cos(\theta) & -\sin(\theta) & 0 \\
+		\sin(\theta) &  \cos(\theta) & 0 \\
+		0 & 0 &  1  \\
+	\end{pmatrix}.
+$$
+
+$P$, itself, can be thought of as a rotation of $A$'s axis of rotation into the $zx$-plane, followed by rotation about the $y-axis$ taking the axis of rotation into the $z$-axis.
+
+$$
+	P = R_{y}R_{x} \quad \text{where} \
+
+	R_x = \begin{pmatrix}
+		0 & \cos(\phi) & -\sin(\phi) \\
+		0 & \sin(\phi) &  \cos(\phi) \\
+		1 & 0 &  0  \\
+	\end{pmatrix}
+
+	\ \text{and} \
+
+    R_y = \begin{pmatrix}
+		\cos(\alpha) & 0 & -\sin(\alpha) \\
+		0 & 1 &  0  \\
+		\sin(\alpha) & 0 & \cos(\alpha) \\
+	\end{pmatrix}
+
+$$
+
+It should be clear that $R_x,\ R_y,\ R_z$ generate $SO(3)$, that angles $\theta, \ \phi, \ \alpha$ parametrize $SO(3)$. Said differently, there's a surjective continuous map from the flat 3-torus into $SO(3)$.
+
+$$
+\mathbb{T}^3 \longrightarrow SO(3).
+$$
+
+
+
 
 [1]: https://nifti.nimh.nih.gov/pub/dist/src/niftilib/nifti1.h
 [2]: https://nifti.nimh.nih.gov/nifti-1/documentation/faq#Q17
 [3]: https://www.cbica.upenn.edu
 [4]: https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem#Euler.27s_theorem_.281776.29
+[5]: https://en.wikipedia.org/wiki/Normal_matrix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
