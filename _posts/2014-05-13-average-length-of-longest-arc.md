@@ -2,6 +2,7 @@
 layout: post
 title: Average Length of the Longest Arc in $S^1$
 category: mathematics 
+comments: true
 tags: puzzle, probability, brainteaser
 ---
 

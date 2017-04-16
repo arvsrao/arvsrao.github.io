@@ -2,6 +2,7 @@
 layout: post
 title: Counting Matrices
 category: mathematics 
+comments: true
 tags: puzzles
 ---
 

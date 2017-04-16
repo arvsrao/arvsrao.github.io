@@ -2,6 +2,7 @@
 layout: post
 title: Super Simple Primality Testing
 category: mathematics 
+comments: true
 tags: prime numbers, algorithms
 ---
 

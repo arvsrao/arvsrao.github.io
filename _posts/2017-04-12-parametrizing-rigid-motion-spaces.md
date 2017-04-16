@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Parametrizing Rigid Motion Spaces
+comments: true
 category: mathematics 
 tags: applied topology, SymPy
 ---
@@ -70,9 +71,9 @@ $$
 $P$, itself, can be thought of as a rotation of $A$'s axis of rotation into the $zx$-plane, followed by rotation about the $y$-axis taking the axis of rotation into the $z$-axis.
 
 $$
-	P = R_{y}R_{x} \quad \text{where} \
+	P = R_{z}R_{y} \quad \text{where} \
 
-	R_x = \begin{pmatrix}
+	R_z = \begin{pmatrix}
 		0 & \cos(\phi) & -\sin(\phi) \\
 		0 & \sin(\phi) &  \cos(\phi) \\
 		1 & 0 &  0  \\
@@ -82,60 +83,57 @@ $$
 
     R_y = \begin{pmatrix}
 		\cos(\alpha) & 0 & -\sin(\alpha) \\
-		0 & 1 &  0  \\
+		0 & 1 &  0  \\	
 		\sin(\alpha) & 0 & \cos(\alpha) \\
 	\end{pmatrix}
 
 $$
 
-It should be clear that $R_x,\ R_y,\ R_z$ generate $SO(3)$, and that angles $\theta, \ \phi, \ \alpha$ parametrize $SO(3)$. Said differently, there's a continuous map from the flat 3-torus onto (read surjective) $SO(3)$.
+Similarily, rotations about the $x$-axis can be parametrized by $S^1$, $R_x(\beta)$. It should be clear that $R_x,\ R_y,\ R_z$ generate $SO(3)$, and that angles $\theta, \ \phi, \ \alpha$ parametrize $SO(3)$. Said differently, there's a continuous map from the flat 3-torus onto (read surjective) $SO(3)$.
 
 $$
-\mathbb{T}^3 \longrightarrow SO(3).
+\mathbb{T}^3 \underrightarrow{f} SO(3).
 $$
 
-Continuous yes, but it isn't full rank everywhere; and hence not locally homeomorphic everywhere. With the aid of [SymPy][6] the listing below verifies this.
+Lets investigate this map by representing elements of $SO(3)$ by an axis, $x \in S^2$ and an angle of rotation, $\theta$.
+
+$$
+
+f(\theta, \alpha, \phi) = (\theta, \cos(\alpha) cos(\phi), \cos(\alpha) \sin(\phi) , sin(\alpha))
+
+$$
+
+The listing below implements the above map.
 
 	from sympy import *
-
-	so3Coeff = lambda A : [A[0,1], A[0,2], A[1,2]]
 
 	theta = Symbol('theta', real=true)
 	alpha = Symbol('alpha', real=true)
 	phi = Symbol('phi', real=true)
 
-	rz = Matrix([[cos(theta), -sin(theta),0],[sin(theta), cos(theta), 0],[0,0,1]])
-	rx = Matrix([[1,0,0],[0,cos(phi), -sin(phi)],[0,sin(phi), cos(phi)]])
-	ry = Matrix([[cos(alpha), 0, -sin(alpha)],[0,1,0],[sin(alpha), 0, cos(alpha)]])
+	f = Matrix([theta, cos(alpha)*cos(phi), cos(alpha)*sin(phi), sin(theta)])
 
-	P = rx *ry
-	A = trigsimp(P* rz* P.transpose())
+Continuous yes, but $f$ isn't full rank everywhere; and hence not locally homeomorphic everywhere. To prove this compute the derivative, $df$. We do this with the aid of [SymPy][6].
 
-	dA_dtheta = trigsimp(diff(A,theta))
-	dA_dphi = trigsimp(diff(A,phi))
-	dA_dalpha = trigsimp(diff(A,alpha))
-	dA = Matrix([so3Coeff(dA_dtheta), so3Coeff(dA_dphi), so3Coeff(dA_dalpha)]).transpose()
+	df_dtheta = map(lambda ll: ll.pop(), trigsimp(diff(f,theta)).tolist())
+	df_dphi = map(lambda ll: ll.pop(), trigsimp(diff(f,phi)).tolist())
+	df_dalpha = map(lambda ll: ll.pop(), trigsimp(diff(f,alpha)).tolist())
+	df = Matrix([df_dtheta, df_dphi, df_dalpha])
 
-	# so that A is Not a local homeomorphism.
-	assert det(dA.subs(theta, 0)) > 0, "dA not full rank @(0, phi, alpha) !!"
+	#f is Not a local homeomorphism.
+	df.subs(alpha, 0)
 
-And evaluating the derivative at $\theta = 0$ gives, 
+And evaluating the derivative at $\alpha = 0$ gives, 
 
-	In [116]: dA.subs(theta,0)
-	Out[116]:
+	In [59]: df.subs(alpha,0)
+	Out[59]:
+	Matrix([
+	[1,         0,        0, cos(theta)],
+	[0, -sin(phi), cos(phi),          0],
+	[0,         0,        0,          0]])
 
-$$
-    dA = \begin{pmatrix}
-	-cos(\alpha)cos(\phi) & 0 & 0 \\
-	-sin(\phi)cos(\alpha) & 0 & 0  \\
-	\sin(\alpha) & 0 & 0 \\
-	\end{pmatrix}
-$$
 
-Though its clear that $\det(dA) = 0$, [SymPy][6] can calculate the determinant for us.
-
-	In [117]: det(dA.subs(theta,0))
-	Out[117]: 0
+It should be clear that $df$ isn't full rank, which is necessary for a parametrization. 
 
 
 
