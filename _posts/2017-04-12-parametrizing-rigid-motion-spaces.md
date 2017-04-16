@@ -98,6 +98,8 @@ Continuous yes, but it isn't full rank everywhere; and hence not locally homeomo
 
 	from sympy import *
 
+	so3Coeff = lambda A : [A[0,1], A[0,2], A[1,2]]
+
 	theta = Symbol('theta', real=true)
 	alpha = Symbol('alpha', real=true)
 	phi = Symbol('phi', real=true)
@@ -108,24 +110,32 @@ Continuous yes, but it isn't full rank everywhere; and hence not locally homeomo
 
 	P = rx *ry
 	A = trigsimp(P* rz* P.transpose())
-	dA = trigsimp(diff(A,theta))
+
+	dA_dtheta = trigsimp(diff(A,theta))
+	dA_dphi = trigsimp(diff(A,phi))
+	dA_dalpha = trigsimp(diff(A,alpha))
+	dA = Matrix([so3Coeff(dA_dtheta), so3Coeff(dA_dphi), so3Coeff(dA_dalpha)]).transpose()
 
 	# so that A is Not a local homeomorphism.
-	assert det(dA.subs(theta, 0)) == 0, "full rank !!"
+	assert det(dA.subs(theta, 0)) > 0, "dA not full rank @(0, phi, alpha) !!"
 
 And evaluating the derivative at $\theta = 0$ gives, 
 
-	In [55]: dA.subs(theta, 0)
-	Out[55]:
-	Matrix([
-	[                  0, -cos(alpha)*cos(phi), -sin(phi)*cos(alpha)],
-	[cos(alpha)*cos(phi),                    0,           sin(alpha)],
-	[sin(phi)*cos(alpha),          -sin(alpha),                    0]])
+	In [116]: dA.subs(theta,0)
+	Out[116]:
 
-	In [56]: det(dA.subs(theta, 0))
-	Out[56]: 0
+$$
+    dA = \begin{pmatrix}
+	-cos(\alpha)cos(\phi) & 0 & 0 \\
+	-sin(\phi)cos(\alpha) & 0 & 0  \\
+	\sin(\alpha) & 0 & 0 \\
+	\end{pmatrix}
+$$
 
+Though its clear that $\det(dA) = 0$, [SymPy][6] can calculate the determinant for us.
 
+	In [117]: det(dA.subs(theta,0))
+	Out[117]: 0
 
 
 
