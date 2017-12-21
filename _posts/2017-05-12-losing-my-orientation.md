@@ -8,7 +8,7 @@ tags: topology, education
 
 While trying to grok $SO(3) \cong \mathbb{RP}^3$ and understand various parametrizations of $SO(3)$, I wandered a bit (okay maybe more that litte:) ) and started to think about projective space itself. It is well know that real projective spaces alternate between being orientable and non-orientable, as dimension increases. Specifically odd dimensional projective spaces are orientable but even ones are not. For example, $\mathbb{RP}^1$ and $\mathbb{RP}^3$ are orientable but $\mathbb{RP}^2$ is not.
 
-Jeffery Week's [*Space of Space*][2] gives a [Flatland][1] inspired explanation of orientations on the projective plane and projective 3-space. It's a fantastic book and a wonderful example of storytelling as a teaching method. In this note, I want to invoke Week's style and describe orientations on real projective spaces of any dimension.
+Jeffery Week's [*Space of Space*][2] gives a [Flatland][1] inspired explanation of orientations on the projective plane and projective 3-space. It's a fantastic book and a wonderful example of storytelling as a teaching method. In this note, I want to invoke Week's style and describe orientations on real projective spaces of any dimension. <!--more-->
 
 Lets start with a low dimensional example, $\mathbb{RP}^2$. There are a few ways to describe the real projective plane: affine plane with points at infinity, as a sphere with antipodes identified, or a disc with boundary antipodes identified. We can't embed $\mathbb{RP}^2$ in 3-dimensional space so we're forced to work with patches. So, the disc model will serve our purposes best.
 

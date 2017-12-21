@@ -14,7 +14,7 @@ tags: applied topology, SymPy
 	subject on another day, or a rigid rotation to true anatomical
 	orientation from the tilted position of the subject in the scanner).
 
-The NifTI standard allows for orientation reversing transforms, but in this post I focus on *proper* rotations. These rigid motions must preserve volume and orientation; rigidity necessitates linearity. Being a geometric property, volume is preserved when the transformation is an isometry; for some matrix $A$, we require $A A^T = I$. Moreover, orientation preservation happens when $\det(A) > 0$. The intersection of all these requirements is the group of 3D rotations, otherwise known as the *special orthogonal group*,
+The NifTI standard allows for orientation reversing transforms, but in this post I focus on *proper* rotations. These rigid motions must preserve volume and orientation; rigidity necessitates linearity. Being a geometric property, volume is preserved when the transformation is an isometry; for some matrix $A$, we require $A A^T = I$. Moreover, orientation preservation happens when $\det(A) > 0$. The intersection of all these requirements is the group of 3D rotations, otherwise known as the *special orthogonal group*, <!--more-->
 
 $$ 
 \begin{equation*}
@@ -169,28 +169,33 @@ In summary, projection $pr$ has the following properties.
 
 ---
 
-$SO(3)$ *is* $S^1 \times S^2$ under the above identifications, $S^1 \times S^2 \Big/\sim$. Not very clean though. It's hard to imagine the shape of $SO(3)$ in this form. But we can try. A heuristic image of $S^1 \times S^2$ could be a curve of circles ( each representing an $S^2$ ). In accordance with Identification $$ however as the parameter on the curve approaches $0$, the circles become smaller, and finally degenerate to a point at $0$. 
+$SO(3)$ *is* $S^1 \times S^2$ under the above identifications, $S^1 \times S^2 \Big/\sim$. Not very clean though. It's hard to imagine the shape of $SO(3)$ in this form. But we can try. A heuristic image of $S^1 \times S^2$ could be a curve of circles ( each representing an $S^2$ ). In accordance with Identification $1$ however as the parameter on the curve approaches $0$, the circles become smaller, and finally degenerate to a point at $\theta = 0$. See Figure #1 below is the heuristic. It looks like a *croissant*.
 
 <figure>
 <div align="center">
-	<img src = "/assets/identification1.jpg">
+	<img src = "/assets/s3_identification_1.jpg">
 </div>
-<figcaption>Figure #1. $S^1 \times S^2$ under identifications $1$.</figcaption>
+<figcaption>Figure #1. $S^1 \times S^2$ under identification $\#1$. Collapsing spheres are represented pictorial as discs with boundary identifications, as indicated by the arrows.</figcaption>
 </figure>
+
+In terms of the heuristic image in Figure #1, I think of applying Identification $2$ by folding the *croissant* about the midline. The result is a horn looking thing shown in Figure #2 below. The $S^2$ sections of the right arm match up as they should with the left arm.
 
 <figure>
 <div align="center">
-	<img src = "/assets/identification2.jpg">
+	<img src = "/assets/s3_identification_all.jpg">
 </div>
-<figcaption>Figure #2. $S^1 \times S^2$ under identifications $1$ and $2$.</figcaption>
+<figcaption>Figure #2. $S^1 \times S^2 \Big/ \sim$, $S^1 \times S^2$ under all <b>Identifications</b>. </figcaption>
 </figure>
+
+Because identification $2$ collapsed the positive angle index sections in the negative angle indexed sections, identification $3$ is now an antipodal equivalence $A_{\theta, -\vec{n}} = A_{\theta, \vec{n}}$
 
 <figure>
 <div align="center">
-	<img src = "/assets/identification3.jpg">
+	<img src = "/assets/s3_identification_ball.jpg">
 </div>
-<figcaption>Figure #3. $S^1 \times S^2 \Big/ \sim$.</figcaption>
+<figcaption>Figure #3. An alternate visualization of a sequence of sphere collapsing to a point.</figcaption>
 </figure>
+
 
 
 As stated above there's a simpler description in terms of $S^3$; specifically, the upper hemisphere of $S^3$. 
@@ -241,7 +246,7 @@ must bijective.
 <div align="center">
 	<img src = "/assets/s3_so3.jpg">
 </div>
-<figcaption>Figure #1. Mapping $S^1 \times S^2 \Big/ \sim$ into upper hemisphere of $S^3$</figcaption>
+<figcaption>Figure #4. Mapping $S^1 \times S^2 \Big/ \sim$ into upper hemisphere of $S^3$</figcaption>
 </figure>
 
 It's easy to check that $S^1 \times S^2$ under the first 3 equalivances map bijectively onto the open upper hemisphere of $S^3$. Figure #1 is a picture I drew of how $\varphi$ maps $S^1 \times S^2 \Big/ \sim$ into the upper hemisphere of $S^3$. I think of  $\theta$ parameterizing a series of $S^2$ upper hemispheres, examplars are drawn as half circles in black (when the angle is positive) & red ( for when the angle is negative) in Figure #1. As the parameter $\theta$ increases from $-\frac{\pi}{2}$, I imagine a hemisphere, drawn as a half circle in Figure #1, tracing out the upper hemisphere of $S^3$; rising up from left, becoming smaller as $\theta$ approaches $0$ from the left, degenerating to a point at $\theta = 0$, then reappearing on the right and becoming larger as $\theta$ approaches $\frac{\pi}{2}$.
@@ -262,7 +267,7 @@ of $S^3$ be identified. Then $S^3 \Big/ \sim \ \cong \mathbb{RP}^3 \cong SO(3)$.
 <div align="center">
 	<img src = "/assets/rp3so3.jpg">
 </div>
-<figcaption>Figure #2. Direct mapping $S^1 \times S^2 \Big/ \sim$ into the Ball Model of $\mathbb{RP}^3$</figcaption>
+<figcaption>Figure #5. Mapping $S^1 \times S^2 \Big/ \sim$ into the $3$-Ball Model of $\mathbb{RP}^3$</figcaption>
 </figure>
 
 There's [actually a pretty slick way of showing $SO(3) \cong \mathbb{RP}^3$][7] by mapping $S^1 \times S^2 \Big/ \sim$ into $B_3(\vec{0}, \pi)$, the 3-ball of radius $\pi$. It's simply $(\theta, \vec{n}) \mapsto \theta \cdot \vec{n}$. Figure #2 is a picture I drew to visualize this map. Identifications **1** through **3** ensure the map is bijective inside the ball. On the boundary the antipodes are identified, in accordance with identification **4**. 

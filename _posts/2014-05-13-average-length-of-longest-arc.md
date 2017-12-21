@@ -9,7 +9,7 @@ tags: puzzle, probability, brainteaser
 Suppose that we draw $n$ points $ a_i \sim Uniform(S^1)$ for $i = 1 \ldots n $. These points determine a partition or set of disjoint arcs of $S^1$. What is the average length of the longest arc? To even measure the $n$ arc lengths, we need an ordering of the <MTMarkdownOptions output='raw'> $\{ a_i \}$ </MTMarkdownOptions>, <MTMarkdownOptions output='raw'>$a_{(1)}, \ldots, a_{(N)} $</MTMarkdownOptions>.
 
 <p align="center"><img src="{{ site.url }}/assets/cuts_circle.jpg" alt="the problem" width="270" height="270"/></p>
-The arc lengths are:
+The arc lengths are: <!--more-->
 
 $$
 \begin{gather*}
@@ -20,7 +20,7 @@ $$
 \end{gather*}
 $$
 
-At this point we'd still have to order the arc lengths, to get the longest arc. Ultimately, we need the distribution of <MTMarkdownOptions output='raw'> $l_{(n)}$, $P(l_{(n)} > x)$</MTMarkdownOptions>, to compute anything.  
+At this point we'd still have to order the arc lengths, to get the longest arc. Ultimately, we need the distribution of <MTMarkdownOptions output='raw'> $l_{(n)}$, $P(l_{(n)} > x)$</MTMarkdownOptions>, to compute anything. <!--more--> 
 
 $$
 \begin{align*}

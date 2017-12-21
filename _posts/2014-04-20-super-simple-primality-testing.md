@@ -8,7 +8,7 @@ tags: prime numbers, algorithms
 
 *Awhile ago I was asked how to determine if an integer is prime*, which is an important problem. Much of today's internet security relies on prime numbers--for generating public & private encryption keys. There are [other uses][2] too. So, labeling a number *prime* is well studied. What I want to do in this post is to cover basic algorithms, which rely on testing divisibility of a given number among a list of possible divisors--a search space; and if none divide, the number is *prime*. By investigating the relationship between a number and its divisors we can reduce the space of possible divisors, and write down a nice sub-linear primality testing algorithm.  
 
-Following first principles, an integer $N$ is prime if $\exists a < N$ so that $a\ \|\ N$. We could then simply try dividing $N$ by all numbers less than $N$. Here's our version $0$ algorithm:
+Following first principles, an integer $N$ is prime if $\exists a < N$ so that $a\ \|\ N$. We could then simply try dividing $N$ by all numbers less than $N$. Here's our version $0$ algorithm: <!--more-->
 
 	def isPrime(N):
 		if type(N) is not int:

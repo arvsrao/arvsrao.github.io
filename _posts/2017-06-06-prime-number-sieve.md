@@ -8,14 +8,14 @@ tags: haskell
 
 In a [post a few years ago][1] I discussed primality testing. For some reason I thought I described the basic prime number sieve (I'm pretty sure there is only one) there, but apparently I didn't. No worries. The prime number sieve solves a different problem; that of generating a list of the first $N$ primes. One could use a primality testing method to do this as well; namely filter a list of numbers with the primality test as a predicate; but sieve based methods are faster and conceptually much easier.
 
-The prime number sieve iteratively filters out all the composite numbers, with the caveat that the leading number in the input is a prime. For $$\{ 2,3,4,5,6,7,8,9,10 \}$$, we put aside $2$, the smallest number, and filter out all multiples of $2$; then put aside $3$ and filter out multiples of $3$, and so on. This process, shown below as a decreasing sequence, terminates with a set of primes.
+The prime number sieve iteratively filters out all the composite numbers, with the caveat that the leading number in the input is a prime. For $$\{ 2,3,4,5,6,7,8,9,10 \}$$, we put aside $2$, the smallest number, and filter out all multiples of $2$; then put aside $3$ and filter out multiples of $3$, and so on. This process, shown below as a decreasing sequence, terminates with a set of primes. <!--more-->
 
 $$
 \begin{gather*}
 \{ 2,3,4,5,6,7,8,9,10 \} \supseteq \{2\} \cup \{ 3,5,7,9 \} \supseteq \{2,3\} \cup \{ 5,7 \} \\
 \supseteq \{2,3,5\} \cup \{ 7 \} \supseteq \{2,3,5,7\}
 \end{gather*}
-$$
+$$ 
 
 At each stage we have a list of some primes and a residual set, which if it is nonempty must be filtered; this process terminates when the residual set is empty. Filtering $$\{2,3,4,\ldots \} $$ and subsequent residuals sort of defines the set of all primes; however it is an infinite process.
 
