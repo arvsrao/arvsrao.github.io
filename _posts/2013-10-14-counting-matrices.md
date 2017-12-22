@@ -28,7 +28,7 @@ $$
  	x_i = \sum_{j} a_{ji} \quad \text{and} \quad y_j = \sum_{i} a_{ji}.
 $$
 
-Then constraint on the row and column sums can be stated as  
+Then the constraint on the row and column sums can be stated as  
 
 $$
 	x_i \mod 2  = 1 \text{ for each } i \quad \& \quad y_j \mod 2 = 1 \text{ for each } j.
@@ -80,19 +80,19 @@ $$
 \end{align*}
 $$
 
-And we get, 
+And we get
 
 $$ 
-	\sum x_i  \equiv \sum y_j 
+	\sum x_i  \equiv \sum y_j \ .
 $$
 
 <div align="right">
 	<p><em>q.e.d.</em></p>
 </div>
-With the above lemma in hand, we know that $a_{NN}$ is uniquely determined. Moreover, 
+With the above lemma in hand, we see that $a_{NN}$ is uniquely determined and
 
 $$ 
-	a_{NN} \equiv \Big( 1  + \sum_{i,j} a_{ij} \Big) \mod 2     
+	a_{NN} \equiv \Big( 1  + \sum_{i,j} a_{ij} \Big) \mod 2  \ .
 $$
 
 What we've shown is that our initial construction/choice of the $N-1 \times N-1$ minor uniquely determines the remaining entries of the larger matrix, the $y_i$'s, $x_i$'s, and $a_{NN}$. So, the count we want is equal to the number of $N-1 \times N-1 $ matrices with zeros and ones:
