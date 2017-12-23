@@ -3,10 +3,10 @@ layout: post
 title: Parameterizing the Space of 3D Rotations
 comments: true
 category: mathematics
-tags: applied topology, SymPy
+tags: applied topology, SymPy, computer graphics
 ---
 
-3D medical images in the NifTI format store data from MRI acquisitions of some anatomy, like a human brain or heart. When I was a postdoc @Penn [my lab][3] was primarily interested in studying brains. Each image associates grayscale values ( in the simplest case ) to coordinates in a discrete coordinate system $(i,j,k)$, which describe voxel locations. And for reasons best explained by [NifTI FAQ][2] it's useful/important to align the acquired image to some other coordinate system. This alignment is stored in the image header, as a rigid motion plus an offset. Here's a bit of [NifTI documentation][1] motivating the need to keep the aligment.
+3D medical images in the NifTI format store data from MRI acquisitions of some anatomy, like a human brain or heart. When I was a postdoc @Penn [my lab][3] was primarily interested in studying brains. Each image associates grayscale values ( in the simplest case ) to discrete coordinates $(i,j,k)$, which describe voxel locations. And for reasons best explained by [NifTI FAQ][2] it's useful/important to align the acquired image to some other coordinate system. This alignment is stored in the image header, as a rigid motion plus an offset. Here's a bit of [NifTI documentation][1] motivating the need to keep the alignment.
 
 	This method can also be used to represent "aligned"
 	coordinates, which would typically result from some post-acquisition
@@ -14,7 +14,7 @@ tags: applied topology, SymPy
 	subject on another day, or a rigid rotation to true anatomical
 	orientation from the tilted position of the subject in the scanner).
 
-The NifTI standard allows for orientation reversing transforms, but in this post I focus on *proper* rotations. These rigid motions must preserve volume and orientation; rigidity necessitates linearity. Being a geometric property, volume is preserved when the transformation is an isometry; for some matrix $A$, we require $A A^T = I$. Moreover, orientation preservation happens when $\det(A) > 0$. The intersection of all these requirements is the group of 3D rotations, otherwise known as the *special orthogonal group*, <!--more-->
+The NifTI standard allows for orientation reversing transforms, but in this post I focus on *proper* rotations. These rigid motions must preserve volume and orientation; rigidity necessitates linearity. Being a geometric property, volume is preserved when this linear transformation is an isometry; which is to say, for some matrix $A$, $A A^T = I$. Moreover, orientation is preserved when $\det(A) > 0$. The intersection of all these requirements is the group of 3D rotations, usually referred to as the *special orthogonal group*, <!--more-->
 
 $$ 
 \begin{equation*}
@@ -22,7 +22,7 @@ $$
 \end{equation*}
 $$
 
-The final affine transform rotates and translates image coordinates and is of the form
+A final affine transform that rotates and translates image coordinates and is of the form
 
 $$
 \begin{equation*}
@@ -30,11 +30,11 @@ $$
 \end{equation*}
 $$
 
-Getting to the point, $A$ isn't what gets stored. Instead four numbers representing a unit quaternion. It seems a point in $S^3 \in \mathbb{H}$ can represent a 3D rotation. More than that, there's a surjective homomorphism from $S^3 \subsetneq \mathbb{H}$ to $SO(3)$. *Pretty amazing*. But what's going on here? To understand more we need to explore the structure of $SO(3)$ a bit.
+Getting to the point, $A$ isn't what gets stored. Instead four numbers representing a unit quaternion. It seems a point in $S^3 \subsetneq \mathbb{H}$ can represent a 3D rotation. More than that, there's a surjective homomorphism from $S^3 \subsetneq \mathbb{H}$ to $SO(3)$. Which means $S^3 \Big/\sim$ parameterizes $SO(3)$. *Pretty amazing*. But what's going on here? To understand more I explore the structure and shape of $SO(3)$ in the next section.
 
 ## Topology of $SO(3)$
 
-Lenorad Euler, [so long ago][4], discovered that $A \in SO(3)$ fixes a vector; the line through this vector is called the *axis of rotation*. Below is a lemma that recapitulates and generalizes this fact for rigid rotations in $\mathbb{R}^N$, where $N$ is odd.
+Leonhard Euler, [so long ago][4], discovered that $A \in SO(3)$ fixes a vector; the line through this vector is called the *axis of rotation*. Below is a lemma that recapitulates and generalizes this fact for rigid rotations in $\mathbb{R}^N$, for odd $N$.
 
 <p><strong>Lemma. A</strong><em>	Suppose $A \in SO(N)$ where $N$ is odd. Then $\exists \vec{n} \in \mathbb{R}^N$ so that $A \vec{n} = \vec{n}$. Equivalently, $\lambda = 1$ is an eigenvalue of $A$.
 </em></p>
@@ -50,15 +50,16 @@ $$
 \end{align*}
 $$
 
-Consequently, $\det(A-I) = 0$, which implies $\lambda = 1$ is an eigenvalue of $A$.
+Consequently, $\det(A-I) = 0$ which implies $\lambda = 1$ is an eigenvalue of $A$.
 <div align="right">
 	<p><em>$\Box$</em></p>
 </div>
 
-Applying **Lemma A** to $A \in SO(3)$, $\det(A) = 1 \times \lambda_2 \lambda_3 = 1$. The immediate implication is that both of the unknown eigenvalues must be unit complex numbers and conjugates of each other; in general, the eigenvalues of any rotation are $1, \omega, \bar{\omega}$, where $\omega \bar{\omega} = 1$. In lay terms this means that $A \in SO(3)$ is a rotation of $\mathbb{R}^3$ about an axis, $[\vec{n}] \in \mathbb{RP}^2$ by some fixed angle, $\theta \in S^1$. 
+Let $A \in SO(3)$. By **Lemma A** $\det(A) = 1 \times \lambda_2 \lambda_3 = 1$. The immediate implication is that both of the unknown eigenvalues must be unit complex numbers and conjugates of each other; in general, the eigenvalues of any rotation are $1, \omega, \bar{\omega}$, where $\omega \bar{\omega} = 1$. In lay terms this means that $A \in SO(3)$ is a rotation of $\mathbb{R}^3$ about an axis, $[\vec{n}] \in \mathbb{RP}^2$ by some fixed angle, $\theta \in S^1$. 
 
-Since $\vec{n}$ and $\theta$ completely determine $A$, it can be decomposed by a special orthogonal matrix formed from the postive frame $$\{\vec{u}, \vec{v}, \vec{n}\}$$. 
+Since $\vec{n}$ and $\theta$ completely determine $A \in SO(3)$, it can be decomposed by a special orthogonal matrix formed from the positive frame $$\{\vec{u}, \vec{v}, \vec{n}\}$$. 
 
+<figure>
 $$
 A_{\theta, \vec{n}} = 
 \begin{bmatrix}
@@ -77,14 +78,16 @@ A_{\theta, \vec{n}} =
     \vec{n}^T \\
 \end{bmatrix}.
 $$
+<figcaption> Note. $\vec{u}$ denotes a column vector. $\vec{u}^T$ denotes a row vector. $A$ is decorated to emphasize its dependence on $\theta$ and $\vec{n}$.</figcaption>
+</figure>
 
-$A$ is decorated to emphasize its dependence on $\theta$ and $\vec{n}$. Dependence implies the projection
+Dependence implies the projection
 
 $$
 S^1 \times S^2 \xrightarrow{\quad pr \quad} SO(3) \quad \text{where} \quad pr(\theta, \vec{n}) = A_{\theta, \vec{n}} \in SO(3)
 $$
 
-is surjective. However, $pr$ is not 1-to-1. $A_{0, \vec{n}} = I$ for all $\vec{n} \in S^2$. Additionally, there are a few identifications that result when one or the other, or both coordinates in $S^1 \times S^2$ are negative. Consider $A_{-\theta, -\vec{n}}$. The positive frame for $A_{-\theta, -\vec{n}}$ is close but not the same as $A_{\theta, \vec{n}}$, because $-\vec{n}$ has the opposite orientation. Their positive frames differ by a permutation matrix.
+is surjective. However, $pr$ is not 1-to-1. For instance $A_{0, \vec{n}} = I$ for all $\vec{n} \in S^2$. Additionally, there are a few identifications that result when one, or the other, or both coordinates in $S^1 \times S^2$ are negative. Consider $A_{-\theta, -\vec{n}}$. The positive frame for $A_{-\theta, -\vec{n}}$ is close but not the same as $A_{\theta, \vec{n}}$, because $-\vec{n}$ has the opposite orientation. The two frames differ by a permutation matrix, so the frame for $A_{-\theta, -\vec{n}}$ is
 
 $$
 \begin{bmatrix}
@@ -101,7 +104,7 @@ $$
  \end{bmatrix}.
 $$
 
-Taking the determinant of the right hand side verifies the frame is positive. Now the valid matrix decomposition for
+Computing the determinant verifies the frame above is positive. Now the valid matrix decomposition for
 
 $$
 A_{-\theta, -\vec{n}} = 
@@ -122,7 +125,7 @@ A_{-\theta, -\vec{n}} =
 \end{bmatrix}.
 $$
 
-It's not so apparent from the decompositions of $A_{\theta, \vec{n}}$ and $A_{-\theta, -\vec{n}}$, but they're equal. Just compute where basis elements are mapped. A similar argument shows that for $-pi \geq \theta \leq \pi$
+It's not so apparent from the matrix decompositions of $A_{\theta, \vec{n}}$ and $A_{-\theta, -\vec{n}}$, but they're equal. Just compute where basis elements are mapped. A similar argument shows that for $-\pi \leq \theta \leq \pi$
 
 $$
 \begin{align*}
@@ -169,50 +172,128 @@ In summary, projection $pr$ has the following properties.
 
 ---
 
-$SO(3)$ *is* $S^1 \times S^2$ under the above identifications, $S^1 \times S^2 \Big/\sim$. Not very clean though. It's hard to imagine the shape of $SO(3)$ in this form. But we can try. A heuristic image of $S^1 \times S^2$ could be a curve of circles ( each representing an $S^2$ ). In accordance with Identification $1$ however as the parameter on the curve approaches $0$, the circles become smaller, and finally degenerate to a point at $\theta = 0$. See Figure #1 below is the heuristic. It looks like a *croissant*.
+The parameter space of $SO(3)$ *is* $S^1 \times S^2$ under **Identifications**, denoted simply $S^1 \times S^2 \Big/\sim$. Not very clean though. It's hard to imagine the shape of $SO(3)$ in this form. However, one can try by applying each identification successively to $S^1 \times S^2$. A picture will help. A heuristic image of $S^1 \times S^2$ could be a closed curve of discs ( each with proper boundary identifications to represent an $S^2$ ). In accordance with Identification $1$, the discs become smaller and smaller as the parameter on the curve approaches $0$, from the left and the right, and finally the discs degenerate to a point at $\theta = 0$. Figure #1 below is how I imagine the just described heuristic. 
 
 <figure>
 <div align="center">
 	<img src = "/assets/s3_identification_1.jpg">
 </div>
-<figcaption>Figure #1. $S^1 \times S^2$ under identification $\#1$. Collapsing spheres are represented pictorial as discs with boundary identifications, as indicated by the arrows.</figcaption>
+<figcaption>Figure #1. $S^1 \times S^2$ under Identification $1$. Collapsing spheres are represented pictorial as discs with boundary identifications, as indicated by the arrows. The green disc is a typical $S^2$ section. The red discs are identified. </figcaption>
 </figure>
 
-In terms of the heuristic image in Figure #1, I think of applying Identification $2$ by folding the *croissant* about the midline. The result is a horn looking thing shown in Figure #2 below. The $S^2$ sections of the right arm match up as they should with the left arm.
+$S^1 \times S^2 \Big/ \sim_1$ is connected. The red discs in Figure #1 are meant to be the exact same disc, just as the points corresponding to $A_{0,\vec{n}} = I$ are the exact same point. A visualization that tried to respect the connectedness of $S^1 \times S^2 \Big/ \sim_1$ a bit more would have looked like a *croissant*. However, drawn as two *halves* separated by positive and negative angles, it is easier to see an embedded hemisphere of $S^3$ in each *half*.
+
+Looking at Identifications $2$ and $3$ it's not readily apparent -- or it wasn't to me -- that they are generated by the same antipodal action, 
+
+$$
+	S^1 \times S^2 \ni 
+  \begin{bmatrix}
+	\theta \\
+	\vec{n} \\
+  \end{bmatrix}
+	 \longmapsto 
+  \begin{bmatrix} 
+	-1 &  0 \\ 
+	 0 & -1 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+	\theta \\
+	\vec{n} \\
+  \end{bmatrix},
+$$
+
+on $S^1 \times S^2$. But they are.
+
+$$
+  \begin{bmatrix} 
+	-1 &  0 \\ 
+	 0 & -1 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+	\theta \\
+	\vec{n} \\
+  \end{bmatrix}
+  = 
+  \begin{bmatrix}
+	- \theta \\
+	- \vec{n} \\
+  \end{bmatrix}
+  \quad
+  \text{ and }
+  \quad
+  \begin{bmatrix} 
+	-1 &  0 \\ 
+	 0 & -1 \\
+  \end{bmatrix}
+  \begin{bmatrix}
+	- \theta \\
+	\vec{n} \\
+  \end{bmatrix}
+  = 
+  \begin{bmatrix}
+	 \theta \\
+	- \vec{n} \\
+  \end{bmatrix}
+$$
+
+are Identifications $2$ and $3$, respectively. Modding out by this antipodal action is tantamount to flipping and rotating all the $S^2$ sections of say the left *half*, see Figure #1, and then merging the entire left *half* into the right *half*. The $S^2$ sections in the right *half* combine with their flipped and rotated twin in the left *half* resulting in a sphere. Things are different for the $S^2$ section at $\theta = \pi$. Identifications $2$ and $3$ degenerate into a single antipodal identification on that $S^2$, making it a $\mathbb{RP}^2$. The final heuristic picture when all the identifications have been applied looks like a hemisphere of $S^3$ with a $\mathbb{RP}^2$ attached at boundary, see Figure #2 below.
 
 <figure>
 <div align="center">
 	<img src = "/assets/s3_identification_all.jpg">
 </div>
-<figcaption>Figure #2. $S^1 \times S^2 \Big/ \sim$, $S^1 \times S^2$ under all <b>Identifications</b>. </figcaption>
+<figcaption>Figure #2. $S^1 \times S^2$ under all <b>Identifications</b>. The red disc has boundary identifications of a $\mathbb{RP}^2$</figcaption>
 </figure>
 
-Because identification $2$ collapsed the positive angle index sections in the negative angle indexed sections, identification $3$ is now an antipodal equivalence $A_{\theta, -\vec{n}} = A_{\theta, \vec{n}}$
+Figure #2 is the cell complex description of $SO(3)$. A $3$-disc (or $3$-ball), whose boundary is attached to a $\mathbb{RP}^2$. Which is precisely $\mathbb{RP}^3$.
+
+There's another way of visualizing $S^1 \times S^2$ I found flipping through Jeffery Week's [*Shape of Space*][12]. In the chapter on product spaces $S^1 \times S^2$ is modeled as a ball in $\mathbb{R}^3$ with a hallow core; said differently, a thick sphere. The inner boundary identified with the outer boundary. The $S^2$ slices are arranged as concentric spheres; a closed curve of concentric spheres, and not of discs with boundary identifications. Reconsidering how I drew $S^1 \times S^2$ with Identification $1$, see Figure #1, I could have drawn each *half* as a ball in $\mathbb{R}^3$ with boundaries identified instead. A ball can be thought of as a sequence of concentric spheres which vanish at a point, the center. And it feels, to me, a bit more faithful because there are no ancillary identifications on each disc to represent the $S^2$ slices. 	
 
 <figure>
 <div align="center">
 	<img src = "/assets/s3_identification_ball.jpg">
 </div>
-<figcaption>Figure #3. An alternate visualization of a sequence of sphere collapsing to a point.</figcaption>
+<figcaption>Figure #3. An alternate visualization of a sequence of spheres collapsing to a point.</figcaption>
 </figure>
 
+Application of Identifications $2$ and $3$ are no different from before; flip and rotate one *half* and merge it into the other. The result is a $3$-ball with antipodes of the boundary sphere identified, see Figure #3 above and Figure #4 below. 
 
+So far my technique for investigating the topology of $SO(3)$ has been to bend and stretch the parameter space $S^1 \times S^2$ and generally acted on that space in accordance with **Identifications**. In this way the shape/topology of $SO(3)$ and true parameter space are discovered. Loose reference was made to coordinates but no specific maps that take $S^1 \times S^2$ into the upper hemisphere of $S^3$ or the $3$-ball. Well, this is totally doable. The $3$-ball model of $SO(3)$ is particularly nice because from the association of concentric spheres $\theta \cdot S^2 \subsetneq B^3(\vec{0}, \pi)$ with spherical slices $(\theta, S^2) \subsetneq S^1 \times S^2$ the map we want 
 
-As stated above there's a simpler description in terms of $S^3$; specifically, the upper hemisphere of $S^3$. 
+$$
+	S^1 \times S^2 \ni (\theta, \vec{n}) \longmapsto \theta \cdot \vec{n} \in B^3(\vec{0}, \pi)
+$$ 
 
-Before one maps into $S^3$ which is also constant on sets of identified points stated in **Identifications**. Specifically, we have the following lemma.
+falls out. Figure #4 below is a visualization of this projection. Inside the ball the projection satisfies **Identifications**, where $\theta < \pi$. As before, on the boundary ( $\theta = \pi$ ) Identifications $2$ and $3$ collapse into a single antipodal identification not satisfied by the projection. No big deal. Just impose an antipodal identification to get a homeomorphism. [It's a pretty slick way of showing $SO(3) \cong \mathbb{RP}^3$][7].   
+
+<figure>
+<div align="center">
+	<img src = "/assets/rp3so3.jpg">
+</div>
+<figcaption>Figure #4. Mapping $S^1 \times S^2 \Big/ \sim$ into the $3$-Ball Model of $\mathbb{RP}^3$</figcaption>
+</figure>
+
+Lemma B below presents a map into the upper hemisphere of $S^3$ from $S^1 \times S^2$. It's a bit more complicated, but can also be deduced from the way spheres in the upper hemisphere of $S^3$ should be arranged.
 
 <p><strong>Lemma. B</strong><em>
 
 
-	$$ \varphi(\theta, \vec{n}) = \Big(\vec{n} \cdot \sin \frac{\theta}{2}, \cos \frac{\theta}{2} \Big) \in S^{3} \quad \text{where} \quad \theta \in [-\pi, \pi) \text{ and } \vec{n} \in S^2
+	$$ \varphi(\theta, \vec{n}) = \Big(\vec{n} \cdot \sin \frac{\theta}{2}, \cos \frac{\theta}{2} \Big) \in S^{3} \quad \text{where} \quad \theta \in [-\pi, \pi] \text{ and } \vec{n} \in S^2
 	$$
 
-takes $S^1 \times S^2$ onto the upper hemisphere of $S^3$, and when the domain is restricted to $S^1 \times \{\text{ upper hemisphere}\}$, $\varphi$ is a parametrization of the upper hemisphere. Since $\varphi$ satisfies identifications equivalent to <b>1</b> though <b>3</b>, stated in <b>Identifications</b>, there is a well-defined continuous map $g$, which is s bijective on the open upper hemisphere of $S^3$. Also $g$ is onto $SO(3)$. Identification <b>4</b> on $S^3$ is equivalent to identification of antipodes on the equator of $S^3$: $(\vec{n}, 0) \sim (-\vec{n},0)$. Therefore, $g \big/ \sim$ is a homeomorphism from $\mathbb{RP}^3$ to $SO(3)$.  
+takes $S^1 \times S^2$ onto the closed upper hemisphere of $S^3$. When $\lvert \theta \rvert < \pi$ $\varphi$ satisfies the same equivalences stated in <b>Identifications</b>. Therefore, $\mathbb{RP}^3$ is homeomorphic $SO(3)$.  
 </em></p>
 <p><em>proof:</em></p>
 
-Since $\cos \frac{\theta}{2} \geq 0$ for all $\theta \in [-\pi, \pi]$, $\varphi$ maps onto the upper hemisphere of $S^3$. Identification **1** states $pr(0, \vec{n}) = I$. Similarily, $\varphi(0, \vec{n}) = (\vec{0}, 1)$ for all $\vec{n} \in S^{2}$. 
+Since $\cos \frac{\theta}{2} \geq 0$ for all $\theta \in [-\pi, \pi]$, $\text{Im}(\varphi)$ is contained in the the upper hemisphere of $S^3$. $\varphi$ takes the sequence of spheres
+
+$$
+	S^1 \times S^2 \supsetneq (\theta, S^2) \longmapsto \Big(\sin(\frac{\theta}{2}) S^2, \cos \frac{\theta}{2}\Big) \subsetneq S^3 \text{  for  } 0 \leq \theta \leq \pi ,
+$$
+
+spherical slices cut laterally from $S^3$ by planes $z=\cos \frac{\theta}{2}$. $(0, S^2)$ gets mapped to the north pole of $S^3$ and $(\pi, S^2)$ is mapped to the equator of $S^3$. Being continuous, $\varphi$ covers all the spherical slices of $S^3$ between the equator and the north pole. $\varphi$ is onto.
+ 
+Now verify that $\varphi$ satisfies the same equivalences stated in **Identifications**. Identification **1** states $pr(0, \vec{n}) = I$. Similarly, $\varphi(0, \vec{n}) = (\vec{0}, 1)$ for all $\vec{n} \in S^{2}$. 
 
 Identification **2** states $pr(\theta, \vec{n}) = pr(-\theta, -\vec{n})$. The same holds for $\varphi$.
 
@@ -234,46 +315,19 @@ $$
 \end{align*}
 $$
 
-These identifications allow us to take $(\theta, \vec{n}) \in S^1 \times S^2$ to be unique ( or the preferred representative ) when $\vec{n} \cdot e_3 \geq 0$ and $-\pi < \theta < \pi$. Also, the definition 
-
-$$
-	g\Big(\varphi(\theta, \vec{n})\Big) = pr(\theta, \vec{n})
-$$ 
-
-must bijective.
-
-<figure>
-<div align="center">
-	<img src = "/assets/s3_so3.jpg">
-</div>
-<figcaption>Figure #4. Mapping $S^1 \times S^2 \Big/ \sim$ into upper hemisphere of $S^3$</figcaption>
-</figure>
-
-It's easy to check that $S^1 \times S^2$ under the first 3 equalivances map bijectively onto the open upper hemisphere of $S^3$. Figure #1 is a picture I drew of how $\varphi$ maps $S^1 \times S^2 \Big/ \sim$ into the upper hemisphere of $S^3$. I think of  $\theta$ parameterizing a series of $S^2$ upper hemispheres, examplars are drawn as half circles in black (when the angle is positive) & red ( for when the angle is negative) in Figure #1. As the parameter $\theta$ increases from $-\frac{\pi}{2}$, I imagine a hemisphere, drawn as a half circle in Figure #1, tracing out the upper hemisphere of $S^3$; rising up from left, becoming smaller as $\theta$ approaches $0$ from the left, degenerating to a point at $\theta = 0$, then reappearing on the right and becoming larger as $\theta$ approaches $\frac{\pi}{2}$.
-
-The equatorial $S^2$ is mapped onto from $(\pm \pi, \vec{n}) \in S^1 \times S^2$ by $\varphi$. 
-
-$$ 
-\varphi(\pm \pi, \vec{n}) = \Big(\sin(\pm \frac{\pi}{2})\vec{n}, \cos(\pm \frac{\pi}{2})\Big) =  (\pm \vec{n}, 0).
-$$
-
-Identification **3** can be extended  that $pr(\pi, -\vec{n}) = pr(-\pi, \vec{n})$, which requires that antipodes in the equatorial $S^2$
-of $S^3$ be identified. Then $S^3 \Big/ \sim \ \cong \mathbb{RP}^3 \cong SO(3)$. Here $\mathbb{RP}^3$ is realized as an $\mathbb{RP}^2$ attached to the boundary of a 3-cell, the upper hemisphere of $S^3$.  
+The only wrinkle is on the equatorial $S^2$. As before, on the boundary ( $\theta = \pm\pi$ ) Identifications $2$ and $3$ collapse into a single antipodal identification not satisfied by $\varphi$. Imposing the antipodal identification on the boundary $S^2$, produces $\mathbb{RP}^3$.
 <div align="right">
 	<p><em>$\Box$</em></p>
 </div>
 
-<figure>
-<div align="center">
-	<img src = "/assets/rp3so3.jpg">
-</div>
-<figcaption>Figure #5. Mapping $S^1 \times S^2 \Big/ \sim$ into the $3$-Ball Model of $\mathbb{RP}^3$</figcaption>
-</figure>
+### A Segue
 
-There's [actually a pretty slick way of showing $SO(3) \cong \mathbb{RP}^3$][7] by mapping $S^1 \times S^2 \Big/ \sim$ into $B_3(\vec{0}, \pi)$, the 3-ball of radius $\pi$. It's simply $(\theta, \vec{n}) \mapsto \theta \cdot \vec{n}$. Figure #2 is a picture I drew to visualize this map. Identifications **1** through **3** ensure the map is bijective inside the ball. On the boundary the antipodes are identified, in accordance with identification **4**. 
+So what do we have. After interrogating the structure of special orthogonal matrices we learned that they are completely determined by data in $S^1 \times S^2$ up to **Identifications**. Manipulating heuristic visualizations of $S^1 \times S^2$ in accordance with **Identifications** yielded the topology of $SO(3)$, without any presumptions about its shape. $\mathbb{RP}^3$ is the true parameter space of $SO(3)$. 
+
+Depending on the application it might be enough to proxy $SO(3)$ with $\mathbb{RP}^3$. At issue would be the cost of computing $pr(\theta, \vec{n}) = A_{\theta, \vec{n}}$ from a presumed parameterization of $\mathbb{RP}^3$ that, say, utilizes coordinates in the open upper hemisphere of $S^3$. In establishing the topology of $SO(3)$ no direct parametrization fell out. However, it's possible to put coordinates on $SO(3)$. In the next and final section I use a bit of [representation theory][10] to do this.
 
 
-## Connections between $SU(2)$ and $SO(3)$
+## The Action of $SU(2)$ on $\mathfrak{su}(2)$
 
 Rotations in $2$-dimensions, $SO(2)$, look like $S^1$. Indeed, $S^1 \cong SO(2)$ is a homeomorphism via
 
@@ -316,7 +370,7 @@ $$
 \end{align*}
 $$
 
-The constraint on the off diagonal elements is equivalent to orthogonality of $\(c\ d\)$ and $\(a \ b\)$. So, we can choose $c = a$ and $d = -\bar{b}$; an equivalent definition of $SU(2)$ is 
+The constraint on the off-diagonal elements is equivalent to orthogonality of $\(c\ d\)$ and $\(a \ b\)$. So, we can choose $c = -\bar{b}$ and $d = \bar{a}$; an equivalent definition of $SU(2)$ is 
 
 $$
 	SU(2) = \Big\{ 
@@ -374,7 +428,7 @@ $$
 \mathfrak{su}(N) = \Big\{ B \in Mat(N, \mathbb{C}) \ \Big\vert \ B = -B^{\dagger} \Big\}.
 $$
 
-The skew-symmetric condition on matrixes in $\mathfrak{su}(2)$ directly leads to the general form
+The skew-symmetric condition on $\mathfrak{su}(2)$ matrices leads directly to the general form
 
 $$
 \begin{bmatrix}
@@ -389,7 +443,7 @@ $$
 	<p><em>$\Box$</em></p>
 </div>
 
-Consider the conjugation action on $SU(2)$. Differentiation gives exactly the action of $S^3 \cong SU(2)$ on vectors in a $3$-dimensional real vector space, the lie algebra $\mathfrak{su}(2)$, which we seek. Letting $\nu \in \mathfrak{su}(2)$, the action is
+Consider the conjugation action on $SU(2)$. [Differentiation gives exactly the action][10] of $S^3 \cong SU(2)$ on vectors in a $3$-dimensional real vector space, the lie algebra $\mathfrak{su}(2)$, which we seek. Letting $\nu \in \mathfrak{su}(2)$, the action is
 
 $$
 	A \cdot \nu = A^{\dagger} \nu A \quad \text{for fixed } A \in SU(2).
@@ -435,7 +489,7 @@ Another way of verifying orthogonality
 	[0, 1, 0],
 	[0, 0, 1]])
 
-Indeed, the action of $S^3 \cong SU(2)$ on $\mathfrak{su}(2)$ generates a homomorphism from $S^3 \cong SU(2)$ onto $SO(3)$. A bit more work and it's possible to show that the homomorphism is surjective. Earlier it was shown that each rotation in $\mathbb{R}^3$ is completely determined by some axis $\vec{n}$ and an angle of rotation $\theta$. Let $\vec{n} = b \cdot e_1 + c\cdot e_2 + d\cdot e_3$. Again with [SymPy][5] we can verify $B * \vec{n} = \vec{n}$ for all $\vec{n} \in \mathbb{R}^3$. 
+If it wasn't clear, $B \in SO(3)$. Indeed, the action of $S^3 \cong SU(2)$ on $\mathfrak{su}(2)$ generates a homomorphism from $S^3 \cong SU(2)$ onto $SO(3)$. A bit more work and it's possible to show that the homomorphism is surjective. Earlier it was shown that each rotation in $\mathbb{R}^3$ is completely determined by some axis $\vec{n}$ and an angle of rotation $\theta$. Let $\vec{n} = b \cdot e_1 + c\cdot e_2 + d\cdot e_3$, and $a = \cos \theta$ encode the rotation angle. Again with [SymPy][5] we can verify $B \vec{n} = \vec{n}$. 
 
 	In [340]: simplify(B * Matrix([[b],[c],[d]])).subs(f, 1)
 	Out[340]:
@@ -444,15 +498,13 @@ Indeed, the action of $S^3 \cong SU(2)$ on $\mathfrak{su}(2)$ generates a homomo
 	[c],
 	[d]])
 
-That is to say there's always a $A \in SU(2)$ that generates an action which fixes a given line through the origin in $\mathbb{R}^3$. $a = \cos \theta$ encodes the rotation angle. All the entries in $B$ are homogenous polynomials of degree $2$ so it follows that $\pm A \in SU(2)$ generate the same action.
+That is to say there's always an $A \in SU(2)$ that generates a rotation by some angle $\theta$ about a given line through the origin in $\mathbb{R}^3$. Therefore, the homomorphism from $S^3 \cong SU(2)$ to $SO(3)$ is onto.
 
-<!-- The Adjoint map for $SU(2)$ is
+And there we have it! The unnamed epimorphism from $S^3 \cong SU(2)$ to $SO(3)$, provides a way to build, via coordinates on $S^3$, a direct parameterization of $SO(3)$.
 
-$$
-	SU(2) \ni B \longmapsto A^{\dagger} B A \in SU(2) \quad \text{ for fixed } A \in SU(2)
-$$
- -->
+### One Last (very small) Note Relating to the Topology of $SO(3)$
 
+All the entries in $B$ are homogeneous polynomials of degree $2$ so it follows that $\pm A \in SU(2)$ generate the same action. The significance of which is that $S^3$ is a [$2$-fold covering space][13] of $SO(3)$. 
 
 
 [1]: https://nifti.nimh.nih.gov/pub/dist/src/niftilib/nifti1.h
@@ -466,3 +518,5 @@ $$
 [9]: http://maths-people.anu.edu.au/~andrews/DG/DG_chap5.pdf
 [10]: http://www.math.columbia.edu/~woit/notes3.pdf
 [11]: https://gist.github.com/arvsrao/b3423f8404d9e59e7819dae5b6c601fa
+[12]: https://www.goodreads.com/book/show/599877.The_Shape_of_Space
+[13]: https://ncatlab.org/nlab/show/covering+space
