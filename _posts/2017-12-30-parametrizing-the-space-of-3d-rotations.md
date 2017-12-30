@@ -329,17 +329,17 @@ Depending on the application it might be enough to proxy $SO(3)$ with $\mathbb{R
 
 ## The Action of $SU(2)$ on $\mathfrak{su}(2)$
 
-Rotations in $2$-dimensions, $SO(2)$, look like $S^1$. Indeed, $S^1 \cong SO(2)$ is a homeomorphism via
+The group of rotations in $2$-dimensions, $SO(2)$, looks like $S^1$. Indeed, they are homeomorphic via
 
 $$
-  \theta \mapsto
+  \theta \longmapsto
   \begin{bmatrix} 
 	\cos \theta & -\sin \theta \\
 	\sin \theta &  \cos \theta \\
   \end{bmatrix}.
 $$
 
-Amazingly, the map shown above doubles as a group isomorphism. Implicit in that statement is that $S^1$ is a group, and that we can think of $\theta \in S^1$ acting on vectors $v \in \mathbb{R}^2$. Now, $S^2$ has no group structure because it carries no non-vanishing vector fields--[a consequence of Brouwer's Fixed Point Theorem][8]. If $S^2$ was a group the left and right group actions would generate diffeomorphisms, from which non-vanishing vector fields could be extracted; see [proposition 5.1.1][9]. The same argument can be generalized to show even dimensional spheres, $S^{2n}$, carry no group structure. Okay. So there's that. But there is hope for $S^3$. Consider the matrix group
+Amazingly, the map shown above doubles as a group isomorphism. Implicit in that statement is $S^1$ is a group. Furthermore, one can think of $\theta \in S^1$ acting on vectors $v \in \mathbb{R}^2$ via the rotation matrix associated to $\theta$. Now, $S^2$ has no group structure because it carries no non-vanishing vector fields--[a consequence of Brouwer's Fixed Point Theorem][8]. If $S^2$ was a group the left and right group actions would generate diffeomorphisms, from which non-vanishing vector fields could be extracted; see [proposition 5.1.1][9]. The same argument can be generalized to show even dimensional spheres, $S^{2n}$, carry no group structure. Okay. So there's that. But there is hope for $S^3$. Consider the matrix group
 
 $$
 	SU(2) = \Big\{ 
@@ -366,11 +366,11 @@ $$
 		\begin{bmatrix}
 			\lvert a \rvert^2 + \lvert b \rvert^2 & a\bar{c} + b\bar{d} \\
 			c\bar{a} + d\bar{b} & \lvert c \rvert ^2 + \lvert d \rvert ^2 \\
-		\end{bmatrix} 
+		\end{bmatrix}.
 \end{align*}
 $$
 
-The constraint on the off-diagonal elements is equivalent to orthogonality of $\(c\ d\)$ and $\(a \ b\)$. So, we can choose $c = -\bar{b}$ and $d = \bar{a}$; an equivalent definition of $SU(2)$ is 
+The constraint on the off-diagonal elements is equivalent to orthogonality of $\(c\ d\)$ and $\(a \ b\)$. So, we can choose $c = -\bar{b}$ and $d = \bar{a}$; therefore the definition of $SU(2)$ reduces to 
 
 $$
 	SU(2) = \Big\{ 
@@ -384,11 +384,11 @@ $$
 	\Big\}.
 $$
 
-Therefore, $S^3$ has the group structure $SU(2)$. In order to define a proper action of $A \in SU(2)$ on vectors in $\mathbb{R}^3$, it's necessary to introduce the lie algebra of $SU(2)$, $\mathfrak{su}(2)$.
+What pops out immediately is that $S^3$ exactly parameterizes $SU(2)$; $S^3$ can be equipped with the group structure of $SU(2)$. In order to define a proper action of $A \in SU(2)$ on vectors in $\mathbb{R}^3$ it's necessary to introduce $\mathfrak{su}(2)$, the lie algebra of $SU(2)$.
 
 
 <p><strong>Lemma. C</strong><em> 
-	The Lie Algebra of $SU(N)$, denoted $\mathfrak{su}(N)$, is the space of skew-symmetric matrices, an $n$-dimensional real vector space. When $N=2$, $\mathfrak{su}(2)$ is a $3$-dimensional vector space with basis
+	The lie algebra of $SU(N)$, denoted $\mathfrak{su}(N)$, is the space of skew-Hermitian matrices. When $N=2$, $\mathfrak{su}(2)$ is a $3$-dimensional real vector space with basis
 
 	$$
 	e_1 = 
@@ -412,11 +412,11 @@ $$
 </em></p>
 <p><em>proof:</em></p>	
 
-$\mathfrak{su}(2)$ is the tangent space of $SU(2)$ at $I$, the identity. So, let $A(t) : (-\epsilon, \epsilon) \longrightarrow SU(N)$ be a curve such that $A(0) = I$ and $\frac{\partial A}{\partial t}(0) = B$, some complex $n \times n$ matrix. Take the derivative of $I = A(t)A(t)^{\dagger}$ at $t=0$.
+By definition, $\mathfrak{su}(N)$ is the tangent space of $SU(N)$ at $I$, the identity. So, let $A(t) : (-\epsilon, \epsilon) \longrightarrow SU(N)$ be a curve such that $A(0) = I$ and $\frac{\partial A}{\partial t}(0) = B$, some complex $N \times N$ matrix. Take the derivative of $I = A(t)A(t)^{\dagger}$ at $t=0$.
 
 $$
 \begin{align*}
-0 &= \frac{\partial A}{\partial t}(0) A^{\dagger}(0) + A(0) \frac{\partial A}{\partial t} A^{\dagger}(0) \\
+0 &= \frac{\partial A}{\partial t}(0) A^{\dagger}(0) + A(0) \frac{\partial}{\partial t} A^{\dagger}(0) \\
   &= B \cdot I + I \cdot B^{\dagger} \\
   & \Longrightarrow B = -B^{\dagger}
 \end{align*}.
@@ -428,7 +428,7 @@ $$
 \mathfrak{su}(N) = \Big\{ B \in Mat(N, \mathbb{C}) \ \Big\vert \ B = -B^{\dagger} \Big\}.
 $$
 
-The skew-symmetric condition on $\mathfrak{su}(2)$ matrices leads directly to the general form
+The skew-Hermitian matrix condition on $\mathfrak{su}(2)$ matrices leads directly to the general form
 
 $$
 \begin{bmatrix}
@@ -443,13 +443,13 @@ $$
 	<p><em>$\Box$</em></p>
 </div>
 
-Consider the conjugation action on $SU(2)$. [Differentiation gives exactly the action][10] of $S^3 \cong SU(2)$ on vectors in a $3$-dimensional real vector space, the lie algebra $\mathfrak{su}(2)$, which we seek. Letting $\nu \in \mathfrak{su}(2)$, the action is
+Consider the conjugation action of $SU(2)$ on itself. [Differentiating this action gives exactly the action][10] of $S^3 \cong SU(2)$ on vectors in a $3$-dimensional real vector space, the lie algebra $\mathfrak{su}(2)$, which we seek. Letting $\nu \in \mathfrak{su}(2)$, the action is
 
 $$
-	A \cdot \nu = A^{\dagger} \nu A \quad \text{for fixed } A \in SU(2).
+	A \cdot \nu = A^{\dagger} \nu A \quad \text{for } A \in SU(2).
 $$
 
-It may not look like it but the action is an isometry ( a rotation ) of $\mathfrak{su}(2)$. Suppose $v,w \in \mathfrak{su}(2)$, then by properties of the trace
+It may not look like it but the action is an isometry ( a rotation ) of $\mathfrak{su}(2)$. Suppose $v,w \in \mathfrak{su}(2)$. Then by properties of the trace
 
 $$
    \langle A \cdot v, A \cdot w \rangle = \frac{1}{2}Tr(A^{\dagger}vAA^{\dagger}w^{\dagger}A) = \frac{1}{2}Tr(A^{\dagger}vw^{\dagger}A) = \frac{1}{2}Tr(vw^{\dagger}) = \langle v, w \rangle.
@@ -466,14 +466,14 @@ $$
 	\end{bmatrix}. 
 $$
 
-The determinant via the [SymPy][5] api
+The determinant computed with the [SymPy][5] api is shown in the listing below.
 
 	In [51]: f = a**2 + b**2 + c**2 + d**2
 
 	In [52]: factor(B.det()).subs(f, 1) == 1
 	Out[52]: True
 
-Another way of verifying orthogonality 
+So yes. The action preserves orientation. The [SymPy][5] api can also verify orthogonality for us:
 
 	In [337]: factor(simplify(B * B.transpose())).subs(f,1)
 	Out[337]:
@@ -489,7 +489,7 @@ Another way of verifying orthogonality
 	[0, 1, 0],
 	[0, 0, 1]])
 
-If it wasn't clear, $B \in SO(3)$. Indeed, the action of $S^3 \cong SU(2)$ on $\mathfrak{su}(2)$ generates a homomorphism from $S^3 \cong SU(2)$ onto $SO(3)$. A bit more work and it's possible to show that the homomorphism is surjective. Earlier it was shown that each rotation in $\mathbb{R}^3$ is completely determined by some axis $\vec{n}$ and an angle of rotation $\theta$. Let $\vec{n} = b \cdot e_1 + c\cdot e_2 + d\cdot e_3$, and $a = \cos \theta$ encode the rotation angle. Again with [SymPy][5] we can verify $B \vec{n} = \vec{n}$. 
+If it wasn't clear, $B \in SO(3)$. Indeed, the action of $S^3 \cong SU(2)$ on $\mathfrak{su}(2)$ generates a homomorphism from $S^3 \cong SU(2)$ onto $SO(3)$. A bit more work and it's possible to show that the homomorphism is surjective. Earlier it was shown that each rotation of $\mathbb{R}^3$ is completely determined by some axis $\vec{n}$ and an angle of rotation $\theta$. Let $\vec{n} = b \cdot e_1 + c\cdot e_2 + d\cdot e_3 \in \mathfrak{su}(2) \cong \mathbb{R}^3$ and $a = \cos \theta$ encode the rotation angle. Again with [SymPy][5], verify $B \vec{n} = \vec{n}$. 
 
 	In [340]: simplify(B * Matrix([[b],[c],[d]])).subs(f, 1)
 	Out[340]:
@@ -498,13 +498,13 @@ If it wasn't clear, $B \in SO(3)$. Indeed, the action of $S^3 \cong SU(2)$ on $\
 	[c],
 	[d]])
 
-That is to say there's always an $A \in SU(2)$ that generates a rotation by some angle $\theta$ about a given line through the origin in $\mathbb{R}^3$. Therefore, the homomorphism from $S^3 \cong SU(2)$ to $SO(3)$ is onto.
+That is to say there's always an $A \in SU(2)$ which generates a rotation by a given angle $\theta$ and a given line through the origin in $\mathbb{R}^3$. Therefore, the homomorphism from $S^3$ to $SO(3)$ is onto.
 
-And there we have it! The unnamed epimorphism from $S^3 \cong SU(2)$ to $SO(3)$, provides a way to build, via coordinates on $S^3$, a direct parameterization of $SO(3)$.
+And there we have it! The unnamed epimorphism from $S^3 \cong SU(2)$ to $SO(3)$ provides a way to build, via coordinates on $S^3$, a *direct parameterization* of $SO(3)$.
 
-### One Last (very small) Note Relating to the Topology of $SO(3)$
+### One Last (very small) Note About the Topology of $SO(3)$
 
-All the entries in $B$ are homogeneous polynomials of degree $2$ so it follows that $\pm A \in SU(2)$ generate the same action. The significance of which is that $S^3$ is a [$2$-fold covering space][13] of $SO(3)$. 
+All the entries in $B$ from above are homogeneous polynomials of degree $2$, so it follows that $\pm A \in SU(2)$ generate the same action. The significance of which is $S^3$ is a [$2$-fold covering space][13] of $SO(3)$. I'm sure there is more to say about that, but for the moment I'll end here.
 
 
 [1]: https://nifti.nimh.nih.gov/pub/dist/src/niftilib/nifti1.h
