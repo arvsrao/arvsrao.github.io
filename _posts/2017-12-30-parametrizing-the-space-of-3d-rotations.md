@@ -339,7 +339,7 @@ $$
   \end{bmatrix}.
 $$
 
-Amazingly, the map shown above doubles as a group isomorphism. Implicit in that statement is $S^1$ is a group. Furthermore, one can think of $\theta \in S^1$ acting on vectors $v \in \mathbb{R}^2$ via the rotation matrix associated to $\theta$. Now, $S^2$ has no group structure because it carries no non-vanishing vector fields--[a consequence of Brouwer's Fixed Point Theorem][8]. If $S^2$ was a group the left and right group actions would generate diffeomorphisms, from which non-vanishing vector fields could be extracted; see [proposition 5.1.1][9]. The same argument can be generalized to show even dimensional spheres, $S^{2n}$, carry no group structure. Okay. So there's that. But there is hope for $S^3$. Consider the matrix group
+Amazingly, the map shown above doubles as a group isomorphism. Implicit in that statement is $S^1$ is a group. Furthermore, one can think of $\theta \in S^1$ acting on vectors $v \in \mathbb{R}^2$ via the rotation matrix associated to $\theta$. Now, $S^2$ has no group structure because it does not carry a non-vanishing vector field. In fact, no even dimensional sphere, $S^{2n}$, does. There's a proof in Allen Hatcher's [Algebraic Topology][8], see Theorem 2.28. The proof is an application of Brouwer’s notion of *degree* for maps $$S^n \rightarrow S^n$$. If $S^{2n}$ was a group, the left and right group actions would generate diffeomorphisms, from which non-vanishing vector fields could be extracted; see [proposition 5.1.1][9]. Okay. So there's that. But there is hope for $S^3$. Consider the matrix group
 
 $$
 	SU(2) = \Big\{ 
@@ -514,7 +514,7 @@ All the entries in $B$ from above are homogeneous polynomials of degree $2$, so 
 [5]: http://docs.sympy.org/latest/index.html
 [6]: https://en.wikipedia.org/wiki/Gimbal_lock#Loss_of_a_degree_of_freedom_with_Euler_angles
 [7]: https://en.wikipedia.org/wiki/Rotation_group_SO(3)#Topology
-[8]: http://www.digizeitschriften.de/dms/img/?PID=GDZPPN002264021
+[8]: https://www.math.cornell.edu/~hatcher/#ATI
 [9]: http://maths-people.anu.edu.au/~andrews/DG/DG_chap5.pdf
 [10]: http://www.math.columbia.edu/~woit/notes3.pdf
 [11]: https://gist.github.com/arvsrao/b3423f8404d9e59e7819dae5b6c601fa
