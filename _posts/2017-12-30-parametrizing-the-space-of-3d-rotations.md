@@ -281,7 +281,7 @@ Lemma B below presents a map into the upper hemisphere of $S^3$ from $S^1 \times
 	$$ \varphi(\theta, \vec{n}) = \Big(\vec{n} \cdot \sin \frac{\theta}{2}, \cos \frac{\theta}{2} \Big) \in S^{3} \quad \text{where} \quad \theta \in [-\pi, \pi] \text{ and } \vec{n} \in S^2
 	$$
 
-takes $S^1 \times S^2$ onto the closed upper hemisphere of $S^3$. When $\lvert \theta \rvert < \pi$ $\varphi$ satisfies the same equivalences stated in <b>Identifications</b>. Therefore, $\mathbb{RP}^3$ is homeomorphic $SO(3)$.  
+takes $S^1 \times S^2$ onto the closed upper hemisphere of $S^3$. When $\lvert \theta \rvert < \pi$, $\varphi$ satisfies the same equivalences stated in <b>Identifications</b>. Therefore, $\mathbb{RP}^3$ is homeomorphic $SO(3)$.  
 </em></p>
 <p><em>proof:</em></p>
 
