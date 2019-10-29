@@ -16,9 +16,9 @@ url:
 
 author:
   name:           'Arvind Rao'
-  url:            https://twitter.com/cwcomplex
+  url:            https://twitter.com/{{ site.data.theme.social.twitter }}
   cv:             /assets/resume_for_web.pdf
-  linkedin:       http://www.linkedin.com/in/asrao
+  linkedin:       http://www.linkedin.com/in/"{{ site.data.theme.social.linkedin }}"
 
 paginate:         8
 
@@ -26,4 +26,4 @@ paginate:         8
 #version:          
 
 github:
-  repo:           https://github.com/arvsrao
+  repo:           https://github.com/{{ site.data.theme.social.github }}

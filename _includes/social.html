@@ -1,0 +1,33 @@
+<div id="social">
+  {% if site.data.theme.social.github %}
+  <a title="Me on Github" href="https://github.com/{{ site.data.theme.social.github }}">
+    <i class="fa fa-github-square fa-2x"></i>
+  </a>
+  {% endif %}
+
+  {% if site.data.theme.social.stackoverflow %}
+  <a title="Me on Stack Overflow" href="http://stackoverflow.com/users/{{site.data.theme.social.stackoverflow }}">
+    <i class="fa fa-stack-overflow fa-2x"></i>
+  </a>
+  {% endif %}
+
+  {% if site.data.theme.social.twitter %}
+  <a title="Me on Twitter" href="https://twitter.com/{{ site.data.theme.social.twitter }}">
+    <i class="fa fa-twitter-square fa-2x"></i>
+  </a>
+  {% endif %}
+
+  {% if site.data.theme.social.linkedin %}
+  <a title="Me on LinkedIn" href="https://www.linkedin.com/in/{{ site.data.theme.social.linkedin }}">
+    <i class="fa fa-linkedin-square fa-2x"></i>
+  </a>
+  {% endif %}
+
+  <a title="Atom feed" id="atom" href="/feed.xml">
+    <i class="fa fa-rss-square fa-2x"></i>
+  </a>
+
+  <a title="Email me" href="mailto:{{ site.data.theme.email }}">
+    <i class="fa fa-envelope fa-2x"></i>
+  </a>  
+</div>

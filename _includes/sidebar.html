@@ -4,17 +4,9 @@
       <h1>{{ site.title }}</h1>
       <p class="lead">{{ site.description }}</p>
     </div>
-      <ul style="list-style-type: none;padding: 0;margin: 0;overflow: hidden;">
-         <li style="display: inline;float: left;margin-right: 10px">
-            <a href="{{ site.author.linkedin }}"><img src="/assets/linkedin-32.png" /></a>
-         </li>
-         <li style="display: inline;float: left;margin-right: 10px">
-            <a href="{{ site.github.repo }}"><img src="/assets/GitHub-Mark-Light-32px.png" /></a>
-         </li>
-         <li style="display: inline;float: left;margin-right: 10px">
-            <a href="mailto:arvind@rao.im"><img src="/assets/email-12-32.png" /></a>
-         </li>
-      </ul>
+      <div id="social">
+    {% include social.html %}
+  </div>
       <ul class="sidebar-nav">
         {% comment %}
           The code below dynamically generates a sidebar nav of pages with
