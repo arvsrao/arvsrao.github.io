@@ -8,6 +8,9 @@ comments: true
 ---
 
 Under the guise of rotating solid spherical harmonic functions, I want to investigate the computational aspects of representing rotations of homogeneous polynomials. The connection being that harmonic homogeneous polynomials are solid spherical harmonics. My goal in this note is to rotate solid homogeneous polynomials ( in variables $x$, $y$, and $z$ ) by computing representations of $SO(3)$ on $$\mathcal{P}_d$$, homogeneous polynomials of degree $d$. One nice aspect of computing representations of $SO(3)$ is that only algebra is required. Differential equations typically used to describe/derive spherical harmonics make no appearance in what follows.
+<!--more-->
+
+**Go straight to the code if your primary interest is the [implementation of rotating homogeneous polynomials][2]**.
 
 ## Preliminaries
 
@@ -33,7 +36,6 @@ $$
 \end{align*}
 $$
 
-<!--more-->
 Let $A, \ B \in SO(3)$ and denote the action instead by $\rho$. The action is actually a homomorphism. 
 
 $$
@@ -53,10 +55,11 @@ $$
 \end{gather*}
 $$
 
-Additionally, $A \in SO(3)$ is a change of coordinates (and therefore a linear isomorphism of $\mathbb{R}^3$) implies each $\rho_A$ has trivial kernel. To see this let $\tilde{x} = A\vec{x}$ denote the new coordinates of $\mathbb{R}^3$. Then $0 = p(\tilde{x}) \ \forall \tilde{x} \in \mathbb{R}^3$ directly implies that $p = 0$. With that $\rho$ is a representation of $SO(3)$ on $P_d$. Specifically, $\rho$ is a homomorphism
+Additionally, $A \in SO(3)$ is a change of coordinates (and therefore a linear isomorphism of $\mathbb{R}^3$) implies each $\rho_A$ has trivial kernel. To see this let $\tilde{x} = A\vec{x}$ denote the new coordinates of $\mathbb{R}^3$. Then $0 = p(\tilde{x}) \ \forall \tilde{x} \in \mathbb{R}^3$ directly implies that $p = 0$. With that $\rho_d$ is a representation of $SO(3)$ on $\mathcal{P}_d$. Specifically, $\rho_d$ is a homomorphism
 
 $$
-	\rho: SO(3) \longrightarrow GL(P_d). 
+	\rho_d: SO(3) \longrightarrow GL(\mathcal{P}_d). 
+
 $$
 
 What I did recently was compute the eigenvalues of $z$-axis rotations on $P_2$. All $z$-axis rotations have the following form
@@ -214,17 +217,17 @@ $A \otimes A$, in the first line above, factors into actions of $A$ on lower deg
 Now a approach to computing $\rho_d$ can be stated, and it is simply
 
 $$
-	\rho_2 = S_2 \cdot A \otimes A \cdot E_2
+	\rho_2 = S_2 (A \otimes A) E_2
 $$
 
 and for any degree $d$ the recursive formula
 
 $$
 
-	\mathbf{ \rho_d = S_d \cdot A \otimes \rho_{d-1} \cdot E_d }.
+	\mathbf{ \rho_d = S_d (A \otimes \rho_{d-1}) E_d }.
 $$
 
-$$E_d: \mathcal{P}_d \longrightarrow \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$ and $$S_d: \mathcal{P}_1 \otimes \mathcal{P}_{d-1} \longrightarrow \mathcal{P}_d$$ are the embedding and projection operators, respectively. I will describe their constructions shortly in the next sections. The key though to scalably computing $\rho_2$ is the [matrix tensor product][1]. It is a pure matrix operation so it is easily computed/programmable.
+$$E_d: \mathcal{P}_d \longrightarrow \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$ and $$S_d: \mathcal{P}_1 \otimes \mathcal{P}_{d-1} \longrightarrow \mathcal{P}_d$$ are the embedding and projection operators, respectively. I will describe their constructions shortly in the next sections. The key though to scalably computing $\rho_2$ is the [matrix tensor product][1]. It is a pure matrix operation so it is easily computed/programmed.
 
 
 ### Ordering the Basis of $$\mathcal{P}_d$$
@@ -232,7 +235,7 @@ $$E_d: \mathcal{P}_d \longrightarrow \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$ a
 
 The main function of $S_d$, the projection operator introduced in the recursive formula at the end of the previous section, is to collect the contributions of _like terms_. Projecting $$\mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$ into $$\mathcal{P}_d$$ accomplishes this. But what are _like terms_? Of main interest here are the basis elements of $$\mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$. Referring to the action of $A \otimes A$ on $x \otimes y$, it seems sensible that $x \otimes y$ and $y \otimes x$ should be considered alike. 
 
-Define tensors to be equivalent if the sum of the degrees in each variable $x$, $y$, $z$ over both tensor coordinates are the same. For clarity represent the degree sums in coordinates $(deg_x, deg_y, deg_z)$. Consider three basis tensors of $$\mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$:
+Let basis tensors be equivalent if the sum of degrees in each variable $x$, $y$, $z$ over both tensor coordinates are the same. For clarity represent the degree sums in coordinates $(deg_x, deg_y, deg_z)$. A basis tensor of $$\mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$ is simply a factorization of some degree $d$ homogeneous monomial into degree $1$ and degree $d-1$ monomials; and all I am saying is that basis tensors are alike if they are factorizations of the same degree $d$ homogeneous monomial. Consider three basis tensors of $$\mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$:
 	
 $$
 \begin{gather*}
@@ -400,33 +403,63 @@ And because of the ordering $\rho_d$ has a nice direct sum of matrices structure
 
 ## Eigenvalues of $\rho_d$
 
-Earlier drafts of this post were actually motivated by my desire to compute the spectrum of matrix representations of $SO(3)$. Initially, I tried to avoid computing $\rho_d$. My hope was to use properties of $SO(3)$ and homogeneous polynomials to show that the eigenvalues of a given $A \in SO(3)$ completely determine the spectrum of the representation of $A$. Anyway, I couldn't see a way to do it, and in the meantime I made progress in computing $\rho_d$. Dear reader if you know how to determine the spectrum of $\rho_d$ without computing it please contact me! 
+Earlier drafts of this post were actually motivated by my desire to compute the spectrum of matrix representations of $SO(3)$. Initially, I tried to avoid computing $\rho_d$. My hope was to use properties of $SO(3)$ and homogeneous polynomials to show that the eigenvalues of a given $A \in SO(3)$ completely determine the spectrum of the representation of $A$. Anyway, I couldn't see a way to do it, and in the meantime I developed an algorithm I spent most of this post describing to compute $\rho_d$. I still believe there is a way to compute the spectrum of $SO(3)$ without explicitly computing $\rho_d$...Dear reader if you know how please contact me! 
 
-At this point I have all the notation and tools to address the question: What are the eigenvalues of $\rho_d$?
-
-Recall the recursive formula for computing degree $\rho_d$
+However, since there is a recursive formula for computing $\rho_d$:
 
 $$
-	\mathbf{ \rho_d = S_d \cdot A \otimes \rho_{d-1} \cdot E_d }.
+	\mathbf{ \rho_d = S_d (A \otimes \rho_{d-1}) E_d }.
 $$
 
-The set of eigenvalues of $$A \otimes \rho_{d-1}$$ is the product of all eigenvalues $A$ with all the eigenvalues of $\rho_{d-1}$. 
+I can exploit it to make a statement about the spectrum of $\rho_d$. And it is this: The eigenvalues of $$A \otimes \rho_{d-1}$$, which are easy to compute, are the eigenvalues of $\rho_d$. _Though not up to multiplicity_. Clearly. $\rho_d$ and $A \otimes \rho_{d-1}$ have different shapes.
 
-Essentially, I want to show that the
-
-I will procced in a steps first I need to show that 
+The spectrum of $$A \otimes \rho_{d-1}$$ is the product of all eigenvalues $A$ with all the eigenvalues of $\rho_{d-1}$. Say, $Af = \lambda f$ and  $\rho_{d-1}g = \omega g$, then $f \otimes g$ is an eigenvector of $A \otimes \rho_{d-1}$ with eigenvalue $\lambda \omega$. So then to show $\lambda \omega$ is a eigenvalue of $\rho_d$ I can try transforming $f \otimes g$ into an eigenvector of $\rho_d$. Well, via the projection operator there is one candidate, $S_d (f \otimes g)$. First a technical lemma.
 
 <p><strong>Lemma. A</strong><em>
 
-Suppose $$\alpha \otimes x^{a-1} y^b z^c \thicksim y \otimes x^a y^{b-1} z^c$$ of $$\mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$ are equivalent.
-Then 
-
-$$
-	
-$$
-
+Suppose basis tensors $\beta,\ \tilde{\beta} \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$ are equivalent, $\beta \thicksim \tilde{\beta}$. Then 
 </em></p>
-<p><em>proof:</em></p>
+
+1. $ S_d (A \otimes \rho_{d-1}) (\tilde{\beta} - \beta) = 0 $
+2. $ \rho_d S_d = S_d (A \otimes \rho_{d-1}) $ 
+
+Immediately one can see that 2 follows from 1; because $E_d S_d$ sends $\beta$ to the equivalence class representative, $E_d S_d \beta \thicksim \beta$. To understand why 1 is true, it's best to consider how $A$ generally acts on degree $d$ homogeneous monomials, given that $\rho_{d-1}$ is known. Let $f_d$ be a degree $d$ homogeneous monomial; it can be factored into degree $1$ and $d-1$ monomials like $\beta$ and $\tilde{\beta}$. $A$ acts on the degree $1$ factor and $\rho_{d-1}$ acts on the degree $d-1$ factor, results of theses actions are simply multiplied into a single expression, and finally contributions from like degree $d$ monomial terms are collected. It should make sense that no matter how $f_d$ is factored the final result is the same. $S_d (A \otimes \rho_{d-1})$ is precisely the same procedure with the lower degree actions combined by tensor product instead of multiplication. Citing the discussion above, tensor product expands expressions according to the same rules as multiplication, so $ S_d (A \otimes \rho_{d-1}) $ should too be well defined on equivalent $$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$. 
+
+With **Lemma A** established I can now prove that the spectrums of $\rho_d$ and $A \otimes \rho_{d-1}$ are the same. 
+
+<p><strong>Lemma. B</strong><em>
+
+$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$ is an eigenvector of $A \otimes \rho_{d-1}$ with eigenvalue $\lambda$ if and only if \exists $\alpha$ an eigenvector of $\rho_d$ with eigenvalue $\lambda$.
+</em></p>
+
+The implication follows directly from the matrix equality asserted in 2 of **Lemma A**.
+
+$$ 
+	\begin{align}
+		\rho_d \cdot S_d \beta &= S_d (A \otimes \rho_{d-1}) \cdot \beta \\
+						       &= \lambda S_d \beta \\
+	\end{align}
+$$
+
+In the converse direction suppose $$\alpha \in \mathcal{P}_d$$. Equation 2 of **Lemma A** and $S_d E_d = I_d$, the identity, produces equalities:
+
+* $$ \rho_d \cdot S_d E_d \alpha = S_d (A \otimes \rho_{d-1}) \cdot E_d \alpha $$
+* $$ \rho_d \cdot S_d E_d \alpha = \lambda S_d E_d \alpha $$
+
+Combining shows that $\lambda$ is an eigenvalue of $A \otimes \rho_{d-1}$.
+
+$$
+	S_d (A \otimes \rho_{d-1}) \cdot E_d \alpha	= \lambda S_d E_d \alpha \ \Longrightarrow \ (A \otimes \rho_{d-1}) \cdot E_d \alpha = \lambda E_d \alpha
+$$
+
+And there it is $A \otimes \rho_{d-1}$ and $\rho_d$ have the same spectrum,
+
+$$
+	\sigma(\rho_d) = \{ e^{-d}, e^{-(d-1)}, \ldots, 1, \ldots, e^{d-1}, e^{d} \}.
+$$
+
+Of course, the multiplicities will be different. _But what are those multiplicities?_ Perhaps I'll tackle this question in another post.
+
 
 [1]: https://en.wikipedia.org/wiki/Tensor_product#Tensor_product_of_linear_maps
 [2]: https://gist.github.com/arvsrao/637a6b6c8553d0f6ca7cc6a2884a56e2

@@ -3,27 +3,17 @@ markdown:         kramdown
 highlighter:      rouge
 
 # Gems
-plugins: [jekyll-paginate]
+plugins:          [jekyll-paginate]
 
 # Permalinks
 permalink:        pretty
 
 # Setup
 title:            Arvind Rao
-tagline:          'Mathematician / Software Engineer'
 description:      'Mathematician / Software Engineer. <a href="https://twitter.com/cwcomplex" target="_blank">@cwcomplex</a>.'
-url:
+url:              http://www.rao.im
 
-author:
-  name:           'Arvind Rao'
-  url:            https://twitter.com/{{ site.data.theme.social.twitter }}
-  cv:             /assets/resume_for_web.pdf
-  linkedin:       http://www.linkedin.com/in/"{{ site.data.theme.social.linkedin }}"
-
+timezone:         Europe/Berlin
 paginate:         8
 
-# Custom vars
-#version:          
-
-github:
-  repo:           https://github.com/{{ site.data.theme.social.github }}
+exclude:          [.gitignore, CNAME, README.md]
