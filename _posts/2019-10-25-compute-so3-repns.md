@@ -175,8 +175,9 @@ After substituting $a = \cos\theta$ and $b = \sin\theta$, the eigenvalues of $\r
 
 Nice...but computing the representation of $A_{\theta}$ on $$\mathcal{P}_1$$ and $$\mathcal{P}_2$$ as I have above is not scalable at all, because there are so many terms to multiply. What I want is to express a $SO(3)$ representation in $$\mathcal{P}_d$$ for any $d$ as a product of matrices involving, necessarily, $A_{\theta}$.
 
+<a name="ctr">
 ## Computing the Representation of $A_{\theta}$ on $\mathcal{P}_d$
-
+</a>
 While developing the formula for $\rho_2$, shown at the end of the previous section, the upper summand of $\rho_2$
 
 $$
@@ -403,12 +404,12 @@ And because of the ordering $\rho_d$ has a nice direct sum of matrices structure
 
 ## Eigenvalues of $\rho_d$
 
-Earlier drafts of this post were actually motivated by my desire to compute the spectrum of matrix representations of $SO(3)$. Initially, I tried to avoid computing $\rho_d$. My hope was to use properties of $SO(3)$ and homogeneous polynomials to show that the eigenvalues of a given $A \in SO(3)$ completely determine the spectrum of the representation of $A$. Anyway, I couldn't see a way to do it, and in the meantime I developed an algorithm I spent most of this post describing to compute $\rho_d$. I still believe there is a way to compute the spectrum of $SO(3)$ without explicitly computing $\rho_d$...Dear reader if you know how please contact me! 
+Earlier drafts of this post were actually motivated by my desire to compute the spectrum of matrix representations of $SO(3)$. Initially, I tried to avoid computing $\rho_d$. My hope was to use properties of $SO(3)$ and homogeneous polynomials to show that eigenvalues of a given $A \in SO(3)$ completely determine the spectrum of the representation of $A$. Anyway, I couldn't see a way to do it, and in the meantime I developed an algorithm I spent most of this post describing to compute $\rho_d$. I still believe there is a way to compute the spectrum of $SO(3)$ without explicitly computing $\rho_d$...Dear reader if you know how please contact me! 
 
-However, since there is a recursive formula for computing $\rho_d$:
+However, since there is a recursive formula for computing $\rho_d$, namely
 
 $$
-	\mathbf{ \rho_d = S_d (A \otimes \rho_{d-1}) E_d }.
+	\mathbf{ \rho_d = S_d (A \otimes \rho_{d-1}) E_d },
 $$
 
 I can exploit it to make a statement about the spectrum of $\rho_d$. And it is this: The eigenvalues of $$A \otimes \rho_{d-1}$$, which are easy to compute, are the eigenvalues of $\rho_d$. _Though not up to multiplicity_. Clearly. $\rho_d$ and $A \otimes \rho_{d-1}$ have different shapes.
@@ -423,13 +424,13 @@ Suppose basis tensors $\beta,\ \tilde{\beta} \in \mathcal{P}_1 \otimes \mathcal{
 1. $ S_d (A \otimes \rho_{d-1}) (\tilde{\beta} - \beta) = 0 $
 2. $ \rho_d S_d = S_d (A \otimes \rho_{d-1}) $ 
 
-Immediately one can see that 2 follows from 1; because $E_d S_d$ sends $\beta$ to the equivalence class representative, $E_d S_d \beta \thicksim \beta$. To understand why 1 is true, it's best to consider how $A$ generally acts on degree $d$ homogeneous monomials, given that $\rho_{d-1}$ is known. Let $f_d$ be a degree $d$ homogeneous monomial; it can be factored into degree $1$ and $d-1$ monomials like $\beta$ and $\tilde{\beta}$. $A$ acts on the degree $1$ factor and $\rho_{d-1}$ acts on the degree $d-1$ factor, results of theses actions are simply multiplied into a single expression, and finally contributions from like degree $d$ monomial terms are collected. It should make sense that no matter how $f_d$ is factored the final result is the same. $S_d (A \otimes \rho_{d-1})$ is precisely the same procedure with the lower degree actions combined by tensor product instead of multiplication. Citing the discussion above, tensor product expands expressions according to the same rules as multiplication, so $ S_d (A \otimes \rho_{d-1}) $ should too be well defined on equivalent $$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$. 
+Immediately one can see that 2 follows from 1; because $E_d S_d$ sends $\beta$ to the equivalence class representative, $E_d S_d \beta \thicksim \beta$. To understand why 1 is true, it's best to consider how $A$ generally acts on degree $d$ homogeneous monomials, given that $\rho_{d-1}$ is known. Let $f_d$ be a degree $d$ homogeneous monomial; it can be factored into degree $1$ and $d-1$ monomials like $\beta$ and $\tilde{\beta}$. $A$ acts on the degree $1$ factor and $\rho_{d-1}$ acts on the degree $d-1$ factor, results of theses actions are simply multiplied into a single expression, and finally contributions from like degree $d$ monomial terms are collected. It should make sense that no matter how $f_d$ is factored the final result is the same. $S_d (A \otimes \rho_{d-1})$ is precisely the same procedure with the actions of $A$ and $\rho_{d-1}$ combined by tensor product instead of multiplication. Recall from the [section above](#ctr) that the tensor product is bilinear just like multiplication, so $ S_d (A \otimes \rho_{d-1}) $ should too be well defined on equivalent $$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$. 
 
 With **Lemma A** established I can now prove that the spectrums of $\rho_d$ and $A \otimes \rho_{d-1}$ are the same. 
 
 <p><strong>Lemma. B</strong><em>
 
-$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$ is an eigenvector of $A \otimes \rho_{d-1}$ with eigenvalue $\lambda$ if and only if \exists $\alpha$ an eigenvector of $\rho_d$ with eigenvalue $\lambda$.
+$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$ is an eigenvector of $A \otimes \rho_{d-1}$ with eigenvalue $\lambda$ if and only if there exists $\alpha$ an eigenvector of $\rho_d$ with eigenvalue $\lambda$.
 </em></p>
 
 The implication follows directly from the matrix equality asserted in 2 of **Lemma A**.
@@ -441,7 +442,7 @@ $$
 	\end{align}
 $$
 
-In the converse direction suppose $$\alpha \in \mathcal{P}_d$$. Equation 2 of **Lemma A** and $S_d E_d = I_d$, the identity, produces equalities:
+In the converse direction suppose $$\alpha \in \mathcal{P}_d$$ is an eigenvector of $\rho_d$. Equation 2 of **Lemma A** and $S_d E_d = I_d$, the matrix identity of size $d$, imply:
 
 * $$ \rho_d \cdot S_d E_d \alpha = S_d (A \otimes \rho_{d-1}) \cdot E_d \alpha $$
 * $$ \rho_d \cdot S_d E_d \alpha = \lambda S_d E_d \alpha $$
