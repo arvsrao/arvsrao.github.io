@@ -175,9 +175,9 @@ After substituting $a = \cos\theta$ and $b = \sin\theta$, the eigenvalues of $\r
 
 Nice...but computing the representation of $A_{\theta}$ on $$\mathcal{P}_1$$ and $$\mathcal{P}_2$$ as I have above is not scalable at all, because there are so many terms to multiply. What I want is to express a $SO(3)$ representation in $$\mathcal{P}_d$$ for any $d$ as a product of matrices involving, necessarily, $A_{\theta}$.
 
-<a name="ctr">
+<a name="ctr"></a>
 ## Computing the Representation of $A_{\theta}$ on $\mathcal{P}_d$
-</a>
+
 While developing the formula for $\rho_2$, shown at the end of the previous section, the upper summand of $\rho_2$
 
 $$
@@ -201,7 +201,7 @@ $$
 
 $$
 
-$A$ distributes to $x$ and $y$ in the first line. The actions of $A$ on $x$ and $y$, linear homogeneous polynomials, are resolved, resulting in a factored expression, which is expanded in the last line. The expansion is determined by the rules of multiplication: _multiplication distributes over addition_. So, two things are happening here. First the action of $A$ on $xy$ is actually a product of $A$-actions on lower degree homogeneous polynomials, here $x$ and $y$. Think _recursion_. Second, expanding the product of the actions on the lower degree factors expresses the result in the basis of $$\mathcal{P}_2$$ and relies only on the bilinearity of multiplication. Cutting to chase...the tensor product of linear operators does both these things. 
+$A$ distributes to $x$ and $y$ in the first line. The actions of $A$ on $x$ and $y$, linear homogeneous polynomials, are resolved, resulting in a factored expression, which is expanded in the last line. The expansion is determined by the rules of multiplication: _multiplication distributes over addition_. So, two things are happening here. First the action of $A$ on $xy$ is actually a product of $A$-actions on lower degree homogeneous polynomials, here $x$ and $y$. Think _recursion_. Second, expanding the product of the actions on the lower degree factors expresses the result in the basis of $$\mathcal{P}_2$$ and relies only on the bilinearity of multiplication. Cutting to the chase...the tensor product of linear operators does both these things. 
 
 $A$ can be [tensored][1] with itself, which is a well defined extension of $A$ to $$\mathcal{P}_1 \otimes \mathcal{P}_1$$. Identifying for the moment $xy$ with $x \otimes y$ -- more on embedding $$\mathcal{P}_{1}$$ into tensor space $$\mathcal{P}_1 \otimes \mathcal{P}_{1}$$ later -- notice that the action of $A \otimes A$ on $x \otimes y$ is very close in appearance to the action of $A$ on $xy$.
 
@@ -404,7 +404,7 @@ And because of the ordering $\rho_d$ has a nice direct sum of matrices structure
 
 ## Eigenvalues of $\rho_d$
 
-Earlier drafts of this post were actually motivated by my desire to compute the spectrum of matrix representations of $SO(3)$. Initially, I tried to avoid computing $\rho_d$. My hope was to use properties of $SO(3)$ and homogeneous polynomials to show that eigenvalues of a given $A \in SO(3)$ completely determine the spectrum of the representation of $A$. Anyway, I couldn't see a way to do it, and in the meantime I developed an algorithm I spent most of this post describing to compute $\rho_d$. I still believe there is a way to compute the spectrum of $SO(3)$ without explicitly computing $\rho_d$...Dear reader if you know how please contact me! 
+Earlier drafts of this post were actually motivated by my desire to compute the spectrum of matrix representations of $SO(3)$. Initially, I tried to avoid computing $\rho_d$. My hope was to use properties of $SO(3)$ and homogeneous polynomials to show that eigenvalues of a given $A \in SO(3)$ completely determine the spectrum of the representation of $A$. Anyway, I couldn't see a way to do it, and in the meantime I developed an algorithm I spent most of this post describing to compute $\rho_d$. I still believe there is a way to compute the spectrum of $SO(3)$ without explicitly computing $\rho_d$... **Update: I sort of figured out how. Most of the details are worked out in the [final section](#soln)**. 
 
 However, since there is a recursive formula for computing $\rho_d$, namely
 
@@ -424,7 +424,7 @@ Suppose basis tensors $\beta,\ \tilde{\beta} \in \mathcal{P}_1 \otimes \mathcal{
 1. $ S_d (A \otimes \rho_{d-1}) (\tilde{\beta} - \beta) = 0 $
 2. $ \rho_d S_d = S_d (A \otimes \rho_{d-1}) $ 
 
-Immediately one can see that 2 follows from 1; because $E_d S_d$ sends $\beta$ to the equivalence class representative, $E_d S_d \beta \thicksim \beta$. To understand why 1 is true, it's best to consider how $A$ generally acts on degree $d$ homogeneous monomials, given that $\rho_{d-1}$ is known. Let $f_d$ be a degree $d$ homogeneous monomial; it can be factored into degree $1$ and $d-1$ monomials like $\beta$ and $\tilde{\beta}$. $A$ acts on the degree $1$ factor and $\rho_{d-1}$ acts on the degree $d-1$ factor, results of theses actions are simply multiplied into a single expression, and finally contributions from like degree $d$ monomial terms are collected. It should make sense that no matter how $f_d$ is factored the final result is the same. $S_d (A \otimes \rho_{d-1})$ is precisely the same procedure with the actions of $A$ and $\rho_{d-1}$ combined by tensor product instead of multiplication. Recall from the [section above](#ctr) that the tensor product is bilinear just like multiplication, so $ S_d (A \otimes \rho_{d-1}) $ should too be well defined on equivalent $$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$. 
+Immediately one can see that 2 follows from 1; because $E_d S_d$ sends $\beta$ to the equivalence class representative, $E_d S_d \beta \thicksim \beta$. To understand why 1 is true, it's best to consider how $A$ generally acts on degree $d$ homogeneous monomials, given that $\rho_{d-1}$ is known. Let $f_d$ be a degree $d$ homogeneous monomial; it can be factored into degree $1$ and $d-1$ monomials like $\beta$ and $\tilde{\beta}$. $A$ acts on the degree $1$ factor and $\rho_{d-1}$ acts on the degree $d-1$ factor, results of theses actions are simply multiplied into a single expression, and finally contributions from like degree $d$ monomial terms are collected. Multiplication is commutative and bilinear so one can take different factorizations of $f_d$ and order the operations so that the final results are the same. $S_d (A \otimes \rho_{d-1})$ is precisely the same procedure with the actions of $A$ and $\rho_{d-1}$ combined by tensor product instead of multiplication. Recall from the [section above](#ctr) that the tensor product is bilinear, just like multiplication, though not commutative. The projection $S_d$ seen from a different perspective [_symmetrizes_][3] tensors, and has the effect of allowing the $x$, $y$, or $z$, in the $$\mathcal{P}_1$$ coordinate, to commute to its proper place. Therefore $S_d(A \otimes \rho_{d-1})$ is well defined on equivalent $$\beta \in \mathcal{P}_1 \otimes \mathcal{P}_{d-1}$$. 
 
 With **Lemma A** established I can now prove that the spectrums of $\rho_d$ and $A \otimes \rho_{d-1}$ are the same. 
 
@@ -459,8 +459,95 @@ $$
 	\sigma(\rho_d) = \{ e^{-d}, e^{-(d-1)}, \ldots, 1, \ldots, e^{d-1}, e^{d} \}.
 $$
 
-Of course, the multiplicities will be different. _But what are those multiplicities?_ Perhaps I'll tackle this question in another post.
+Of course, the multiplicities will be different. _But what are those multiplicities?_
+
+<a name="soln"></a>
+
+### Dimension of the Eigenspaces: Eigenvalue Multiplicities.
+
+From the proof of **Lemma B** one sees that $S_d$ projects the $\lambda-$eigenspace of $A \otimes \rho_{d-1}$ into the $\lambda-$eigenspace of $\rho_d$. Peering into the projection however is difficult because $\rho_{d-1}$ too has a projection component, and so on. The entire recursion has series of nested projections which hampers the analysis. Instead I can describe $\rho_d$ as a batch computation. And yes, there is a batch method. Which is, by the way, the definition of how $A$ acts on some monomial $p \in \mathcal{P}_d$: Factor $p$ into $d$ $\mathcal{P}_1$ factors and compute the action of $A$ on each factor. Abusing the previously introduced notation
+
+$$
+   \rho_d = S_d \ \underbrace{A \otimes A \otimes \cdots \otimes A}_{d \ \text{copies}} \ E_d .
+$$
+
+
+This $S_d$ projection is a true [symmetrizing][3] operator on $$\bigotimes^{d}_{i=1} \mathcal{P}_1 $$; and just like before it projects the $\lambda-$eigenspace of $$ \bigotimes^{d}_{i=1} A $$ into the $\lambda-$eigenspace of $\rho_d$. An eigenvector of $$ \bigotimes^{d}_{i=1} A $$ is built from the eigenvectors of $A$ tensored $d$ times. Let $v_{-1}$, $v_{0}$, and $v_{+1}$ be eigenvectors of $A$ for eigenvalues $e^{-i\theta}$, 1, and $e^{+i\theta}$, respectively. Then a $\lambda-$eigenvector of $$ \bigotimes^{d}_{i=1} A $$ looks like
+
+$$
+	v_{+1} \otimes v_{-1} \otimes v_{+1} \otimes \cdots \otimes v_{-1} \otimes v_{0},
+$$
+
+where each permutation of the elements $v_{\star}$ in the $d-$tensor is a different $\lambda-$eigenvector. Furthermore, $S_d$ sends each permutation to the same $\lambda-$eigenvector of $\rho_d$. What I want is to count the number of $\lambda-$eigenvectors of $\rho_d$, and I can build them from the $\lambda-$eigenvectors of $$ \bigotimes^{d}_{i=1} A $$, but I don't have to count the permutations; I just need to count the unique combinations that produce a $\lambda-$eigenvector of $\rho_d$. To make counting a bit easier I represent a $e^{i\bf{l}\theta}-$eigenvector of $$ \bigotimes^{d}_{i=1} A $$ as word in $+$, $-$, and $\lvert$ characters. 
+
+<div align="center">
+	<img src = "/assets/eigenvector-word.jpg">
+</div>
+
+Hopefully it is clear that plus is $v_{+1}$, minus is $v_{-1}$, and pipe is $v_0$. The negative $l$ configuration would be the same drawing with the $l$ plus signs replaced with $l$ minus signs; so $e^{\pm i\bf{l}\theta}-$eigenspaces have the same dimension. Count the number of possible combinations like so 
+
+$$
+\begin{align}
+ 0 \quad  & \boxed{-+} \ \text{pairs} \\
+ 1 \quad & \boxed{-+} \ \text{pairs} \\
+  & \vdots   \\
+ \lfloor \frac{d-l}{2} \rfloor \ & \boxed{-+} \ \text{pairs} \\
+\end{align}
+$$
+
+Therefore eigenvalues $e^{\pm il\theta}$ of $\rho_d$ have multiplicity
+
+<a name="final"></a>
+
+$$
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+\begin{equation}
+	\dim(Eig(\rho_d(A), e^{\pm il\theta})) = \floor{\frac{d-l}{2}} + 1 \ .
+\end{equation}
+$$
+
+### Application: Spectrum of $SO(3)$ Representation in Harmonic Polynomials
+
+The representations of $SO(3)$ that I have described so far have been in $\mathcal{P}_d$, homogeneous polynomials of degree $d$. These are, however reducible representations, because degree $d$ harmonic polynomicals form a $SO(3)-$invariant subspace of $\mathcal{P}_d$. There is certainly more to be said about harmonic representations of $SO(3)$, but my interest right now is to use to the the [dimension of the eigenspaces](#final) formula to prove degree $d$ harmonic $SO(3)$ representations have eigenvalues 
+
+$$
+	\{ e^{-d}, e^{-(d-1)}, \ldots, 1, \ldots, e^{d-1}, e^{d} \},
+$$
+
+and each has multiplicity one.
+
+$$\mathcal{P}_{d+2}$$ is the direct sum of degree $d$ harmonic polynomials $$\mathcal{H}_{d+2}$$ and $$r^2\mathcal{P}_{d}$$; so inside $\rho_{d+2}$ is a $$\mathcal{P}_{d}$$ representation, $\rho_{d}$. Then to compute the dimension of the $e^{\pm i\bf{l}\theta}-$eigenspaces just subtract the dimension of the $e^{\pm i\bf{l}\theta}-$eigenspace in $\rho_{d+2}$ from the dimension of the $e^{\pm i\bf{l}\theta}-$eigenspace in $\rho_{d}$.
+
+When $0 \leq l \leq d$
+
+$$
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+\begin{align}
+	\dim(Eig(\rho_{d+2}(A), e^{\pm il\theta})) - \dim(Eig(\rho_d(A), e^{\pm il\theta})) &= \floor{\frac{d+2-l}{2}} - \floor{\frac{d-l}{2}} \\
+	                                                  &= \floor{\frac{d-l}{2}} + 1 - \floor{\frac{d-l}{2}}\\
+	  												  &= 1 												
+\end{align}	
+$$
+
+and when $d < l \leq d+2$ 
+
+$$
+\require{cancel}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+\begin{align}
+	\dim(Eig(\rho_{d+2}(A), e^{il\theta})) = \cancelto{0}{\floor{\frac{d+2-l}{2}}} + 1 = 1 \ .\\
+\end{align}	
+$$
+
+Finally I have an answer/proof of __Fact 1.2.1__ from these [Akshay Venkatesh lecture notes][4] :) 
 
 
 [1]: https://en.wikipedia.org/wiki/Tensor_product#Tensor_product_of_linear_maps
 [2]: https://gist.github.com/arvsrao/637a6b6c8553d0f6ca7cc6a2884a56e2
+[3]: https://en.wikipedia.org/wiki/Symmetric_tensor
+[4]: https://stuff.mit.edu/people/fengt/249C_2017.pdf
