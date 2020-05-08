@@ -4,6 +4,7 @@ _site
 .ruby-version
 
 # Numerous always-ignore extensions
+*.lock
 *.diff
 *.err
 *.orig
@@ -39,3 +40,5 @@ validation-report.json
 
 # Folders to ignore
 node_modules
+vendor/
+.bundle/
