@@ -25,19 +25,23 @@
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
-  <script type="text/javascript">
-    window.MathJax = {
-      tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-		displayMath: [ ['$$','$$'],  ["\\[","\\]"] ], 
-        processEscapes: true
-      },
-  	  "HTML-CSS": {
-		  styles: { ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
-	  }
-    };
-  </script>
-  <script type="text/javascript"
-      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
-  </script>
+<script>
+  MathJax = {
+    tex: {
+        packages: ['base', 'require'],        // extensions to use
+        inlineMath: [ 
+            ['$','$'], ["\\(","\\)"] 
+        ],             // start/end delimiter pairs for in-line math
+        displayMath: [ ['$$','$$'],  ["\\[","\\]"] ],            // start/end delimiter pairs for display math
+        processEscapes: true,      // use \$ to produce a literal dollar sign
+        processEnvironments: true // process \begin{xxx}...\end{xxx} outside math mode
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
 </head>
