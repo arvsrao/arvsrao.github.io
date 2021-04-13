@@ -3,11 +3,10 @@
 
 ### MacOS Setup
 
-Run the following commands to acquire dependencies.
+Run the following commands to acquire dependencies. For help installing ruby, gems, etc. see this [blog post][1].
 
 ```bash
-gem install bundler
-bundle config set --local path 'vendor/bundle'
-bundle install
 bundle exec jekyl serve -D
 ```
+
+[1]: https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/?utm_source=stackoverflow
