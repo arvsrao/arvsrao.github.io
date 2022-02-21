@@ -1,0 +1,342 @@
+---
+layout: post
+title: Projecting 3D Points to the Camera Image Plane
+comments: true
+category: computer graphics
+tags: computer graphics
+typora-root-url: ../
+---
+
+Given some object placed in world or scene coordinates, $\vec{x} \in \mathbb{R}^{3}$, I would like to project these 3D coordinates to the image plane of a camera. Consider the general situation $\vec{x} \in \mathbb{R}^{n+1}$ and a plane $x_{n+1} = f$. We're going to map pencils in $\mathbb{R}^{n+1}$, lines through the origin, to unique points in plane $x_{n+1} = f$.
+
+<figure>
+<div align="center">
+	<img src = "/assets/plane_coords.jpg">
+</div>
+<figcaption> Figure #1. Projection of pencils in $\mathbb{R}^{n+1}$ to plane $x_{n+1} = f$. </figcaption>
+</figure>
+
+<!--more-->
+
+The pencil through $\vec{x} \in \mathbb{R}^{n+1}$ has the form $(tx_1, \cdots, tx_n, tx_{n+1} )$, and it intersects plane $x_{n+1} = f$ at $\tilde{x}$ when
+
+$$
+t x_{n+1} = f \quad \Longrightarrow \quad t  = \frac{f}{x_{n+1}} .
+$$
+
+The projected point can be described purely as a function of $f$ and $\vec{x}$. $\tilde{x} = (f \frac{x_1}{x_{n+1}}, \cdots, f \frac{x_n}{x_{n+1}})$ where $x_{n+1} \neq 0$. Division by $x_{n+1}$ isn't linear, however the mapping $\vec{x} \mapsto \tilde{x}$ can be *lifted* so that it factors through a projective linear map. Below is a communative diagram where one of the factors of  $K_n$ of is projective linear map $\tilde{K}_n$. 
+
+$$
+\begin{matrix}
+	\mathbb{RP}^{n+1} & \overset{\tilde{K_{n}}}\longrightarrow & \mathbb{RP}^{n} \\
+     \rho_{n+1} \Bigg\uparrow   &  				& \Bigg\downarrow \pi_n  \\
+	\mathbb{R}^{n+1} & \overset{K_{n}}\longrightarrow & \mathbb{R}^{n} \\
+\end{matrix}
+$$
+
+$\rho_{n+1}$ is the coordinate mapping, $\rho_{n+1}(x_1, \cdots, x_{n}, x_{n+1}) = (x_1, \cdots, x_{n}, x_{n+1}, 1)$. $\pi_n$ is the non-linear projection of pencils in $\mathbb{R}^{n+1}$ that pass through $x_{n+1} = f$, so points at infinity are excluded; it's defined on the image of $\tilde{K_{n}}$. It is also a left inverse of $\rho_{n}$, because
+
+$$
+ (x_1, x_2, \cdots, x_n) \xrightarrow{\rho_{n}} (x_1, x_2, \cdots, x_n, 1) \xrightarrow{\pi_n} (x_1, x_2, \cdots, x_n).
+$$
+
+$\tilde{K_n}$ can now be expressed as a projective matrix
+
+$$
+\begin{bmatrix}
+           1  &         &        &              &  & 0        \\
+              & 1       &        &  \Huge0      &  & \vdots   \\
+              &         & \ddots &              &  &          \\
+              &         &        &      1       &  &          \\
+   	          & \Huge0  &        &              &  \frac{1}{f} & 0        \\
+\end{bmatrix} \\
+{\bf{\Large\sim}}
+\begin{bmatrix}
+           f  &         &        &          &  & 0        \\
+              & f       &        &  \Huge0  &  & \vdots   \\
+              &         & \ddots &          &  &          \\
+              &         &        &      f   &  &          \\              
+              & \Huge0  &        &          & 1 & 0        \\
+\end{bmatrix} \\
+$$
+
+Applying $\rho_{n+1}$ and $\tilde{K_n}$ sucessively to $x \in \mathbb{R}^{n+1}$ gives a projective point that $\pi_n$ would project back to $\tilde{x}$.
+
+$$
+\begin{bmatrix}
+           f \frac{x_1}{x_{n+1}}   \\
+   		   \vdots \\
+   		   f \frac{x_n}{x_{n+1}} \\
+   		   1   \\
+\end{bmatrix} \\
+{\bf{\Large\sim}}
+\begin{bmatrix}
+           fx_1   \\
+   		   \vdots \\
+   		   fx_{n} \\
+   		   x_{n+1}   \\
+\end{bmatrix} \\
+=
+\begin{bmatrix}
+           f  &         &        &          &  & 0        \\
+              & f       &        &  \Huge0  &  & \vdots   \\
+              &         & \ddots &          &  &          \\
+              &         &        &      f   &  &          \\              
+              & \Huge0  &        &          & 1 & 0        \\
+\end{bmatrix} \\
+\begin{bmatrix}
+           x_1   \\
+           x_2   \\
+   		    \vdots \\
+   		    \vdots \\
+   		    x_{n+1} \\
+   		     1   \\
+\end{bmatrix} \\
+$$
+
+## Pinhole Cameras
+
+A pinhole camera is a simple camera without a lens—effectively a box with a small hole in one side. Light from a scene  passes through the hole and projects an inverted image on the opposite side of the box, which is known as the [camera obscura](https://en.wikipedia.org/wiki/Camera_obscura)  effect. A model of the way an image forms in pinhole camera is depicted in Figure #2. Light from points on the tree, for example $x_0$ or $x_1$ in Figure #2, travel along straight lines through the camera center, and hit the image plane, $f$ units away from the camera center. $f$ is the *focal* length.
+
+<figure>
+<div align="center">
+      <img src = "/assets/lochkamera.jpg">
+</div>
+<figcaption> Figure #2. Image formation on the pinhole camera plane. $f$ is the focal length. The projected image is flipped about both the horizontal & vertical axis.</figcaption>
+</figure>
+Though not depicted in Figure #2 the tree would be projected on the image plane upside down and flipped about the vertical axis, the midline. The camera center is the pinhole and in Figure #2 it is the blue dot positioned at the origin.
+
+The situation depicted in Figure #1 limited to 3D and rotated in the positive $z$ direction $90$ degrees about the $y$-axis also describes image formation -- the projection of object points to the image plane. Therefore, the projection of tree points to the image plane is best described by projective linear map $\mathbb{RP}^{4} \xrightarrow{\ \tilde{K}_3 \ } \mathbb{RP}^{3}$,
+
+$$
+\begin{bmatrix}
+     f  & 0 & 0 &  0 \\
+     0  & f & 0 &  0 \\
+     0  & 0 & 1 &  0 \\
+\end{bmatrix} \\
+.
+$$
+
+And just like before, applying $\tilde{K}_3$ to tree points gives their corresponding world coordinates on the image plane.
+
+$$
+\begin{bmatrix}
+           f \frac{x_1}{x_{3}}   \\
+           f \frac{x_2}{x_{3}}   \\
+               1   \\
+\end{bmatrix} \\
+{\bf{\Large\sim}}
+\begin{bmatrix}
+           fx_1   \\
+           fx_2 \\
+            x_3   \\
+\end{bmatrix} \\
+=
+\begin{bmatrix}
+     f  & 0 & 0 &  0 \\
+     0  & f & 0 &  0 \\
+     0  & 0 & 1 &  0 \\
+\end{bmatrix} \\
+\begin{bmatrix}
+           x_1 \\
+           x_2 \\
+           x_3 \\
+           1   \\
+\end{bmatrix} \\
+.
+$$
+
+### From World Coordinates to Camera Coordinates
+
+Projected points $(f\frac{x_1}{x_3}, f\frac{x_2}{x_3}, 1)$ are in the image plane and even span it, however they remain in world coordinates, measured in metric units if the scene is in the real world or some normalized units of a 3D model. By contrast camera coordinates are measured in pixel units. Moreover, the extent of the image plane is actually finite; the film or sensor on which the image is taken is rectangular. A depection of an image senor is shown below in Figure #3. The red rectangle is the image sensor and the ruled elements are pixels. Both $H$ and $W$ are measured in units of the world coordinates, whatever those might be. Without loss of generality assume $H$, $W$, and focal length $f$ are measured in millimeters.
+
+<figure>
+<div align="center">
+      <img src = "/assets/image_sensor_model.jpg">
+</div>
+<figcaption> Figure #3. Camera coordinates on the image sensor. $H$ and $W$ are the image sensor height and width, respectively, usually measured in metric units (e.g millimeters). The green coordinates axis represent the coordinate sytem corresponding to projected and scaled object points.
+</figcaption>
+</figure>
+
+The origin of the camera coordinate system, of the image sensor, is for [odd historical reasons][upper-left] in the upper left corner of the rectangle. Anyhow, it's nice I suppose that matrices are indexed in the same way. As shown in Figure #3  $(v,u)$ coordinates locate pixels; $v$ is a row index and $u$ is a column index.
+
+Real cameras have lenses and some types of distortion introduced by lenses can be modeled with non-square pixels. While unusual, for the sake of generality I will make the modeling assumption that pixels are rectangular -- not necessarily square. Letting the sensor dimensions in pixels be $n \times m$, then the pixel dimensions are $\frac{W}{m}$ mm/pixel in the $u$-direction and $\frac{H}{n}$ in the $v$-direction. Now, to convert points $(f\frac{x_1}{x_3}, f\frac{x_2}{x_3}, 1)$ to pixel units only the focal length $f$ needs to be rescaled because factors $\frac{x_i}{x_3}$ are unitless.
+
+$$
+\begin{gather}
+		 f_u = f \frac{m}{W} \quad \text{and}\quad f_v = f \frac{n}{H}
+\end{gather}
+$$
+
+are the effective focal lengths in the $u$ & $v$ directions, in pixel units. Having two focal lengths isn't intuitive, but from the point-of-view of rescaling to pixel units it should be clear. Note that some texts ([Solem][1] and [Forsyth and Ponce](http://luthuli.cs.uiuc.edu/~daf/book/book.html)) avoid two focal lengths by choosing a different starting point; namely, $f$ is given in pixels. With no need to convert $f$ to pixels, one would account for non-square pixels by scaling the $u$ coordinate by some calibrated constant $\alpha$, the *aspect ratio*.
+
+**Before continuing a few definitions** ... Let's call the coordinate system of points projected to the image plane and converted to pixels, points like $(f_v\frac{x_1}{x_3}, f_u\frac{x_2}{x_3}, 1)$, *pixelated coordinates*. The green axis in Figure #3 depicts the pixelated coordinate system overlayed onto the image sensor.
+
+* *optical axis* -- The line perpendicular to the image plane that passes through the camera center. In Figures #2 and #3 the *optical axis* is the $x_3$-axis. 
+* *principal point* -- The point where the *optical axis* intersects the image plane, and is the origin of the pixelated frame. As depicted in Figure #3, the *principal point* is typically in the middle of the image plane and sensor.
+
+#### Reindexing Pixelated Coordinates
+
+The goal here is to find a $1$-to-$1$ map $T(p_x,p_y)$ from pixelated coordinates to $(v,u)$ coordinates, while also rectifying the projected image. The image projected on the image plane appears flipped about both the vertical and horizontal midlines. It would be nice to, in one move, reindex and flip the image upright. **The left-right inversion/flip is natural** and undoing it would result in a mirror image of the object; therfore, to correct the image orientation the projection should **only** be flipped about its horizontal midline. Below, Figure #4 depicts a projected image on the image sensor in the pixelated coordinates system; $v$ and $u$ directions are also indicated in the upper left corner. The four corners of the image sensor are labeled with coordinates in the pixelated frame.
+
+<figure>
+<div align="center">
+      <img src = "/assets/pinhole_start.jpeg">
+</div>
+<figcaption> Figure #4. Pixelated coordinates overlayed on the image sensor.
+</figcaption>
+</figure> 
+
+What would the correspondence be? Well, since the middle of the image sensor is same in both frames, the principal point $(0,0)$ will be mapped to $T(0, 0) = (\frac{n}{2},\frac{m}{2})$​. The corners are a different story, because the $(v,u)$ frame is oppositely oriented to the pixelated frame. Notice that while $u$ and $y$ directions are parallel (*left* & *right* are the same in both frames), $v$ and $x$ point in opposite directions (*up* in either frame is *down* in the other). Specifically, this means that the upper left corner of the $(v,u)$ frame is the lower left corner of the pixelated frame. Putting it all together, the corresponding $(v,u)$ coordinates of all four corners are $T(\frac{n}{2},-\frac{m}{2})  = (n,0)$, $T(\frac{n}{2},\frac{m}{2})   = (n,m)$, $T(-\frac{n}{2},\frac{m}{2})  = (0,m)$, and $T(-\frac{n}{2},-\frac{m}{2}) = (0,0)$. These correspondences are also drawn below in Figure #5 in the orientation of the pixelated frame. However, if drawn in the orientation of the $(v,u)$ frame, the result is Figure #6; the image is flipped and is no longer upside down, as desired.
+
+<figure>
+<div align="center">
+      <img src = "/assets/pinhole_translate.jpeg">
+</div>
+<figcaption> Figure #5. Image sensor relabeled with corresponding $(v,u)$ coordinates of the four corners.
+</figcaption>
+</figure> 
+<figure>
+<div align="center">
+      <img src = "/assets/pinhole_final.jpeg">
+</div>
+<figcaption> Figure #6. Translated pixelated coordinate system, reoriented to match the $(v,u)$ frame.
+</figcaption>
+</figure> 
+
+
+
+Comparing Figures #4 and #5, one can imagine translating the image sensor, in the pixelated frame, into the first quadrant by adding $(\frac{n}{2},\frac{m}{2})$ to each coordinate, $T(p_x, p_y) = (p_x, p_y) + (\frac{n}{2},\frac{m}{2})$. Amazingly, this translation satisfies the previous determined correspondences. 
+
+#### Intrinsic Camera Properties
+
+Abusing the previously established notation a bit, let $(p_x,p_y)$ be the principal point and $T(p_x,p_y) = (c_v, c_u)$. Now the scaling of world coordinates to pixels and translation by $(c_v, c_u)$ can be expressed as a projective linear transformation; and $\tilde{K}_3$ can be redefined
+
+$$
+\tilde{K}_3 =
+\begin{bmatrix}
+     f_u  & 0   & c_u &  0 \\
+     0    & f_v & c_v &  0 \\
+     0    & 0   & 1   &  0 \\
+\end{bmatrix}.
+$$
+
+In the simple camera - object orientation pictured in Figures #2, $\tilde{K}_3$, as defined above, now describes the projection of object points to image sensor coordinates, based solely on instrinic properties of the camera. In the literature, $\tilde{K}_3$ is called the [Camera Calibration Matrix][1] and it's just one factor in the projection from world coordinates to screen coordinates. In its full glory the *Camera Calibration Matrix* is written
+
+$$
+K =
+\begin{bmatrix}
+     f_v  & s   & c_v &  0 \\
+     0    & f_u & c_u &  0 \\
+     0    & 0   & 1   &  0 \\
+\end{bmatrix} 
+\text{ or }
+\begin{bmatrix}
+     \alpha f  & s & c_v &  0 \\
+     0         & f & c_u &  0 \\
+     0         & 0 & 1   &  0 \\
+\end{bmatrix}
+$$
+
+and takes into account an irregularity called *skew*. It is donoted $s$ in matrix $K$. Nonzero *Skew* accounts for the rare and unusual circumstance where the image looks like a parallelogram. Here is a [nice blog post][4] that dives deep into *skew*; and another [good reference][5]. The image plane depicted in figures throughout this post is rectangular, so *skew* is $0$ for the situation described here.
+
+## Moving the Camera
+
+To image different perspectives of an object, imagine the camera moved in world coordinates to point $C$, its new camera center, pointing in direction $\vec{O}$, and its orientation determined by *up* direction $\vec{U}$. Take for instance the rendering below I made of an angled perspective of a bust using my [software render][3]. From a computational point-of-view the camera isn't actually moved, rather scene points are translated and rotated to the *standard* frame, the one used to derive the Camera Calibration Matrix. In the *standard* frame the camera center is $\vec{0} \in \mathbb{R}^3$,  $\vec{U} = (0,1,0)$,  and $\vec{O}=(0,0,-1)$, just like in Figure #2.
+
+<figure>
+<div align="center">
+      <img src = "/assets/african_head_camera_move.png">
+</div>
+<figcaption> Figure #7. Camera rotated and translated to render an angled perspective. </figcaption>
+</figure>
+Suppse the camera is already located at $C \in \mathbb{R}^3$, and oriented by $\vec{U}$ and  $\vec{O}$. Moving the scene is an affine transformation, $Ax +b$ where $A$ is a $3 \times 3$ matrix and $x, \ b \in \mathbb{R}^3$, which moves the camera back to the origin and reorients the camera to the *standard* frame. Then $b = -C$ moves the camera center to the origin. $A \in SO(3)$ reorients the camera to the *standard* frame; furthermore $A$ is a rotation matrix, because the scene shouldn't be distorted. 
+
+Rotation and translation can be expressed together in a single a projective linear transformation. Rotation is linear but translation is not, however doing the translation in projective space is linear. Keenan Crane has a [nice lecture from his computer graphics][2] course where he visualizes translation in the plane as shearing in 3D. And anyway this a known starting point in algebraic geometry where affine transformations are expressed as projective linear transformations like so
+
+$$
+\begin{bmatrix}
+          A & b\\
+          0 & 1\\
+    \end{bmatrix}
+    \begin{bmatrix}
+           x \\
+           1 \\
+    \end{bmatrix} \\
+    =
+       \begin{bmatrix}
+           Ax +b \\
+           1 \\
+    \end{bmatrix} \\
+     .
+$$
+
+### Constructing the Rotation Matrix
+
+A brief digrestion on how to construct $A$. First construct $\vec{v}$ so that $\{\vec{v}, \vec{U}, \vec{O}\}$ Is an orthonormal frame. Assume without loss of generality $\vec{U}$ is unit length and orthogonal; if not take  $\vec{U} - \vec{O}\cdot \vec{U}$ and normalize it. Let $\vec{v} = \vec{O} \times \vec{U}$  then normalize it. The result is an orthonormal frame where $\vec{O}$ is one of the axes. Then define
+
+$$
+A = 
+\begin{bmatrix}
+ 	\vec{U} \\
+ 	\vec{v} \\
+	-\vec{O} \\
+\end{bmatrix}.
+$$
+
+$A$ sends $\vec{O}$ to $A \vec{O} = (0,0,-1)$ the standard optical direction, and $A$ sends $\vec{U}$ to $A \vec{U} = (1,0,0)$ the standard *up* direction, and finally $\vec{v}$ is mapped to  $A \vec{v} = (0,1,0)$, the $y$-axis. $A$ is the desired rotation.
+
+## The Camera Matrix
+
+With the needed rotation $A$ in hand, the affine transformation expressed as a 3D projective linear transformation is
+
+$$
+\begin{bmatrix}
+ R \ |\ t
+ \end{bmatrix}
+ =
+ \begin{bmatrix}
+     U_x  &  U_y   &  U_z &  -C_x \\
+     v_x  &  v_x   &  v_z &  -C_y \\
+    -O_x  & -O_y   & -O_z &  -C_z \\
+     0    & 0      & 1    &  1    \\
+\end{bmatrix}.
+$$
+
+Finally, the full camera projection matrix is
+
+$$
+\begin{align}
+C & = K \cdot 
+\begin{bmatrix}
+ R \ |\ t
+\end{bmatrix} \\
+  & = 
+  \underbrace{
+\begin{bmatrix}
+     f_v  & s   & c_v &  0 \\
+     0    & f_u & c_u &  0 \\
+     0    & 0   & 1   &  0 \\
+\end{bmatrix}
+}_{\text{\bf{intrinsic properties}}}
+\underbrace{
+\begin{bmatrix}
+     U_x  &  U_y   &  U_z &  -C_x \\
+     v_x  &  v_x   &  v_z &  -C_y \\
+    -O_x  & -O_y   & -O_z &  -C_z \\
+     0    & 0      & 1    &  1    \\
+\end{bmatrix}
+}_{\text{\bf{extrinsic properties}}}.
+\\
+\end{align}
+$$
+
+$C$ projects a scene before a camera to a rectified image expressed in $(v,u)$ image sensor coordinates.
+
+[1]: https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/	"Solem"
+[2]: https://youtu.be/QmFBHSJS0Gw
+[3]: https://github.com/arvsrao/tiny_render_course
+[4]: https://blog.immenselyhappy.com/post/camera-axis-skew/
+[5]: https://ksimek.github.io/2013/08/13/intrinsic/
+[6]: https://devblogs.microsoft.com/oldnewthing/20101004-00/?p=126437	" upper-left"
+[7]: : http://luthuli.cs.uiuc.edu/~daf/book/book.html	"Forsyth and Ponce"
