@@ -1,13 +1,17 @@
 ---
 layout: post
-title: Projecting 3D Points to the Camera Image Plane
+title: Projecting a 3D Scene to the Image Plane
 comments: true
 category: computer graphics
 tags: computer graphics
 typora-root-url: ../
 ---
 
-Given some object placed in world or scene coordinates, $\vec{x} \in \mathbb{R}^{3}$, I would like to project these 3D coordinates to the image plane of a camera. Consider the general situation $\vec{x} \in \mathbb{R}^{n+1}$ and a plane $x_{n+1} = f$. We're going to map pencils in $\mathbb{R}^{n+1}$, lines through the origin, to unique points in plane $x_{n+1} = f$.
+**Given a 3D scene in world coordinates, how does an image of the scene form in the camera, and how do 3D scene points project to the image plane?** The short answer to the later question is the [camera matrix](#the-camera-matrix). And this short note is devoted to deriving the [camera matrix](#the-camera-matrix). First some mathematical preliminaries.
+
+## From Pencils to Points
+
+Consider the generic scenario $\vec{x} \in \mathbb{R}^{n+1}$ and a plane $x_{n+1} = f$. Pencils in $\mathbb{R}^{n+1}$, that is lines which pass through both the origin and  $x_{n+1} = f$, map to unique points in plane $x_{n+1} = f$. Figure #1 shows a pencil intersecting plane $x_{n+1} = f$ at unique point $\tilde{x}$.
 
 <figure>
 <div align="center">
@@ -18,80 +22,93 @@ Given some object placed in world or scene coordinates, $\vec{x} \in \mathbb{R}^
 
 <!--more-->
 
-The pencil through $\vec{x} \in \mathbb{R}^{n+1}$ has the form $(tx_1, \cdots, tx_n, tx_{n+1} )$, and it intersects plane $x_{n+1} = f$ at $\tilde{x}$ when
+The pencil through $\vec{x} \in \mathbb{R}^{n+1}$ has the form $(tx_1, \cdots, tx_n, tx_{n+1} )$, and it intersects plane $x_{n+1} = f$ when
 
 $$
 t x_{n+1} = f \quad \Longrightarrow \quad t  = \frac{f}{x_{n+1}} .
 $$
 
-The projected point can be described purely as a function of $f$ and $\vec{x}$. $\tilde{x} = (f \frac{x_1}{x_{n+1}}, \cdots, f \frac{x_n}{x_{n+1}})$ where $x_{n+1} \neq 0$. Division by $x_{n+1}$ isn't linear, however the mapping $\vec{x} \mapsto \tilde{x}$ can be *lifted* so that it factors through a projective linear map. Below is a communative diagram where one of the factors of  $K_n$ of is projective linear map $\tilde{K}_n$. 
+The intersection point, the point the line projects to, is described purely as a function of $f$ and $\vec{x}$, 
+
+
+$$
+\tilde{x} = (f \frac{x_1}{x_{n+1}}, \cdots, f \frac{x_n}{x_{n+1}}) \quad \text{ where }  \quad  x_{n+1} \neq 0. \\
+$$
+
+
+The above formula is well defined on pencils. Meaning, given two representatives of a given pencil, say $[a] \sim [b]$, they will both be projected to the same point $\tilde{x}$ in plane $x_{n+1} = f$. Let $K_{n}$ be the projection of $\vec{x} \in \mathbb{R}^{n+1}$ to points on plane $x_{n+1} = f$ and suppose $[a] \sim [b]$, then there is a $t \neq 0$ such that
+
+
+$$
+\begin{align}
+K_n(b) & = (f \frac{b_1}{b_{n+1}}, \cdots, f \frac{b_n}{b_{n+1}}) \\ 
+             &= (f \frac{t a_1}{t a_{n+1}}, \cdots, f \frac{t a_n}{t a_{n+1}}) \\
+             &= K_n(a). \\
+\end{align}
+$$
+
+$K_n$ is what's called a *projective* transformation because it is well defined on pencils; though sadly, it isn't also linear because division by $x_{n+1}$ is not. So $K_n$ can't be expressed in matrix form. However, it can be *lifted* so that it factors through a projective linear map called $\tilde{K}_n$. To see how break $K_n$ into steps:
+
+1. Points are mapped to pencils by the canonical projection $\rho_{n}(\vec{x}) = [\vec{x}] \in \mathbb{RP}^{n}$.
+2. Pencils are scaled by $$\tilde{K}_n([x_1 : x_2 : \cdots : x_{n+1}]) = [fx_1 : fx_2 : \cdots : fx_n : x_{n+1}]$$.
+3. Project pencils in $\mathbb{R}^{n+1}$ to plane $x_{n+1} = 1$ by $\pi_n([x_1 : x_2 : \cdots : x_{n+1}]) = (\frac{x_1}{x_{n+1}}, \frac{x_2}{x_{n+1}}, \cdots, \frac{x_n}{x_{n+1}})$. Points at infinity are excluded because $x_{n+1} \neq 0$.
+
+Below is a commutative diagram depicting how $K_n$ factors over $\tilde{K}_n$.
+
 
 $$
 \begin{matrix}
-	\mathbb{RP}^{n+1} & \overset{\tilde{K_{n}}}\longrightarrow & \mathbb{RP}^{n} \\
-     \rho_{n+1} \Bigg\uparrow   &  				& \Bigg\downarrow \pi_n  \\
-	\mathbb{R}^{n+1} & \overset{K_{n}}\longrightarrow & \mathbb{R}^{n} \\
+	\mathbb{RP}^{n} & \overset{\tilde{K_{n}}}\longrightarrow & \mathbb{RP}^{n} \\
+     \rho_{n} \Bigg\uparrow   &  				& \Bigg\downarrow \pi_n  \\
+	\mathbb{R}^{n+1}-\{\vec{0}\} & \overset{K_{n}}\longrightarrow & \mathbb{R}^{n} \\
 \end{matrix}
 $$
 
-$\rho_{n+1}$ is the coordinate mapping, $\rho_{n+1}(x_1, \cdots, x_{n}, x_{n+1}) = (x_1, \cdots, x_{n}, x_{n+1}, 1)$. $\pi_n$ is the non-linear projection of pencils in $\mathbb{R}^{n+1}$ that pass through $x_{n+1} = f$, so points at infinity are excluded; it's defined on the image of $\tilde{K_{n}}$. It is also a left inverse of $\rho_{n}$, because
+$\tilde{K_n}$ does the scaling part of $K_n$, so it is easily written as a projective matrix.
 
 $$
- (x_1, x_2, \cdots, x_n) \xrightarrow{\rho_{n}} (x_1, x_2, \cdots, x_n, 1) \xrightarrow{\pi_n} (x_1, x_2, \cdots, x_n).
+\tilde{K_n} = 
+\begin{bmatrix}
+           fI_n     & \vec{0}  \\
+           \vec{0}  &  1       \\
+\end{bmatrix} =
+\begin{bmatrix}
+           f  &         &         &    0     \\
+              & \ddots  &  \Huge0 &  \vdots  \\
+              & \Huge0  &  f      &    0     \\              
+           0  & \ldots  &  0      &    1     \\
+\end{bmatrix}. \\
 $$
 
-$\tilde{K_n}$ can now be expressed as a projective matrix
+Applying $\rho_{n}$ and $\tilde{K_n}$ sucessively to $x \in \mathbb{R}^{n+1}$ gives a projective point that $\pi_n$ would project to $\tilde{x}$.
 
 $$
 \begin{bmatrix}
-           1  &         &        &              &  & 0        \\
-              & 1       &        &  \Huge0      &  & \vdots   \\
-              &         & \ddots &              &  &          \\
-              &         &        &      1       &  &          \\
-   	          & \Huge0  &        &              &  \frac{1}{f} & 0        \\
-\end{bmatrix} \\
-{\bf{\Large\sim}}
-\begin{bmatrix}
-           f  &         &        &          &  & 0        \\
-              & f       &        &  \Huge0  &  & \vdots   \\
-              &         & \ddots &          &  &          \\
-              &         &        &      f   &  &          \\              
-              & \Huge0  &        &          & 1 & 0        \\
-\end{bmatrix} \\
-$$
-
-Applying $\rho_{n+1}$ and $\tilde{K_n}$ sucessively to $x \in \mathbb{R}^{n+1}$ gives a projective point that $\pi_n$ would project back to $\tilde{x}$.
-
-$$
-\begin{bmatrix}
-           f \frac{x_1}{x_{n+1}}   \\
+           \tilde{x}_1   \\
    		   \vdots \\
-   		   f \frac{x_n}{x_{n+1}} \\
+   		   \tilde{x}_n \\
    		   1   \\
 \end{bmatrix} \\
 {\bf{\Large\sim}}
 \begin{bmatrix}
-           fx_1   \\
-   		   \vdots \\
-   		   fx_{n} \\
-   		   x_{n+1}   \\
+           fx_1  \\
+   		   \vdots  \\
+   		   fx_{n}  \\
+   		   x_{n+1} \\
 \end{bmatrix} \\
 =
 \begin{bmatrix}
-           f  &         &        &          &  & 0        \\
-              & f       &        &  \Huge0  &  & \vdots   \\
-              &         & \ddots &          &  &          \\
-              &         &        &      f   &  &          \\              
-              & \Huge0  &        &          & 1 & 0        \\
-\end{bmatrix} \\
+           f  &         &         &    0     \\
+              & \ddots  &  \Huge0 &  \vdots  \\
+              & \Huge0  &  f      &    0     \\              
+           0  & \ldots  &  0      &    1     \\
+\end{bmatrix}
 \begin{bmatrix}
-           x_1   \\
-           x_2   \\
-   		    \vdots \\
-   		    \vdots \\
+           x_1    \\
+           x_2    \\
+   		    \vdots  \\
    		    x_{n+1} \\
-   		     1   \\
-\end{bmatrix} \\
+\end{bmatrix}. \\
 $$
 
 ## Pinhole Cameras
@@ -104,20 +121,21 @@ A pinhole camera is a simple camera without a lens—effectively a box with a sm
 </div>
 <figcaption> Figure #2. Image formation on the pinhole camera plane. $f$ is the focal length. The projected image is flipped about both the horizontal & vertical axis.</figcaption>
 </figure>
-Though not depicted in Figure #2 the tree would be projected on the image plane upside down and flipped about the vertical axis, the midline. The camera center is the pinhole and in Figure #2 it is the blue dot positioned at the origin.
+Though not depicted in Figure #2 the tree would be projected on the image plane upside down and flipped about the vertical midline. The camera center is the pinhole and in Figure #2 it is the blue dot positioned at the origin.
 
-The situation depicted in Figure #1 limited to 3D and rotated in the positive $z$ direction $90$ degrees about the $y$-axis also describes image formation -- the projection of object points to the image plane. Therefore, the projection of tree points to the image plane is best described by projective linear map $\mathbb{RP}^{4} \xrightarrow{\ \tilde{K}_3 \ } \mathbb{RP}^{3}$,
+The situation depicted in Figure #1 limited to 3D and rotated in the positive $z$ direction $90$ degrees about the $y$-axis also describes image formation -- the projection of object points to the image plane. Therefore, the projection of tree points to the image plane is best described by projective linear map 
 
 $$
-\begin{bmatrix}
-     f  & 0 & 0 &  0 \\
-     0  & f & 0 &  0 \\
-     0  & 0 & 1 &  0 \\
+\tilde{K}_2
+=\begin{bmatrix}
+     f  & 0 & 0 \\
+     0  & f & 0 \\
+     0  & 0 & 1 \\
 \end{bmatrix} \\
 .
 $$
 
-And just like before, applying $\tilde{K}_3$ to tree points gives their corresponding world coordinates on the image plane.
+And just like before, applying $\tilde{K}_2$ to tree points gives their corresponding world coordinates on the image plane.
 
 $$
 \begin{bmatrix}
@@ -133,15 +151,14 @@ $$
 \end{bmatrix} \\
 =
 \begin{bmatrix}
-     f  & 0 & 0 &  0 \\
-     0  & f & 0 &  0 \\
-     0  & 0 & 1 &  0 \\
+     f  & 0 & 0 \\
+     0  & f & 0 \\
+     0  & 0 & 1 \\
 \end{bmatrix} \\
 \begin{bmatrix}
            x_1 \\
            x_2 \\
            x_3 \\
-           1   \\
 \end{bmatrix} \\
 .
 $$
@@ -187,7 +204,7 @@ The goal here is to find a $1$-to-$1$ map $T(p_x,p_y)$ from pixelated coordinate
 </figcaption>
 </figure> 
 
-What would the correspondence be? Well, since the middle of the image sensor is same in both frames, the principal point $(0,0)$ will be mapped to $T(0, 0) = (\frac{n}{2},\frac{m}{2})$​. The corners are a different story, because the $(v,u)$ frame is oppositely oriented to the pixelated frame. Notice that while $u$ and $y$ directions are parallel (*left* & *right* are the same in both frames), $v$ and $x$ point in opposite directions (*up* in either frame is *down* in the other). Specifically, this means that the upper left corner of the $(v,u)$ frame is the lower left corner of the pixelated frame. Putting it all together, the corresponding $(v,u)$ coordinates of all four corners are $T(\frac{n}{2},-\frac{m}{2})  = (n,0)$, $T(\frac{n}{2},\frac{m}{2})   = (n,m)$, $T(-\frac{n}{2},\frac{m}{2})  = (0,m)$, and $T(-\frac{n}{2},-\frac{m}{2}) = (0,0)$. These correspondences are also drawn below in Figure #5 in the orientation of the pixelated frame. However, if drawn in the orientation of the $(v,u)$ frame, the result is Figure #6; the image is flipped and is no longer upside down, as desired.
+What would the correspondence be? Well, since the middle of the image sensor is the same in both frames, the principal point $(0,0)$ will be mapped to $T(0, 0) = (\frac{n}{2},\frac{m}{2})$​. The corners are a different story, because the $(v,u)$ frame is oppositely oriented to the pixelated frame. Notice that while $u$ and $y$ directions are parallel (*left* & *right* are the same in both frames), $v$ and $x$ point in opposite directions (*up* in either frame is *down* in the other). Specifically, this means that the upper left corner of the $(v,u)$ frame is the lower left corner of the pixelated frame. Putting it all together, the corresponding $(v,u)$ coordinates of all four corners are $T(\frac{n}{2},-\frac{m}{2})  = (n,0)$, $T(\frac{n}{2},\frac{m}{2})   = (n,m)$, $T(-\frac{n}{2},\frac{m}{2})  = (0,m)$, and $T(-\frac{n}{2},-\frac{m}{2}) = (0,0)$. These correspondences are also drawn below in Figure #5 in the orientation of the pixelated frame. However, if drawn in the orientation of the $(v,u)$ frame, the result is Figure #6; the image is flipped and is no longer upside down, as desired.
 
 <figure>
 <div align="center">
@@ -215,9 +232,9 @@ Abusing the previously established notation a bit, let $(p_x,p_y)$ be the princi
 $$
 \tilde{K}_3 =
 \begin{bmatrix}
-     f_u  & 0   & c_u &  0 \\
-     0    & f_v & c_v &  0 \\
-     0    & 0   & 1   &  0 \\
+     f_u  & 0   & c_u  \\
+     0    & f_v & c_v  \\
+     0    & 0   & 1    \\
 \end{bmatrix}.
 $$
 
@@ -226,15 +243,15 @@ In the simple camera - object orientation pictured in Figures #2, $\tilde{K}_3$,
 $$
 K =
 \begin{bmatrix}
-     f_v  & s   & c_v &  0 \\
-     0    & f_u & c_u &  0 \\
-     0    & 0   & 1   &  0 \\
+     f_v  & s   & c_v \\
+     0    & f_u & c_u \\
+     0    & 0   & 1   \\
 \end{bmatrix} 
 \text{ or }
 \begin{bmatrix}
-     \alpha f  & s & c_v &  0 \\
-     0         & f & c_u &  0 \\
-     0         & 0 & 1   &  0 \\
+     \alpha f  & s & c_v  \\
+     0         & f & c_u  \\
+     0         & 0 & 1    \\
 \end{bmatrix}
 $$
 
@@ -252,7 +269,7 @@ To image different perspectives of an object, imagine the camera moved in world 
 </figure>
 Suppse the camera is already located at $C \in \mathbb{R}^3$, and oriented by $\vec{U}$ and  $\vec{O}$. Moving the scene is an affine transformation, $Ax +b$ where $A$ is a $3 \times 3$ matrix and $x, \ b \in \mathbb{R}^3$, which moves the camera back to the origin and reorients the camera to the *standard* frame. Then $b = -C$ moves the camera center to the origin. $A \in SO(3)$ reorients the camera to the *standard* frame; furthermore $A$ is a rotation matrix, because the scene shouldn't be distorted. 
 
-Rotation and translation can be expressed together in a single a projective linear transformation. Rotation is linear but translation is not, however doing the translation in projective space is linear. Keenan Crane has a [nice lecture from his computer graphics][2] course where he visualizes translation in the plane as shearing in 3D. And anyway this a known starting point in algebraic geometry where affine transformations are expressed as projective linear transformations like so
+Rotation and translation can be expressed together in a single a projective linear transformation. Rotation is linear but translation is not, however doing the translation in projective space is linear. Keenan Crane has a [nice lecture from his computer graphics][2] course where he visualizes translation in the plane as shearing in 3D. Anyway, this a known starting point in algebraic geometry where affine transformations are expressed as projective linear transformations like so
 
 $$
 \begin{bmatrix}
@@ -299,7 +316,7 @@ $$
      U_x  &  U_y   &  U_z &  -C_x \\
      v_x  &  v_x   &  v_z &  -C_y \\
     -O_x  & -O_y   & -O_z &  -C_z \\
-     0    & 0      & 1    &  1    \\
+     0    & 0      & 0    &  1    \\
 \end{bmatrix}.
 $$
 
@@ -307,31 +324,28 @@ Finally, the full camera projection matrix is
 
 $$
 \begin{align}
-C & = K \cdot 
+C & = \underbrace{K}_{\text{intrinsic}} \cdot 
+\underbrace{
 \begin{bmatrix}
  R \ |\ t
-\end{bmatrix} \\
+\end{bmatrix}}_{\text{extrinsic}} \\
   & = 
-  \underbrace{
 \begin{bmatrix}
      f_v  & s   & c_v &  0 \\
      0    & f_u & c_u &  0 \\
      0    & 0   & 1   &  0 \\
 \end{bmatrix}
-}_{\text{\bf{intrinsic properties}}}
-\underbrace{
 \begin{bmatrix}
      U_x  &  U_y   &  U_z &  -C_x \\
      v_x  &  v_x   &  v_z &  -C_y \\
     -O_x  & -O_y   & -O_z &  -C_z \\
-     0    & 0      & 1    &  1    \\
-\end{bmatrix}
-}_{\text{\bf{extrinsic properties}}}.
+     0    & 0      & 0    &  1    \\
+\end{bmatrix}.
 \\
 \end{align}
 $$
 
-$C$ projects a scene before a camera to a rectified image expressed in $(v,u)$ image sensor coordinates.
+$C$ projects a scene in front of a camera to a rectified image expressed in $(v,u)$ image sensor coordinates.
 
 [1]: https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/	"Solem"
 [2]: https://youtu.be/QmFBHSJS0Gw
