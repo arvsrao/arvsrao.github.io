@@ -262,7 +262,7 @@ The calibrated constant $s$ in the above definitions of $K$ stands for *skew*. N
 
 ## Moving the Camera
 
-To image different perspectives of an object, imagine the camera moved in world coordinates to point $C$, its new camera center, pointing in direction $\vec{O}$, and its orientation determined by an *up* direction $\vec{U}$. Take for instance the rendering below I made of an angled perspective of a bust using my [software render][3]. From a computational point-of-view the camera isn't actually moved, rather scene points are translated and rotated to the *standard* frame, the one used to derive the [intrinsic camera matrix](#intrinsic-camera-properties). In the *standard* frame the camera center is $\vec{0} \in \mathbb{R}^3$,  $\vec{U} = (0,1,0)$,  and $\vec{O}=(0,0,-1)$ just like in Figure #2.
+To image different perspectives of an object, imagine the camera moved in world coordinates to point $\vec{c}$, its new camera center, pointing in direction $\vec{O}$, and its orientation determined by an *up* direction $\vec{U}$. Take for instance the rendering below I made of an angled perspective of a bust using my [software render][3]. From a computational point-of-view the camera isn't actually moved, rather scene points are translated and rotated to the *standard* frame, the one used to derive the [intrinsic camera matrix](#intrinsic-camera-properties). In the *standard* frame the camera center is $\vec{0} \in \mathbb{R}^3$,  $\vec{U} = (0,1,0)$,  and $\vec{O}=(0,0,-1)$ just like in Figure #2.
 
 <figure>
 <div align="center">
@@ -270,7 +270,7 @@ To image different perspectives of an object, imagine the camera moved in world 
 </div>
 <figcaption> Figure #7. Camera rotated and translated to render an angled perspective. </figcaption>
 </figure>
-Suppse the camera is already located at $C \in \mathbb{R}^3$, and oriented by $\vec{U}$ and  $\vec{O}$. Moving the scene is an affine transformation $Ax +b$, where $A$ is a $3 \times 3$ matrix and $x, \ b \in \mathbb{R}^3$, which moves the camera back to the origin and reorients the camera to the *standard* frame. $b = -C$ moves the camera center to the origin and $A \in SO(3)$ reorients the camera to the *standard* frame; furthermore, $A$ must be a rotation matrix, because the scene shouldn't be distorted. 
+Suppse the camera is already located at $\vec{c} \in \mathbb{R}^3$, and oriented by $\vec{U}$ and  $\vec{O}$. Moving the scene is an affine transformation $A(x + b)$, where $A$ is a $3 \times 3$ matrix and $x, \ b \in \mathbb{R}^3$, which moves the camera back to the origin and reorients the camera to the *standard* frame. $b = -A\vec{c}$ moves the camera center to the origin and $A \in SO(3)$ reorients the camera to the *standard* frame; furthermore, $A$ must be a rotation matrix, because the scene shouldn't be distorted. 
 
 Rotation and translation can be expressed together in a single a projective linear transformation. Rotation is linear but translation is not, however doing the translation in projective space is linear. Keenan Crane has a [nice lecture from his computer graphics][2] course where he visualizes translation in the plane as shearing in 3D. Anyway, this a known starting point in algebraic geometry where affine transformations are expressed as projective linear transformations like so
 
@@ -316,9 +316,9 @@ $$
  \end{bmatrix}
  =
  \begin{bmatrix}
-     U_x  &  U_y   &  U_z &  -C_x \\
-     v_x  &  v_y   &  v_z &  -C_y \\
-    -O_x  & -O_y   & -O_z &  -C_z \\
+     U_x  &  U_y   &  U_z &  -b_x \\
+     v_x  &  v_y   &  v_z &  -b_y \\
+    -O_x  & -O_y   & -O_z &  -b_z \\
      0    & 0      & 0    &  1    \\
 \end{bmatrix}.
 $$
@@ -339,9 +339,9 @@ C & = \underbrace{K}_{\text{intrinsic}} \cdot
      0    & 0   & 1   &  0 \\
 \end{bmatrix}
 \begin{bmatrix}
-     U_x  &  U_y   &  U_z &  -C_x \\
-     v_x  &  v_y   &  v_z &  -C_y \\
-    -O_x  & -O_y   & -O_z &  -C_z \\
+     U_x  &  U_y   &  U_z &  -b_x \\
+     v_x  &  v_y   &  v_z &  -b_y \\
+    -O_x  & -O_y   & -O_z &  -b_z \\
      0    & 0      & 0    &  1    \\
 \end{bmatrix}.
 \\
