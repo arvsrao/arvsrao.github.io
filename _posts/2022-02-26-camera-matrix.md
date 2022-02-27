@@ -61,7 +61,7 @@ $$
 % AMScd reference https://www.jmilne.org/not/Mamscd.pdf
 \begin{CD}
 \mathbb{RP}^{n} @>\tilde{K_{n}}>> \mathbb{RP}^{n}\\
-@V{\rho_n}VV  @VV{\pi_n}V \\
+@A{\rho_n}AA  @VV{\pi_n}V \\
 \mathbb{R}^{n+1}/\{\infty\} @>{K_n}>> \mathbb{R}^{n}
 \end{CD}
 $$
