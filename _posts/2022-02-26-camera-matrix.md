@@ -270,7 +270,7 @@ To image different perspectives of an object, imagine the camera moved in world 
 </div>
 <figcaption> Figure #7. Camera rotated and translated to render an angled perspective. </figcaption>
 </figure>
-Suppse the camera is already located at $\vec{c} \in \mathbb{R}^3$, and oriented by $\vec{U}$ and  $\vec{O}$. Moving the scene is an affine transformation $A(x + b)$, where $A$ is a $3 \times 3$ matrix and $x, \ b \in \mathbb{R}^3$, which moves the camera back to the origin and reorients the camera to the *standard* frame. $b = -A\vec{c}$ moves the camera center to the origin and $A \in SO(3)$ reorients the camera to the *standard* frame; furthermore, $A$ must be a rotation matrix, because the scene shouldn't be distorted. 
+Suppse the camera is already located at $\vec{c} \in \mathbb{R}^3$, and oriented by $\vec{U}$ and  $\vec{O}$. Moving the scene is an affine transformation $Ax + b$, where $A$ is a $3 \times 3$ matrix and $x, \ b \in \mathbb{R}^3$, which moves the camera back to the origin and reorients the camera to the *standard* frame. $b = -A\vec{c}$ moves the camera center to the origin and $A \in SO(3)$ reorients the camera to the *standard* frame; furthermore, $A$ must be a rotation matrix, because the scene shouldn't be distorted. 
 
 Rotation and translation can be expressed together in a single a projective linear transformation. Rotation is linear but translation is not, however doing the translation in projective space is linear. Keenan Crane has a [nice lecture from his computer graphics][2] course where he visualizes translation in the plane as shearing in 3D. Anyway, this a known starting point in algebraic geometry where affine transformations are expressed as projective linear transformations like so
 
