@@ -53,15 +53,18 @@ $K_n$ is what's called a *projective* transformation because it is well defined 
 2. Pencils are scaled by $$\tilde{K}_n([x_1 : x_2 : \cdots : x_{n+1}]) = [fx_1 : fx_2 : \cdots : fx_n : x_{n+1}]$$.
 3. Project pencils in $\mathbb{R}^{n+1}$ to plane $x_{n+1} = 1$ by $\pi_n([x_1 : x_2 : \cdots : x_{n+1}]) = (\frac{x_1}{x_{n+1}}, \frac{x_2}{x_{n+1}}, \cdots, \frac{x_n}{x_{n+1}})$. Points at infinity are excluded because $x_{n+1} \neq 0$.
 
-Below is a commutative diagram depicting how $K_n$ factors over $\tilde{K}_n$.
+Below is a commutative diagram depicting how $K_n$ factors over $\tilde{K}_n$. Recall $\mathbb{R}^{n+1}/\{\infty\}$ is $\mathbb{R}^{n+1}$ minus points at infinity.
+
 
 
 $$
-\begin{matrix}
-	\mathbb{RP}^{n} & \overset{\tilde{K_{n}}}\longrightarrow & \mathbb{RP}^{n} \\
-     \rho_{n} \Bigg\uparrow   &  				& \Bigg\downarrow \pi_n  \\
-	\mathbb{R}^{n+1}-\{\vec{0}\} & \overset{K_{n}}\longrightarrow & \mathbb{R}^{n} \\
-\end{matrix}
+% AMScd reference https://www.jmilne.org/not/Mamscd.pdf
+\require{AMScd}
+\begin{CD}
+\mathbb{RP}^{n} @>\tilde{K_{n}}>> \mathbb{RP}^{n}\\
+@V{\rho_n}VV  @VV{\pi_n}V \\
+\mathbb{R}^{n+1}/\{\infty\} @>{K_n}>> \mathbb{R}^{n}
+\end{CD}
 $$
 
 $\tilde{K_n}$ does the scaling part of $K_n$, so it is easily written as a projective matrix.
