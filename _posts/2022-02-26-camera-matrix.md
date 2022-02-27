@@ -59,7 +59,6 @@ Below is a commutative diagram depicting how $K_n$ factors over $\tilde{K}_n$. R
 
 $$
 % AMScd reference https://www.jmilne.org/not/Mamscd.pdf
-\require{AMScd}
 \begin{CD}
 \mathbb{RP}^{n} @>\tilde{K_{n}}>> \mathbb{RP}^{n}\\
 @V{\rho_n}VV  @VV{\pi_n}V \\
