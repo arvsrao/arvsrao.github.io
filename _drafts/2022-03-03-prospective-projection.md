@@ -27,7 +27,7 @@ F & 0 & 0 & 0 \\
 0 & 0 & 1 & 0 \\
 \end{bmatrix}
 $$
-is a basic perspective projection. It is defined on the affine portion of $\mathbb{RP}^3$ and by copying the $z$ cooridinate into the $w$ coordinate, lines are projected onto the $z = F$ plane of the affine space in $\mathbb{RP}^3$.
+is a basic perspective projection. It is defined on the affine portion of $\mathbb{RP}^3$ and by copying the $z$ cooridinate into the $w$ coordinate, lines are projected onto the $z = F$ plane of the affine space in $\mathbb{RP}^3$ after homogenous division.
 $$
 \begin{bmatrix}
 F & 0 & 0 & 0 \\
@@ -57,7 +57,9 @@ F \\
 \end{bmatrix}.
 $$
 
-$P$ renders the 3D scene in perspective on the image plane. However, we humans and also cameras can not perceive the whole scene. What can be perceived are bounded regions. In the literature there are two volume one
+$P$ renders the entire 3D scene in perspective on the image plane even though we humans and by consequence cameras can not see the whole scene. This limitation or *field of view* is modeled by a bounding region in front of the camera. In the literature on image projection there are two types view volumes presented: 
+
+1. The *view frustum*, pictured below in Figure #1; and it pairs with perspective projection. Points in a frustum bounded scene are meant to be projected onto the near face, at $z=-n$, along lines through the origin.
 
 <figure>
 <div align="center">
@@ -66,32 +68,41 @@ $P$ renders the 3D scene in perspective on the image plane. However, we humans a
 <figcaption> Figure #1. The view frustum. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html </figcaption>
 </figure>
 
+2. The *[orthrographic view volume][1]* pictured below in Figure #2; and it pairs with an orthographic projection. Essentially, the $z$-coordiante is forgotten. A basic orthographic projection, written as projective matrix, is
+   $$
+   O = 
+   \begin{bmatrix}
+   1 & 0 & 0 & 0 \\
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 1 \\
+   \end{bmatrix}.
+   $$
 
-
+<figure>
+<div align="center">
+	<img src = "/assets/orthographic_volume.png">
+</div>
+<figcaption> Figure #2. The orthographic view volume. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html </figcaption>
+</figure>
 
 Filtering the scene removes regions that would not be viewable and would be extra work to render anyway. Additionally, not clipping could lead to unwanted artifacts. For instance, without a near plane the rendered output might exhibit [z-fighting][2]. Choosing the near plane so it is not too close to the eye (at a distance smaller than floating point precision), or keeping the near and far plane not too far apart reduces the chance of [z-fighting][2]. 
+
+To speed the clipping proccess the orthographic volume is mapped to the canonical view volume, the unit cube depicted in Figure #2. Having a canonical view volume allows for [simpler hardware][3].
 
 <figure>
 <div align="center">
 	<img src = "/assets/canonical_volume.png">
 </div>
-<figcaption> Figure #3. Standard clipping volume. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html</figcaption>
+<figcaption> Figure #2 Standard clipping volume. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html</figcaption>
 </figure>
 
 
 My route to computing the perspective projection $P_{proj}$ goes through orthographic projection $O_{proj}$. So, what I want is some projective transformation $M_p$ that maps the view frustum to the orthographic cube, which then is mapped to the canonical cube via $O_{proj}$. 
 
-## Orthographic Projection
-
-When processing a scene the area in front of the virtual camera/eye is clipped to remove parts of the scene outside the box show below in Figure #2. The [orthrographic view volume][1], as it is called, is defined by planes: $z=-f$,  $z=-n$, $y=t$, $y=b$, $x=l$, and $x=r$. Here $l=$left, $r=$right, $t=$top, $b=$bottom, $n=$near,  and $f=$far; necessarily $r>l$, $t >b$, and $f > n$.
-
-
-
 ## Mapping the Orthographic View Volume to the Canonical View Volume
 
-
-
-To speed the clipping proccess the orthographic volume is mapped to the canonical view volume, the unit cube depicted in Figure #2. Having a canonical view volume allows for [simpler hardware][3].
+The [orthrographic view volume][1] is defined by planes: $z=-f$,  $z=-n$, $y=t$, $y=b$, $x=l$, and $x=r$. Here $l=$left, $r=$right, $t=$top, $b=$bottom, $n=$near,  and $f=$far; necessarily $r>l$, $t >b$, and $f > n$.
 
 <figure>
 <div align="center">
@@ -130,7 +141,7 @@ O_{proj}
   0           & \frac{2}{t-b} & 0               &  \frac{b+t}{b-t} \\
   0           & 0             & -\frac{2}{f-n}  & -\frac{f+n}{f-n} \\
   0           & 0             & 0               &         1        \\
-\end{bmatrix}.
+\end{bmatrix}
 \\
 \end{align}
 $$
@@ -245,9 +256,8 @@ $$
 </figure>
 
 
-All the pieces are in place to describe perspective projection in a pipeline fashion. By which I mean a sequence of transformations.
+All the pieces are in place to describe perspective projection in a pipeline fashion. By which I mean a sequence of transformations. Finally, the full perspective projection matrix is
 
-Finally, the full perspective projection matrix is
 $$
 \begin{align}
 P_{proj} &= O_{proj} M_{pp} \\
