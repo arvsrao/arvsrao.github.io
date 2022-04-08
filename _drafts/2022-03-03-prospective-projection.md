@@ -57,9 +57,9 @@ F \\
 \end{bmatrix}.
 $$
 
-$P$ renders the entire 3D scene in perspective on the image plane even though we humans and by consequence cameras can not see the whole scene. This limitation or *field of view* is modeled by a bounding region in front of the camera. In the literature on image projection there are two types view volumes presented: 
+$P$ renders the entire 3D scene in perspective on the image plane even though we humans and by consequence cameras can not see the whole scene. This limitation or *field of view* is modeled by a bounding region in front of the camera. Points and triangles outside the bounding region are not rendered. In the literature on image projection there are two types of view volumes presented: 
 
-1. The *view frustum*, pictured below in Figure #1; and it pairs with perspective projection. Points in a frustum bounded scene are meant to be projected onto the near face, at $z=-n$, along lines through the origin.
+1. The *view frustum*, pictured below in Figure #1; and it pairs with perspective projection.
 
 <figure>
 <div align="center">
@@ -68,33 +68,45 @@ $P$ renders the entire 3D scene in perspective on the image plane even though we
 <figcaption> Figure #1. The view frustum. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html </figcaption>
 </figure>
 
-2. The *[orthrographic view volume][1]* pictured below in Figure #2; and it pairs with an orthographic projection. Essentially, the $z$-coordiante is forgotten. A basic orthographic projection, written as projective matrix, is
+Points in the frustum are perspective projected onto the near face, at $z=-n$, along lines through the origin. For in the projective transformation 
+$$
+\begin{bmatrix}
+n & 0 & 0 & 0 \\
+0 & n & 0 & 0 \\
+0 & 0 & n & 0 \\
+0 & 0 & -1 & 0 \\
+\end{bmatrix}
+$$
+is a basic perspective projection. For all intents and purposes $z = -n$ is the screen.
+
+2. The *[orthrographic view volume][1]* pictured below in Figure #2; it pairs with an orthographic or parallel projection. A basic orthographic projection written as projective matrix acting on the affine space of $\mathbb{RP}^3$ is
    $$
    O = 
    \begin{bmatrix}
    1 & 0 & 0 & 0 \\
    0 & 1 & 0 & 0 \\
-   0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & -n \\
    0 & 0 & 0 & 1 \\
    \end{bmatrix}.
    $$
+   Essentially, the $z$-coordiante is erased and $x,y$ coordinates are moved/projected to the screen at $z=-n$ .
 
 <figure>
 <div align="center">
 	<img src = "/assets/orthographic_volume.png">
 </div>
-<figcaption> Figure #2. The orthographic view volume. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html </figcaption>
+<figcaption> Figure #2. The orthographic view volume. Borrowed from http://www.songho.ca/opengl/gl_projectionmatrix.html </figcaption>
 </figure>
 
-Filtering the scene removes regions that would not be viewable and would be extra work to render anyway. Additionally, not clipping could lead to unwanted artifacts. For instance, without a near plane the rendered output might exhibit [z-fighting][2]. Choosing the near plane so it is not too close to the eye (at a distance smaller than floating point precision), or keeping the near and far plane not too far apart reduces the chance of [z-fighting][2]. 
+Filtering points and triangles outside the bounding region potentially eliminates a lot of extra work and unwanted artifacts. For instance, without a near plane the rendered output might exhibit [z-fighting][2]. Choosing the near plane so it is not too close to the eye (at a distance smaller than floating point precision), or keeping the near and far plane not too far apart reduces the chance of [z-fighting][2]. 
 
-To speed the clipping proccess the orthographic volume is mapped to the canonical view volume, the unit cube depicted in Figure #2. Having a canonical view volume allows for [simpler hardware][3].
+To speed the clipping proccess the bounding volume is mapped to the *canonical view volume*, the unit cube depicted in Figure #3. This usually a requirement coming from the hardware; Having a canonical view volume allows for [simpler hardware][3].
 
 <figure>
 <div align="center">
 	<img src = "/assets/canonical_volume.png">
 </div>
-<figcaption> Figure #2 Standard clipping volume. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html</figcaption>
+<figcaption> Figure #3 Standard clipping volume. Borrowed from http://www.songho.ca/opengl/gl_projectionmatrix.html</figcaption>
 </figure>
 
 
@@ -108,7 +120,7 @@ The [orthrographic view volume][1] is defined by planes: $z=-f$,  $z=-n$, $y=t$,
 <div align="center">
 	<img src = "/assets/orthographic_to_canonical.pdf">
 </div>
-<figcaption> Figure #3. Orthographic view volume. The eye is the blue dot at the origin. </figcaption>
+<figcaption> Figure #4. Orthographic view volume. The eye is the blue dot at the origin. </figcaption>
 </figure>
 
 
@@ -155,8 +167,9 @@ Consider a $yz$-cross section of the frustum. Now, imagine collapsing the top an
 <div align="center">
 	<img src = "/assets/yz_cross_section.jpg">
 </div>
-<figcaption> Figure #4. Deforming the frustum to a box. </figcaption>
+<figcaption> Figure #5. Deforming the frustum to a box. </figcaption>
 </figure>
+
 
 Naturally, both arrows intercept the near face at the same point. Therefore, the horizontal green arrow is constructed by projecting the sloping green arrow in the frustum (on the left in Figure #3) to the near face. The $y$-coordinate of the near face intercept is then the  $y$-value of the mapped horizontal green arrow (on the right in Figure #3). Since any point in the interior of the frustum section can be projected to the near face, the $y$-coordinate of every point in the frustum is mapped by the deformation to its projection on the near face; specifically, if $(y,z)$ is a point in the frustum section, then  $y \mapsto \frac{-ny}{z}$ on the near face. A derivation of the projected $y$ value can be found in my previous post on [camera matrices]({% post_url 2022-02-26-camera-matrix %}).
 
@@ -252,7 +265,7 @@ $$
 <div align="center">
 	<img src = "/assets/pipeline.pdf">
 </div>
-<figcaption> Figure #5. Mapping the frustum to the canonical clipping volume. </figcaption>
+<figcaption> Figure #6. Mapping the frustum to the canonical clipping volume. </figcaption>
 </figure>
 
 
