@@ -15,6 +15,8 @@ typora-root-url: ../
 
 Perspective in art and photography is about representing depth of 3D scenes in 2D. When thinking about perspective the first image that comes to mind, and it ought to be familiar to most people, is of railroad tracks running off into the distance. The tracks though parallel are rendered as angled toward each other; and they would eventually meet at some point behind the image plane called the  *vanishing point*, or the *point at infinity*. Objects further away appear smaller than those closer to the camera or eye. This is what the world looks like to us and to cameras, since cameras are meant to capture of the world as we see it.
 
+<!--more-->
+
 In a [previous post](/2022-02-26-camera-matrix.html) I dervied the camera matrix, a projective transformation of a 3D scene before a camera looking down the negative $z$-axis onto a image plane located at $z = F$.  Tranformed points are projected onto the image plane only after their $x$ and $y$ coordinates are divided by the $z$. This *homogenous division* scales points by there depth; scene points further away are projected to points on the image closer the image center. Consequently, lines (e.g. railroad tracks) in the scene which point in the $z$-axis direction will naturally angle inward, toward the image plane center; and similarly objects in the scene will appear smaller if located further away from the camera center. *... which sounds like perspective*.
 
 By simply projecting lines through the origin onto plane $z = F$, the scene can be rendered in perspective. The projective transformation 
@@ -59,7 +61,7 @@ $$
 
 $P$ renders the entire 3D scene in perspective on the image plane even though we humans and by consequence cameras can not see the whole scene. This limitation or *field of view* is modeled by a bounding region in front of the camera. Points and triangles outside the bounding region are not rendered. In the literature on image projection there are two types of view volumes presented: 
 
-1. The *view frustum*, pictured below in Figure #1; and it pairs with perspective projection.
+* The *view frustum*, pictured below in Figure #1; and it pairs with perspective projection.
 
 <figure>
 <div align="center">
@@ -70,6 +72,7 @@ $P$ renders the entire 3D scene in perspective on the image plane even though we
 
 Points in the frustum are perspective projected onto the near face, at $z=-n$, along lines through the origin. For in the projective transformation 
 $$
+P = 
 \begin{bmatrix}
 n & 0 & 0 & 0 \\
 0 & n & 0 & 0 \\
@@ -77,19 +80,20 @@ n & 0 & 0 & 0 \\
 0 & 0 & -1 & 0 \\
 \end{bmatrix}
 $$
-is a basic perspective projection. For all intents and purposes $z = -n$ is the screen.
+is a basic perspective projection. For all intents and purposes $z = -n$ is the screen. Specifically, the frustum is flattened onto the near face after homogenous division. This okay because resolving occlusion is not a goal at the moment; [later](#map-to-box) when it is, the $z$-coordinate of projected points is retained to determine if a point or triangle is blocked by something else in the scene.
 
-2. The *[orthrographic view volume][1]* pictured below in Figure #2; it pairs with an orthographic or parallel projection. A basic orthographic projection written as projective matrix acting on the affine space of $\mathbb{RP}^3$ is
-   $$
-   O = 
-   \begin{bmatrix}
-   1 & 0 & 0 & 0 \\
-   0 & 1 & 0 & 0 \\
-   0 & 0 & 0 & -n \\
-   0 & 0 & 0 & 1 \\
-   \end{bmatrix}.
-   $$
-   Essentially, the $z$-coordiante is erased and $x,y$ coordinates are moved/projected to the screen at $z=-n$ .
+* The *[orthrographic view volume][1]* pictured below in Figure #2; it pairs with an orthographic or parallel projection. Points in the cuboid volume are projected along lines perpendicular to the near face, $z=-n$. A basic orthographic projection written as projective matrix acting on the affine space of $\mathbb{RP}^3$ ($w=1$) is
+
+$$
+O = 
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & -n \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}.
+$$
+Essentially, the $z$-coordiante is erased and $x,y$ coordinates are translated to the screen at $z=-n$ .
 
 <figure>
 <div align="center">
@@ -158,6 +162,8 @@ O_{proj}
 \end{align}
 $$
 is the *orthographic projection* expressed a projective transformation.
+
+<a name="map-to-box"></a>
 
 ## Projecting the Frustum to the Orthographic Volume
 
