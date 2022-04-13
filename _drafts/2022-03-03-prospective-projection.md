@@ -9,7 +9,7 @@ typora-root-url: ../
 
 ![](/assets/pxfuel.com.jpeg)
 
-All the presentations of image projection, projection of a 3D scene to 2D, in books and on the web that I have seen present perspective and orthographic projection without relating them. As a result the derivations of perspective projection matrix feel either overly complicated or completely lacking in detail--in some presentations the perspective projection matrix is simply just stated. At least at the level of formulas perspective and orthographic projection seem similiar enough to believe perspective projection could be written in terms of orthographic projection. 
+The presentations of image projection, projection of a 3D scene to 2D, in books and on the web I have seen present perspective and orthographic projection without relating them. As a result the derivations of perspective projection matrix feel either overly complicated or completely lacking in detail--in some presentations the perspective projection matrix is simply just stated. At least at the level of formulas perspective and orthographic projection look similiar enough to believe perspective projection could be written in terms of orthographic projection. 
 
 Here perspective projection is a projective transformation of the view frustum to the canonical view volume; and, abusing the term a bit, orthographic projection is an affine map from the orthographic view volume to the canonical view volume. Perspective and orthographic projection are technically methods of projecting points to screen, not really maps from the screen. I use these terms interchangeable throughout to refer to maps between [cuboids](https://en.wikipedia.org/wiki/Cuboid) and methods of projecting to the image plane.
 
@@ -22,7 +22,7 @@ Here perspective projection is a projective transformation of the view frustum t
 
 <!--more-->
 
-This post is about deriving the perspective projection matrix by factoring it through the orthographic view volume. IMHO doing so leads to a simpler derivation of the perspective projection matrix when compared to traditional presentations.
+In what follows I derive the perspective projection matrix by factoring it through the orthographic view volume. IMHO doing so leads to a simpler derivation of the perspective projection matrix.
 
 ## Perspective
 
@@ -86,8 +86,6 @@ The view frustum is a pyramidal solid primarly defined by the dimensions of its 
 </div>
 <figcaption> Figure #1. The view frustum. Image attribution  http://www.songho.ca/opengl/ </figcaption>
 </figure>
-
-
 Points in the frustum are perspective projected by 
 $$
 P = 
@@ -132,7 +130,7 @@ To speed the clipping proccess the bounding volume is usually mapped to the *can
 <figcaption> Figure #3 Standard clipping volume. Image attribution  http://www.songho.ca/opengl/ </figcaption>
 </figure>
 
-The canonical view volume is also an orthographic volume; so when points are in the canonical frame they are orthographically projected to the screen. 
+The canonical view volume is also an orthographic volume; so when points are in the canonical frame they are orthographically projected to the screen at $z = 1$. 
 
 ## Mapping the Orthographic View Volume to the Canonical View Volume
 
