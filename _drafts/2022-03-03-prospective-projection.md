@@ -9,19 +9,24 @@ typora-root-url: ../
 
 ![](/assets/pxfuel.com.jpeg)
 
+All the presentations of image projection, projection of a 3D scene to 2D, in books and on the web that I have seen present perspective and orthographic projection without relating them. As a result the derivations of perspective projection matrix feel either overly complicated or completely lacking in detail--in some presentations the perspective projection matrix is simply just stated. At least at the level of formulas perspective and orthographic projection seem similiar enough to believe perspective projection could be written in terms of orthographic projection. 
 
+Here perspective projection is a projective transformation of the view frustum to the canonical view volume; and, abusing the term a bit, orthographic projection is an affine map from the orthographic view volume to the canonical view volume. Perspective and orthographic projection are technically methods of projecting points to screen, not really maps from the screen. I use these terms interchangeable throughout to refer to maps between [cuboids](https://en.wikipedia.org/wiki/Cuboid) and methods of projecting to the image plane.
 
-Descriptions of image projection in books and on the web often present perspective and orthographic projection serially without relating them. At least at the level of formulas the OpenGL perspective & orthographic matrices seem similiar enough.
+<figure>
+<div align="center">
+	<img src = "/assets/pipeline.pdf">
+</div>
+<figcaption> Factoring the map from the frustum to the canonical view volume through the orthographic view volume. </figcaption>
+</figure>
 
+<!--more-->
 
-
-, which is a mapping of the view frustum to a canonical frame. The derivation of this projective transformation in the sources I found seemed either overly complicated or lacking in detail. My aim in this note is to derive the perspective projection matrix as mapping from the 
+This post is about deriving the perspective projection matrix by factoring it through the orthographic view volume. IMHO doing so leads to a simpler derivation of the perspective projection matrix when compared to traditional presentations.
 
 ## Perspective
 
 Perspective in art and photography is about representing depth of 3D scenes in 2D. When thinking about perspective the first image that comes to mind, and it ought to be familiar to most people, is of railroad tracks running off into the distance. The tracks though parallel are rendered as angled toward each other such that they would eventually meet at some point behind the image plane called the *vanishing point*, or the *point at infinity*. Objects further away appear smaller than those closer to the camera or eye. This is what the world looks like to us and cameras, since cameras are meant to capture of the world as we see.
-
-<!--more-->
 
 In a [previous post](/2022-02-26-camera-matrix.html) I dervied the camera matrix, a projective transformation of a 3D scene in front of a camera looking down the negative $z$-axis onto an image plane located behind the camera at $z = F$. The camera projection renders the scene in perspective on the image plane. Scene points are projected onto the image plane by dividing their $x$ and $y$ coordinates by the depth coordinate $z$. This *homogenous division* scales points by there depth; consequently, scene points further away are projected to points on the image closer the image center. Lines (e.g. railroad tracks) in the scene which have depth will naturally angle inward, toward the image plane center; and the result is objects in the scene will appear smaller if located further away from the origin.
 $$
@@ -65,11 +70,11 @@ $$
 
 $P$ copies the $z$ cooridinate into the $w$ coordinate, and after homogenous division lines are projected onto the $z = F$ plane of $\mathbb{A}^3$. 
 
-$P$ renders the entire scene in perspective on the image plane even though we humans, and by relation cameras, can not perceive the whole scene. This limitation or *field of view* is modeled by a bounding region in front of the camera. Points and triangles outside the bounding region are filtered out before projection to the screen. 
+$P$ renders the entire scene in perspective on the image plane even though we humans, and by relation cameras, can not perceive the whole scene. This limitation or *field of view* is modeled by a 3D view volume in front of the camera. Points and triangles outside the bounding region are filtered out before projection to the screen. 
 
-Filtering points and triangles outside the bounding region potentially eliminates a lot of extra work and unwanted artifacts. For instance, without a near plane the rendered output might exhibit [z-fighting][2]. Choosing the near plane so it is not too close to the eye (at a distance smaller than floating point precision), or keeping the near and far plane not too far apart reduces the chance of [z-fighting][2].
+Filtering out points and triangles outside the view volume potentially eliminates a lot of extra work and unwanted artifacts. For instance, without a near plane the rendered output might exhibit [z-fighting][2]. Choosing the near plane so it is not too close to the eye (at a distance smaller than floating point precision), or keeping the near and far plane not too far apart reduces the chance of [z-fighting][2].
 
-Presentations of image projection in books and course notes/videos focus two types of view volumes: the *view frustum* and the *orthographic view volume*.
+Presentations of image projection in books and course notes/videos focus on  two types of view volumes: the *view frustum* and the *orthographic view volume*.
 
 #### View Frustum
 
@@ -79,8 +84,9 @@ The view frustum is a pyramidal solid primarly defined by the dimensions of its 
 <div align="center">
 	<img src = "/assets/frustum.png">
 </div>
-<figcaption> Figure #1. The view frustum. Clipped from http://www.songho.ca/opengl/gl_projectionmatrix.html </figcaption>
+<figcaption> Figure #1. The view frustum. Image attribution  http://www.songho.ca/opengl/ </figcaption>
 </figure>
+
 
 Points in the frustum are perspective projected by 
 $$
@@ -106,15 +112,16 @@ O =
 0 & 0 & 0 & 1 \\
 \end{bmatrix}.
 $$
-Essentially, the $z$-coordiante is erased and $x,y$ coordinates are translated to the screen at $z=-n$ . The exact matrix formulation of $O$ is so important because when implemented the $x$ and $y$ coordinates would simply be picked from points in the target frame.
+Essentially, the $z$-coordiante is erased and $x,y$ coordinates are translated to the screen at $z=-n$ . The exact matrix formulation of $O$ is not so important, because when implemented the $x$ and $y$ coordinates would simply be picked from points in the target frame.
 
 <figure>
 <div align="center">
 	<img src = "/assets/orthographic_volume.png">
 </div>
-<figcaption> Figure #2. The orthographic view volume. Borrowed from http://www.songho.ca/opengl/gl_projectionmatrix.html </figcaption>
+<figcaption> Figure #2. The orthographic view volume. Image attribution http://www.songho.ca/opengl/ </figcaption>
 </figure>
-#### The Canonical View Volume
+
+#### Canonical View Volume
 
 To speed the clipping proccess the bounding volume is usually mapped to the *canonical view volume*, a cube centered at the origin depicted in Figure #3. Mapping to a canonical view volume allows for [simpler hardware][3]. Throughout this post I use the OpenGL definition of the canonical frame.  
 
@@ -122,11 +129,10 @@ To speed the clipping proccess the bounding volume is usually mapped to the *can
 <div align="center">
 	<img src = "/assets/canonical_volume.png">
 </div>
-<figcaption> Figure #3 Standard clipping volume. Borrowed from http://www.songho.ca/opengl/gl_projectionmatrix.html</figcaption>
+<figcaption> Figure #3 Standard clipping volume. Image attribution  http://www.songho.ca/opengl/ </figcaption>
 </figure>
-The canonical view volume is also an orthographic volume; so when points are in the canonical frame they are orthographically projected to the screen. 
 
-My route to computing the perspective projection $P_{proj}$ goes through orthographic projection $O_{proj}$. So, what I want is some projective transformation $M_{pp}$ that maps the view frustum to the orthographic cube, which then is mapped to the canonical cube via $O_{proj}$.
+The canonical view volume is also an orthographic volume; so when points are in the canonical frame they are orthographically projected to the screen. 
 
 ## Mapping the Orthographic View Volume to the Canonical View Volume
 
@@ -138,8 +144,6 @@ The [orthrographic view volume][1] is defined by planes: $z=-f$,  $z=-n$, $y=t$,
 </div>
 <figcaption> Figure #4. Orthographic view volume. The eye is the blue dot at the origin. </figcaption>
 </figure>
-
-
 Since both volumes are the same shape, with different dimensions and centers, an affine map converts the orthographic volume to the canonical volume. Specifically, the map <u>translates</u> the orthographic view center to the origin, then <u>scales</u> all the axises so the box dimension are uniform and side length is 2. For some frameworks like Vulkan the camera in the target coordinate system looks down the positive $z$-axis. Therefore, the projection must also flip the $z-$axis.
 
 $$
@@ -187,8 +191,6 @@ Consider a $yz$-cross section of the frustum. Now, imagine collapsing the top an
 </div>
 <figcaption> Figure #5. Deforming the frustum to a box. </figcaption>
 </figure>
-
-
 Naturally, both arrows intercept the near face at the same point. Therefore, the horizontal green arrow is constructed by projecting the sloping green arrow in the frustum (on the left in Figure #3) to the near face. The $y$-coordinate of the near face intercept is then the  $y$-value of the mapped horizontal green arrow (on the right in Figure #3). Since any point in the interior of the frustum section can be projected to the near face, the $y$-coordinate of every point in the frustum is mapped by the deformation to its projection on the near face; specifically, if $(y,z)$ is a point in the frustum section, then  $y \mapsto \frac{-ny}{z}$ on the near face. A derivation of the projected $y$ value can be found in my previous post on [camera matrices]({% post_url 2022-02-26-camera-matrix %}).
 
 Moving from heuristic to implememation: Because the deformation includes a projection of the $y$ coordinate, it can be conceived of as projective transformation 
@@ -285,10 +287,7 @@ $$
 </div>
 <figcaption> Figure #6. Mapping the frustum to the canonical clipping volume. </figcaption>
 </figure>
-
-
-All the pieces are in place to describe perspective projection in a pipeline fashion. By which I mean a sequence of transformations. Finally, the full perspective projection matrix is
-
+All the pieces are in place to describe perspective projection in a pipeline fashion. By which I mean a sequence of transformations, factoring throught the orthographic view volume. Finally, the full perspective projection matrix is
 $$
 \begin{align}
 P_{proj} &= O_{proj} M_{pp} \\
@@ -315,7 +314,9 @@ n & 0 & 0   &  0 \\
 \end{align}
 $$
 
-Though not at all necessary I carried out these calculations in a [Juypter notebook](/perspective-projection.html).  
+Though not at all necessary I carried out these calculations in a [Juypter notebook](/perspective-projection.html).   
+
+
 
 #### Some References
 
