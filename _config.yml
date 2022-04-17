@@ -11,7 +11,7 @@ permalink:        pretty
 # Setup
 title:            Arvind Rao
 description:      'Mathematician / Software Engineer. <a href="https://twitter.com/cwcomplex" target="_blank">@cwcomplex</a>.'
-url:              http://www.rao.im
+url:              https://rao.im
 
 timezone:         Europe/Berlin
 paginate:         8
