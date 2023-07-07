@@ -1,3 +1,7 @@
+---
+layout: dnr
+---
+
 # Sensor Fusion Nanodegree
 
 I really enjoyed working my way through Udacity's [Sensor Fusion Nanodegree Program](https://www.udacity.com/course/sensor-fusion-engineer-nanodegree--nd313). Each lesson culminated in a final project. My final project submissions are described below; all submissions are implemented in C++, except for the radar project which is in Matlab.
@@ -16,5 +20,5 @@ I really enjoyed working my way through Udacity's [Sensor Fusion Nanodegree Prog
 
 [Link to Verified Certificate](https://confirm.udacity.com/L3GYWLLG)
 
-![Nanodegree Certificate](./udacity-sensor-fusion-certificate.png "Certificate")
+![Nanodegree Certificate](/assets/udacity-sensor-fusion-certificate.png "Certificate")
 
