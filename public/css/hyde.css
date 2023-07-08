@@ -222,6 +222,24 @@ a.sidebar-nav-item:focus {
   color: #75b5aa;
 }
 
+/* Boeing Blue*/
+.theme-base-0g .sidebar {
+  background-color: #0039a6;
+}
+.theme-base-0g .content a,
+.theme-base-0g .related-posts li a:hover {
+  color: #484848;
+}
+
+/* Royal Blue*/
+.theme-base-0h .sidebar {
+  background-color: #002366;
+}
+.theme-base-0h .content a,
+.theme-base-0h .related-posts li a:hover {
+  color: #0039a6;
+}
+
 /* Blue */
 .theme-base-0d .sidebar {
   background-color: #6a9fb5;
