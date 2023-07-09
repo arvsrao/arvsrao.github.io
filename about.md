@@ -4,12 +4,22 @@ title: About
 ---
 ![space_partition](/assets/ragnar.jpg)
 
-Awhile back I studied differential geometry and geometric analysis [@Iowa][3]. But these days I work with *the* big data [@HERE][1]. While I **left** academic mathematics, mathematics never *left* me. How I think about problem solving and my scientific tastes are heavily influenced by mathematics.
+A major goal of mine is to develop products that manipulate, simulate, or analyze complex 3D models. Today I am a software engineer [@HERE][1], contributing mainly to the development of map compilers optimized for geocoding and search use cases. At [Spark Summit 2017][4] I talked about work I did to create heat maps from reverse geocoding logs.
 
-That said, I have broad interests which span pure and applied mathematics, electrical engineering, and computer science. In particular, topics related to graphics, geometry processing, computational geometry and topology; MIMO wireless system design and associated detection/estimation methods; and more...This blog is an attempt to record my musings on these and other topics.
+I did my undergrad in electrical engineering at Georiga Tech in Atlanta. Digital signal processing and communciations systems were my favorite subjects. Being fairly mathematical, DSP and communications theory inspired me to study more mathematics and to eventually do a PhD in differential geometry and analysis [@Iowa][3]. 
 
-I love discussions, so please don't hesitate to connect [@cwcomplex][2] or <span style="font-size:18px;font-family:american typewriter"> {first name} **at** {last name}.im</span>.
+Before leaving academia I took a postdoctoral research post at the [University of Pennsylvania][2]. There I developed a suite of mathematical contrast measures for 3D high angular diffusion MRI to better classify pathologies of neurodegenerative diseases. I published a paper about these measures at the [MMBIA 2012 conference][5].
 
-[1]: https://company.here.com/here/
+While I **left** academic mathematics, mathematics never *left* me. How I think about problem solving and my scientific tastes are heavily influenced by mathematics. That said, I have broad interests which span pure and applied mathematics, electrical engineering, and computer science. In this blog I hope to, in particular, explore topics related to:
+* computer graphics and geometry processing
+* computational geometry/topology
+* MIMO wireless system design and associated detection/estimation methods
+* and more...
+
+If you've read this far and want to reach out, don't hesitate to connect [@cwcomplex][2] or <span style="font-size:18px;font-family:american typewriter"> {first name} **at** {last name}.im</span>.
+
+[1]: https://developer.here.com/products/geocoding-and-search
 [2]: https://twitter.com/6sphere
-[3]: https://www.math.uiowa.edu
+[3]: http://ir.uiowa.edu/etd/582/
+[4]: https://youtu.be/n7ZpUrsUzZo
+[5]: https://ieeexplore.ieee.org/document/6164756
