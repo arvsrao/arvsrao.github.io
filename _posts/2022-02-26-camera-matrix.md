@@ -8,7 +8,7 @@ typora-root-url: ../
 ---
 
 **Given a 3D scene in world coordinates, how does an image of the scene form in the camera, and how do 3D scene points project to the image plane?** The short answer to the later question is the [camera matrix](#the-camera-matrix). And this short note is devoted to deriving the [camera matrix](#the-camera-matrix). First some mathematical preliminaries.
-
+<!--more-->
 ## From Pencils to Points
 
 Consider the generic scenario $\vec{x} \in \mathbb{R}^{n+1}$ and a plane $x_{n+1} = f$. Pencils in $\mathbb{R}^{n+1}$, that is lines which pass through both the origin and  $x_{n+1} = f$, map to unique points in plane $x_{n+1} = f$. Figure #1 shows a pencil intersecting plane $x_{n+1} = f$ at unique point $\tilde{x}$.
