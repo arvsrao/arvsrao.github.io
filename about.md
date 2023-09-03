@@ -2,7 +2,7 @@
 layout: page
 title: About
 ---
-![space_partition](/assets/ragnar.jpg)
+![space_partition](/assets/profile-for-web.jpeg)
 
 A major goal of mine is to develop products that manipulate, simulate, or analyze complex 3D models. Today I am a software engineer [@HERE][1], contributing mainly to the development of map compilers optimized for geocoding and search use cases. At [Spark Summit 2017][4] I talked about work I did to create heat maps from reverse geocoding logs.
 
