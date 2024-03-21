@@ -16,4 +16,5 @@ url:              https://rao.im
 timezone:         Europe/Berlin
 paginate:         8
 
+include:          udacity/
 exclude:          [.gitignore, CNAME, README.md]
