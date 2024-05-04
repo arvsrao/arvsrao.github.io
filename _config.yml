@@ -18,3 +18,6 @@ paginate:         8
 
 include:          udacity/
 exclude:          [.gitignore, CNAME, README.md]
+
+# Google Analytics 4
+google_analytics: G-XVZ56FPXF4

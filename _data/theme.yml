@@ -10,4 +10,5 @@ cv: /assets/resume.pdf
 email: arvind@rao.im
 tagline: "Mathematician / Software Engineer."
 
-google_analytics_key: UA-67788713-1
+#old google tag UA-67788713-1
+google_analytics_key: G-XVZ56FPXF4
