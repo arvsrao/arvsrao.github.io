@@ -43,7 +43,7 @@ $$
 
 This system is pictured above in Figure #1. Any two equations of the system explain the other. For example the third equation can be eliminated because $\rho_3 = \frac{1}{2}(3\rho_1 + \rho_2)$. Leaving a system of two independent equations in two unknowns, which is solvable. 
 
-More common are systems like the one below. It is pictured below in Figure #2.
+More common are systems like the one listed and pictured below.
 
 $$
 \begin{align*}
@@ -154,7 +154,7 @@ $$
 \right]
 $$
 
-The norm to be minimized is has a lower bound purely in last $n - \rho$ coordinates of $\tilde{y}$.
+The norm to be minimized has a lower bound purely in last $n - \rho$ coordinates of $\tilde{y}$.
 
 $$
 \begin{equation*}
