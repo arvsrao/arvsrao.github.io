@@ -19,5 +19,5 @@ I really enjoyed working my way through Udacity's [C++ Nanodegree Program](https
 
 [Link to Verified Certificate](https://www.udacity.com/certificate/e/b8cfeb5a-30cb-11ed-b2b2-37d55a081cf3)
 
-![Nanodegree Certificate](/assets/udacity-c++-certificate.png "Certificate")
+.![Nanodegree Certificate](./assets/udacity-c++-certificate.png "Certificate")
 

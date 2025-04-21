@@ -18,5 +18,5 @@ I really enjoyed working my way through Udacity's [Sensor Fusion Nanodegree Prog
 
 [Link to Verified Certificate](https://confirm.udacity.com/L3GYWLLG)
 
-![Nanodegree Certificate](/assets/udacity-sensor-fusion-certificate.png "Certificate")
+![Nanodegree Certificate](./assets/udacity-sensor-fusion-certificate.png "Certificate")
 
