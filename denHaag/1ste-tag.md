@@ -41,3 +41,7 @@ Wir wohnen im ersten Obergeschoss, aber die ganze Wohnung legt ein Stockwerk hö
 ![Den Haag - 10 von 13](./assets/Den Haag - 10 von 13.jpeg)
 
 ![Den Haag - 13 von 13](./assets/Den Haag - 13 von 13.jpeg)
+
+Als die Sonne ging unter, haben wir den Strand verlassen. Wir müssten Lebensmittel einkaufen. Unterwegs nach unserer Ferienwohnung hatten wir bei *Jumbo* angehalten, und wurden mit unsere Lieblings Erdnussbutter wiedervereint.
+
+ ![calve](./assets/calve.jpeg)
