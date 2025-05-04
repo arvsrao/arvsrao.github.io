@@ -4,7 +4,7 @@ title: About
 ---
 <figure>
 <div align="center">
-  <img src = "./assets/profile-fotos/den-Haag-am-strand.jpeg">
+  <img src = "/assets/profile-fotos/den-Haag-am-strand.jpeg">
 </div>
   <figcaption align="center">
     der Stand von Scheveningen, den Haag.
