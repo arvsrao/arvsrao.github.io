@@ -26,7 +26,7 @@ The unknowns are $x_{i} \in X$ and the range / observation values are $y_{j} \in
 
 <figure>
 <div align="center">
-  <img src = "/assets/sympy-figure2.png">
+  <img src = "/assets/overdetermined-systems/sympy-figure2.png">
 </div>
 <figcaption> Figure #1. Overdetermined system with a solution. </figcaption>
 </figure>
@@ -55,7 +55,7 @@ $$
 
 <figure>
 <div align="center">
-  <img src = "/assets/sympy-figure1.png">
+  <img src = "/assets/overdetermined-systems/sympy-figure1.png">
 </div>
 <figcaption> Figure #2. Overdetermined system without a solution. </figcaption>
 </figure>

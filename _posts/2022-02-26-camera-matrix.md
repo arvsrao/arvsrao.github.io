@@ -15,7 +15,7 @@ Consider the generic scenario $\vec{x} \in \mathbb{R}^{n+1}$ and a plane $x_{n+1
 
 <figure>
 <div align="center">
-	<img src = "/assets/plane_coords.jpg">
+	<img src = "/assets/camera-matrix/plane_coords.jpg">
 </div>
 <figcaption> Figure #1. Projection of pencils in $\mathbb{R}^{n+1}$ to plane $x_{n+1} = f$. </figcaption>
 </figure>
@@ -119,7 +119,7 @@ A pinhole camera is a simple camera without a lens—effectively a box with a sm
 
 <figure>
 <div align="center">
-      <img src = "/assets/lochkamera.jpg">
+      <img src = "/assets/camera-matrix/lochkamera.jpg">
 </div>
 <figcaption> Figure #2. Image formation on the pinhole camera plane. $f$ is the focal length.</figcaption>
 </figure>
@@ -172,7 +172,7 @@ Projected points $(f\frac{x_1}{x_3}, f\frac{x_2}{x_3}, 1)$ are in the image plan
 
 <figure>
 <div align="center">
-      <img src = "/assets/image_sensor_model.jpg">
+      <img src = "/assets/camera-matrix/image_sensor_model.jpg">
 </div>
 <figcaption> Figure #3. Camera coordinates on the image sensor. $H$ and $W$ are the image sensor height and width, respectively, usually measured in metric units (e.g millimeters). The green coordinates axis represent the coordinate sytem corresponding to projected and scaled scene points.
 </figcaption>
@@ -202,7 +202,7 @@ The goal here is to find a $1$-to-$1$ map $T(p_x,p_y)$ from pixelated coordinate
 
 <figure>
 <div align="center">
-      <img src = "/assets/pinhole_start.jpeg">
+      <img src = "/assets/camera-matrix/pinhole_start.jpeg">
 </div>
 <figcaption> Figure #4. Pixelated coordinates overlayed on the image sensor.
 </figcaption>
@@ -211,14 +211,14 @@ The goal here is to find a $1$-to-$1$ map $T(p_x,p_y)$ from pixelated coordinate
 
 <figure>
 <div align="center">
-      <img src = "/assets/pinhole_translate.jpeg">
+      <img src = "/assets/camera-matrix/pinhole_translate.jpeg">
 </div>
 <figcaption> Figure #5. Image sensor relabeled with corresponding $(v,u)$ coordinates of the four corners.
 </figcaption>
 </figure> 
 <figure>
 <div align="center">
-      <img src = "/assets/pinhole_final.jpeg">
+      <img src = "/assets/camera-matrix/pinhole_final.jpeg">
 </div>
 <figcaption> Figure #6. Translated pixelated coordinate system, reoriented to match the $(v,u)$ frame.
 </figcaption>
@@ -266,7 +266,7 @@ To image different perspectives of an object, imagine the camera moved in world 
 
 <figure>
 <div align="center">
-      <img src = "/assets/african_head_camera_move.png">
+      <img src = "/assets/camera-matrix/african_head_camera_move.png">
 </div>
 <figcaption> Figure #7. Camera rotated and translated to render an angled perspective. </figcaption>
 </figure>

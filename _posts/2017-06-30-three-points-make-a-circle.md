@@ -20,7 +20,7 @@ Well it's **true**. Up to rotation and scaling the three given points can be pos
 
 <figure>
 <div align="center">
-	<img src = "/assets/triangle.jpeg">
+	<img src = "/assets/3-points-make-a-cirle/triangle.jpeg">
 </div>
 <figcaption> Figure #1. 3 non-colinear points in the plane. </figcaption>  
 </figure>
@@ -29,7 +29,7 @@ Edges $AB$ and $BC$ each have a line that bisects them; because the points form 
 
 <figure>
 <div align="center">
-	<img src = "/assets/bisectors.jpeg">
+	<img src = "/assets/3-points-make-a-cirle/bisectors.jpeg">
 </div>
 <figcaption> Figure #2. Bisectors of $AB$ and $BC$ intersect at a single point. </figcaption>  
 </figure>
@@ -39,7 +39,7 @@ Voila! The intersection of the two bisectors is the center of a circle which pas
 
 <figure>
 <div align="center">
-	<img src = "/assets/circle-sln.jpeg">
+	<img src = "/assets/3-points-make-a-cirle/circle-sln.jpeg">
 </div>
 <figcaption> Figure #3. Compass constructed circle segment through $A$, $B$, and $C$. The circle is centered at the intersection of the dashed lines. </figcaption>  
 </figure>
@@ -48,7 +48,7 @@ The circle segment above looks really good. Just a bit off the points $A$, $B$, 
 
 <figure>
 <div align="center">
-	<img src = "/assets/triangle_pts_annotated_for_code.jpg">
+	<img src = "/assets/3-points-make-a-cirle/triangle_pts_annotated_for_code.jpg">
 </div>
 <figcaption> Figure #4. Reference figure for <a href="https://gist.github.com/arvsrao/1d3895013fa2a87b45396676c8f508d0">gist</a> </figcaption>  
 </figure>

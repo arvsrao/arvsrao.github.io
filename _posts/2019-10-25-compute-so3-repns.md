@@ -397,7 +397,7 @@ Putting [it all together][2], the representation $A_{\theta}$ on $$\mathcal{P}_2
 The degree $2$ representation computed here looks a bit different than the one computed earlier at the end of the preliminaries section because the bases are slightly different; otherwise it is correct. The [code I wrote][2] can generate the matrix representation $\rho_d$ for any degree $d$. For instance $d=3$
 
 <div align="center">
-	<img src = "/assets/rho3.jpg">
+	<img src = "/assets/compute-so3-repns/rho3.jpg">
 </div>
 
 And because of the ordering $\rho_d$ has a nice direct sum of matrices structure...for $z$-axis rotations. The method and code I have described correctly computes representations for any 3D rotation, however no guarantees the representation will decompose nicely, as it does for $z$-axis rotations.
@@ -481,7 +481,7 @@ $$
 where each permutation of the elements $v_{\star}$ in the $d-$tensor is a different $\lambda-$eigenvector. Furthermore, $S_d$ sends each permutation to the same $\lambda-$eigenvector of $\rho_d$. What I want is to count the number of $\lambda-$eigenvectors of $\rho_d$, and I can build them from the $\lambda-$eigenvectors of $$ \bigotimes^{d}_{i=1} A $$, but I don't have to count the permutations; I just need to count the unique combinations that produce a $\lambda-$eigenvector of $\rho_d$. To make counting a bit easier I represent a $e^{i\bf{l}\theta}-$eigenvector of $$ \bigotimes^{d}_{i=1} A $$ as word in $+$, $-$, and $\lvert$ characters. 
 
 <div align="center">
-	<img src = "/assets/eigenvector-word.jpg">
+	<img src = "/assets/compute-so3-repns/eigenvector-word.jpg">
 </div>
 
 Hopefully it is clear that plus is $v_{+1}$, minus is $v_{-1}$, and pipe is $v_0$. The negative $l$ configuration would be the same drawing with the $l$ plus signs replaced with $l$ minus signs; so $e^{\pm i\bf{l}\theta}-$eigenspaces have the same dimension. Count the number of possible combinations like so 

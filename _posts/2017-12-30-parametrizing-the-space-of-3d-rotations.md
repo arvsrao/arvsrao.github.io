@@ -176,7 +176,7 @@ The parameter space of $SO(3)$ *is* $S^1 \times S^2$ under **Identifications**, 
 
 <figure>
 <div align="center">
-	<img src = "/assets/s3_identification_1.jpg">
+	<img src = "/assets/parametrizing-so3/s3_identification_1.jpg">
 </div>
 <figcaption>Figure #1. $S^1 \times S^2$ under Identification $1$. Collapsing spheres are represented pictorial as discs with boundary identifications, as indicated by the arrows. The green disc is a typical $S^2$ section. The red discs are identified. </figcaption>
 </figure>
@@ -240,7 +240,7 @@ are Identifications $2$ and $3$, respectively. Modding out by this antipodal act
 
 <figure>
 <div align="center">
-	<img src = "/assets/s3_identification_all.jpg">
+	<img src = "/assets/parametrizing-so3/s3_identification_all.jpg">
 </div>
 <figcaption>Figure #2. $S^1 \times S^2$ under all <b>Identifications</b>. The red disc has boundary identifications of a $\mathbb{RP}^2$</figcaption>
 </figure>
@@ -251,7 +251,7 @@ There's another way of visualizing $S^1 \times S^2$ I found flipping through Jef
 
 <figure>
 <div align="center">
-	<img src = "/assets/s3_identification_ball.jpg">
+	<img src = "/assets/parametrizing-so3/s3_identification_ball.jpg">
 </div>
 <figcaption>Figure #3. An alternate visualization of a sequence of spheres collapsing to a point.</figcaption>
 </figure>
@@ -268,7 +268,7 @@ falls out. Figure #4 below is a visualization of this projection. Inside the bal
 
 <figure>
 <div align="center">
-	<img src = "/assets/rp3so3.jpg">
+	<img src = "/assets/parametrizing-so3/rp3so3.jpg">
 </div>
 <figcaption>Figure #4. Mapping $S^1 \times S^2 \Big/ \sim$ into the $3$-Ball Model of $\mathbb{RP}^3$</figcaption>
 </figure>

@@ -14,7 +14,7 @@ While the light model--how light travels to the image plane--underlying the diff
 
 <figure>
 <div align="center">
-	<img src = "/assets/pipeline.png">
+	<img src = "/assets/perspective-projection/pipeline.png">
 </div>
 <figcaption> Factoring the map from the view frustum to the canonical view volume through the orthographic view volume. </figcaption>
 </figure>
@@ -25,7 +25,7 @@ At least at the level of formulas perspective projection and orthographic projec
 
 ## Perspective
 
-![](/assets/pxfuel.com.jpeg)
+![](/assets/perspective-projection/pxfuel.com.jpeg)
 
 Perspective in art and photography is about representing depth of a 3D scene in 2D. When thinking about perspective the first image that comes to mind, and it ought to be familiar to most people, is of railroad tracks running off into the distance. The tracks though parallel are rendered as angled toward each other such that they would eventually meet at some point behind the image plane called the *vanishing point*, or the *point at infinity*. Objects further away appear smaller than those closer to the eye. This is what the world looks like to us and cameras, since cameras are meant to capture the world as we see it.
 
@@ -89,7 +89,7 @@ The view frustum is a pyramidal solid primarly defined by the dimensions of its 
 
 <figure>
 <div align="center">
-	<img src = "/assets/frustum.png">
+	<img src = "/assets/perspective-projection/frustum.png">
 </div>
   <figcaption> Figure #1. The view frustum. Image courtesy of <a href="http://www.songho.ca/opengl/">Song Ho Ahn</a>. </figcaption>
 </figure>
@@ -118,7 +118,7 @@ In contrast to the view frustum, light travels in lines perpendicular to the ima
 
 <figure>
 <div align="center">
-	<img src = "/assets/orthographic_volume.png">
+	<img src = "/assets/perspective-projection/orthographic_volume.png">
 </div>
 <figcaption> Figure #2. The orthographic view volume. Image courtesy of <a href="http://www.songho.ca/opengl/">Song Ho Ahn</a>. </figcaption>
 </figure>
@@ -143,7 +143,7 @@ To speed the clipping proccess the given view volume, either type, is mapped to 
 
 <figure>
 <div align="center">
-	<img src = "/assets/canonical_volume.png">
+	<img src = "/assets/perspective-projection/canonical_volume.png">
 </div>
 <figcaption> Figure #3 Standard clipping volume. Image courtesy of <a href="http://www.songho.ca/opengl/">Song Ho Ahn</a>. </figcaption>
 </figure>
@@ -158,7 +158,7 @@ A projective transformation that bijectivily takes the orthographic view volume 
 
 <figure>
 <div align="center">
-	<img src = "/assets/orthographic_to_canonical.png">
+	<img src = "/assets/perspective-projection/orthographic_to_canonical.png">
 </div>
 <figcaption> Orthographic projection maps the orthographic view volume to canonical view volume. </figcaption>
 </figure>
@@ -207,7 +207,7 @@ the orthographic projection matrix.
 
 <figure>
 <div align="center">
-	<img src = "/assets/frustum_to_canonical.png">
+	<img src = "/assets/perspective-projection/frustum_to_canonical.png">
 </div>
 <figcaption> Projection from the view frustum to the orthographic view volume. </figcaption>
 </figure>
@@ -216,7 +216,7 @@ Consider a $yz$-cross section of the view frustum; one is drawn on the left side
 
 <figure>
 <div align="center">
-	<img src = "/assets/yz_cross_section.jpg">
+	<img src = "/assets/perspective-projection/per	yz_cross_section.jpg">
 </div>
 <figcaption> Figure #4. Deforming a view frustum $yz$-cross section to an orthographic view volume $yz$-cross section. </figcaption>
 </figure>
@@ -332,7 +332,7 @@ $$
 
 <figure>
 <div align="center">
-	<img src = "/assets/pipeline.png">
+	<img src = "/assets/perspective-projection/pipeline.png">
 </div>
 <figcaption> Mapping the view frustum to the canonical clipping volume through the orthographic view volume. </figcaption>
 </figure>
@@ -368,7 +368,7 @@ $$
 
 
 
-Though not at all necessary I carried out these calculations in a [Juypter notebook](/perspective-projection.html).   
+Though not at all necessary I carried out these calculations in a [Juypter notebook](/assets/perspective-projection/perspective-projection.html).   
 
 #### Some References
 

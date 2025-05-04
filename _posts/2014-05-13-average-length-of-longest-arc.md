@@ -8,7 +8,7 @@ tags: puzzle, probability, brainteaser
 
 Suppose that we draw $n$ points $ a_i \sim Uniform(S^1)$ for $i = 1 \ldots n $. These points determine a partition or set of disjoint arcs of $S^1$. What is the average length of the longest arc? To even measure the $n$ arc lengths, we need an ordering of the <MTMarkdownOptions output='raw'> $\{ a_i \}$ </MTMarkdownOptions>, <MTMarkdownOptions output='raw'>$a_{(1)}, \ldots, a_{(N)} $</MTMarkdownOptions>.
 
-<p align="center"><img src="{{ site.url }}/assets/cuts_circle.jpg" alt="the problem" width="270" height="270"/></p>
+<p align="center"><img src="{{ site.url }}/assets/longest-arc/cuts_circle.jpg" alt="the problem" width="270" height="270"/></p>
 The arc lengths are: <!--more-->
 
 $$
@@ -43,7 +43,7 @@ one on a line, after the first cut: the unit circle problem with $n$ points is t
 on a $2 \pi$ long line segment. The first cut is superfluous. From there, [the argument][4] boils down to recognizing that 
 each cut is made in segments of total length <MTMarkdownOptions output='raw'> $2\pi - kx$</MTMarkdownOptions>.
 
-![helpful graphic]({{ site.url }}/assets/cuts_sequence.jpg)
+![helpful graphic]({{ site.url }}/assets/longest-arc/cuts_sequence.jpg)
  
 <p><strong>Lemma. A</strong> <em>Suppose $X \sim p(x)$ is a non-negative random variable, then
 \[
@@ -121,4 +121,4 @@ Both sample mean and true mean are within a few thousands of each other, which I
 [1]: http://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle#Special_case
 [2]: http://en.wikipedia.org/wiki/Harmonic_number#Calculation
 [3]: https://gist.github.com/arvsrao/fdceb1ec794a8796a991
-[4]: {{ site.url }}/assets/appendix_for_post.pdf
+[4]: {{ site.url }}/assets/longest-arc/appendix_for_post.pdf
