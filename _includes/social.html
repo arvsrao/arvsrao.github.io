@@ -1,7 +1,7 @@
 <div id="social">
   {% if site.data.theme.social.github %}
   <a title="Me on Github" href="https://github.com/{{ site.data.theme.social.github }}">
-    <i class="fa fa-github-square fa-2x"></i>
+    <i class="fa-brands fa-github fa-2xl"></i>
   </a>
   {% endif %}
 
@@ -11,23 +11,29 @@
   </a>
   {% endif %}
 
+  {% if site.data.theme.social.bluesky %}
+  <a title="Me on bluesky" href="https://bsky.app/profile/{{ site.data.theme.social.bluesky }}">
+    <i class="fa-brands fa-square-bluesky fa-2xl"></i>
+  </a>
+  {% endif %}
+
   {% if site.data.theme.social.twitter %}
-  <a title="Me on Twitter" href="https://twitter.com/{{ site.data.theme.social.twitter }}">
-    <i class="fa fa-twitter-square fa-2x"></i>
+  <a title="Me on twitter" href="https://x.com/{{ site.data.theme.social.twitter }}">
+    <i class="fa-brands fa-square-x-twitter fa-2xl"></i>
   </a>
   {% endif %}
 
   {% if site.data.theme.social.linkedin %}
   <a title="Me on LinkedIn" href="https://www.linkedin.com/in/{{ site.data.theme.social.linkedin }}">
-    <i class="fa fa-linkedin-square fa-2x"></i>
+    <i class="fa-brands fa-linkedin fa-2xl"></i>
   </a>
   {% endif %}
 
   <a title="Atom feed" id="atom" href="/feed.xml">
-    <i class="fa fa-rss-square fa-2x"></i>
+        <i class="fa-solid fa-square-rss fa-2xl"></i>
   </a>
 
   <a title="Email me" href="mailto:{{ site.data.theme.email }}">
-    <i class="fa fa-envelope fa-2x"></i>
+    <i class="fa-solid fa-square-envelope fa-2xl"></i>
   </a>  
 </div>
