@@ -1,5 +1,3 @@
-# Den Haag Näher Angucken
-
 Wir haben den Osternmontag langsam angefangen mit Frühstuck. Da Osternmontag auch ein Nationalfeiertag in den Niederlanden ist, konnten wir unsere Fahrräder nicht abholen (das war sowieso für Dienstag geplant). Zum Glück war das M.C. Escher Museum geöffnet. 
 
 ![](./assets/mowen.gif)
