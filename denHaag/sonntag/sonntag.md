@@ -1,5 +1,3 @@
-# Unsere Reise nach Den Haag
-
 ### ICE nach Utrecht
 
 ![](./assets/Den Haag - 1 von 13.jpeg)
@@ -8,7 +6,7 @@ Gegenüber den Kindern vom Tisch  nebenan haben Kiran und Sushmita sich vorbildl
 
 ![Den Haag - 9 von 13](./assets/Den Haag - 9 von 13.jpeg)
 
-## In der Wohnung 
+### In der Wohnung 
 
 Kiran bestätigt!!
 
@@ -24,9 +22,7 @@ Wir wohnen im ersten Obergeschoss, aber die ganze Wohnung legt ein Stockwerk hö
 
 ![Den Haag - 12 von 13](./assets/Den Haag - 12 von 13.jpeg)
 
-
-
-## Ein Spaziergang am Strand
+### Ein Spaziergang am Strand
 
 ![](./assets/Den Haag - 2 von 13.jpeg)
 
