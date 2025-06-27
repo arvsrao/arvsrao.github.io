@@ -11,7 +11,7 @@ title: About
   </figcaption>
 </figure>
 
-I am a software engineer [@HERE][1], contributing mainly to the development of map compilers optimized for geocoding and search use cases. At [Spark Summit 2017][4] I talked about work I did to create heat maps from reverse geocoding logs. A major goal of mine is to develop products that manipulate, simulate, or analyze complex 3D models. 
+I was a software engineer [@HERE][1], contributing mainly to the development of map compilers optimized for geocoding and search use cases. At [Spark Summit 2017][4] I talked about work I did to create heat maps from reverse geocoding logs. A major goal of mine is to develop products that manipulate, simulate, or analyze complex 3D models.
 
 I did my undergrad in electrical engineering at Georiga Tech in Atlanta. Digital signal processing and communciations systems were my favorite subjects. Being fairly mathematical, DSP and communications theory inspired me to study more mathematics and to eventually do a PhD in differential geometry and analysis [@Iowa][3]. 
 
