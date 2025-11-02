@@ -17,7 +17,7 @@ timezone:         Europe/Berlin
 paginate:         8
 
 include:          
-exclude:          [.gitignore, CNAME, README.md, udacity/*.md, denHaag/*.md, notes/*.md]
+exclude:          [.gitignore, CNAME, README.md, udacity/*.md, denHaag/*.md]
 
 # Google Analytics 4
 google_analytics: G-XVZ56FPXF4
