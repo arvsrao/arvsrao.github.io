@@ -37,11 +37,15 @@ K = -\frac{1}{2}\begin{bmatrix}
 \end{bmatrix}.
 $$
 
+<a name="eigenvalues"></a>
+
 ### $\Delta \approx K$ has Real Eigenvalues 
 
-By the Spectral Theorem $K$ can be diagonalized by some real orthogonal matrix, $\Lambda = O K O^T$. Therefore, $K$ has real eigenvalues. Though, orthogonally diagonalizing $K$ is *overkill*. 
+By the Spectral Theorem $K$ symmetric implies that it can be diagonalized by some real orthogonal matrix, $\Lambda = O K O^T$. Therefore, $K$ has real eigenvalues. Though, orthogonally diagonalizing $K$ is *overkill*. 
 
-Instead, suppose $0 \neq \lambda \in \mathbb{C}$ is an eigenvalue of $K$, for some $v \in \mathbb{C}^n$. Also define the inner product on $\mathbb{C}^n$ to be $v \cdot w := v^T \bar{w}$. The product $Kv \cdot v$ can be computed two different ways:
+*Alternate proof*:
+
+Suppose $0 \neq \lambda \in \mathbb{C}$ is an eigenvalue of $K$, for some $v \in \mathbb{C}^n$. Also define the inner product on $\mathbb{C}^n$ to be $v \cdot w := v^T \bar{w}$. The product $Kv \cdot v$ can be computed two different ways:
 
 1. $Kv \cdot v = \lambda v \cdot v = \lambda \|v\|^2$
 2. 
@@ -56,7 +60,7 @@ Kv \cdot v &= (Kv)^T\bar{v} \\
 \end{align}
 $$
 
-From which one must conclude $\bar{\lambda} = \lambda \ \Longrightarrow \lambda \in \mathbb{R}$.                    								$\Box$
+Then, one must conclude $\bar{\lambda} = \lambda \ \Longrightarrow \lambda \in \mathbb{R}$.                    								$\Box$
 
 By a similar argument, it can be shown that $v \neq w$ eigenvectors of $K$, which do not span each other, must be **orthogonal**, if they have different eigenvalues. Just compute $Kv \cdot w$ two different ways. Assuming $\lambda_v \neq \lambda_w$ then
 
@@ -73,7 +77,36 @@ Kv \cdot w &= (Kv)^T\bar{w} \\
 \end{align}
 $$
 
-Since $\lambda_v \neq \lambda_w \ \Longrightarrow \ v \cdot w = 0$.
+Since $\lambda_v \neq \lambda_w \ \Longrightarrow \ v \cdot w = 0$. 
+
+Eigenvectors of $K$ belonging to the same eigenspace are also orthogonal. For a proof checkout these [notes][1].
+
+<div style="text-align: right"> <span style='font-size:20px;'>&#9634;</span> </div>
+
+### The Eigenvalues of $\Delta \approx K$ 
+
+$K$ is a circulant matrix so we can calculate eigenvalues. In my [notes on circulant matrices][2], I did just that. In general the eigenvalues have the following form.
+
+
+$$
+\begin{equation}
+\lambda_C = c_0 + c_1 e^{i\frac{2\pi k}{n}} + c_2 e^{i\frac{4\pi k}{n}} +\cdots + c_{n-1}e^{i\frac{2\pi k(n-1)}{n}}
+\end{equation}
+$$
+For $\Delta \approx K$, all coefficients $c_i$ are zero except for $c_0 = -2$, $c_1 = 1$, and $c_{n-1} = 1$. And the eigenvalues are the real part since $K$ has only real eigenvalues, see [above](#eigenvalues). Furthermore,
+
+
+$$
+\begin{equation}
+\lambda_K = -2 + e^{i\frac{2\pi k}{n}} + e^{i\frac{2\pi k(n-1)}{n}} \ \
+\end{equation}
+$$
+
+
+
+
+[1]: https://people.math.harvard.edu/~knill/teaching/math22b2019/handouts/lecture17.pdf
+[2]: ../circulant/
 
 
 

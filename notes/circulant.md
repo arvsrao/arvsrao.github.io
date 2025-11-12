@@ -36,7 +36,7 @@ y_k = \sum^{n-1}_{i=0} c_{[(k-i) \mod n]}x_{i}
 $$
 For example,
 
- 
+
 $$
 \begin{align}
 y_1 &= \sum^{n-1}_{i=0} c_{[(1-i) \mod n]}x_{i} \\
@@ -211,6 +211,29 @@ e^{i\frac{2\pi k}{n}} \ \Longleftrightarrow \
   1 \\
 \end{bmatrix}
 $$
+
+### Eigenvalues of $C$
+
+Because $C$ can be written as linear combination of permutation matrices, its eigenvalues are of the form
+
+
+$$
+\begin{equation}
+\lambda_C = c_0 + c_1 \lambda_P + c_2 \lambda_P^2 +\cdots + c_{n-1}\lambda_P^{n-1} \\
+\end{equation}
+$$
+
+
+where $\lambda_P = e^{i\frac{2\pi k}{n}}$  is an eigenvalue of $P$. Substituting further,
+
+
+$$
+\begin{equation}
+\lambda_C = c_0 + c_1 e^{i\frac{2\pi k}{n}} + c_2 e^{i\frac{4\pi k}{n}} +\cdots + c_{n-1}e^{i\frac{2\pi k(n-1)}{n}} \\
+\end{equation}
+$$
+
+
 
 
 ### References
