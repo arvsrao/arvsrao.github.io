@@ -93,14 +93,21 @@ $$
 \lambda_C = c_0 + c_1 e^{i\frac{2\pi k}{n}} + c_2 e^{i\frac{4\pi k}{n}} +\cdots + c_{n-1}e^{i\frac{2\pi k(n-1)}{n}}
 \end{equation}
 $$
-For $\Delta \approx K$, all coefficients $c_i$ are zero except for $c_0 = -2$, $c_1 = 1$, and $c_{n-1} = 1$. And the eigenvalues are the real part since $K$ has only real eigenvalues, see [above](#eigenvalues). Furthermore,
+For $\Delta \approx K$, all coefficients $c_i$ are zero except for $c_0 = -2$, $c_1 = 1$, and $c_{n-1} = 1$. Substituting those specific coefficients into the eigenvalue formula and simplifying gives,
 
 
 $$
-\begin{equation}
-\lambda_K = -2 + e^{i\frac{2\pi k}{n}} + e^{i\frac{2\pi k(n-1)}{n}} \ \
-\end{equation}
+\begin{align}
+\lambda_k &= -2 + e^{i\frac{2\pi k}{n}} + e^{i\frac{2\pi k(n-1)}{n}} \\
+&= -2 + e^{i\frac{2\pi k}{n}} + \cancelto{1}{e^{i2\pi k}} + e^{-i\frac{2\pi k}{n}} \\
+&= -1 + 2\cos\big(\frac{2\pi k}{n}\big)
+
+\end{align}
 $$
+
+Based on the [previous](#eigenvalues) section, we expected the eigenvalues of $K$ to be real, and they are indeed real.
+
+
 
 
 
