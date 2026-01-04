@@ -7,25 +7,37 @@ exclude: true
 typora-root-url: ../
 ---
 
-The title and word choice are a bit out-of-date. Surface fairing refers to mesh smoothing and denoising. The ansatz of the paper is to cast a given mesh as a signal that can be smoothed with a low-pass filter.
+Surface fairing refers to mesh smoothing and denoising. The ansatz of the paper is to cast a given mesh as a signal that can be smoothed with a low-pass filter. Furthermore, the ansatz is motivated and explained in the 1D case: Closed polygonal curves. 
 
-The ansatz is motivated and explained in the 1D case. Curves. A discrete laplacian definition is given without proof or background. 
-
+Given a polygon with vertices $\{v_i\}$, it carries functions $f: \mathbb{R}^3 \ni \{v_i\} \longrightarrow \mathbb{R}$, where $f(v_i) = x_i$. The function values are iterative smoothed by flowing $f$ in the scaled direction of  $\Delta f $, where $\Delta$ is a discrete Laplacian. In the paper its definition is given without proof or background.
 $$
-\Delta x_i = \frac{1}{2}\Big(x_{i+1} - x_{i}\Big) + \frac{1}{2}\Big(x_{i-1} - x_{i}\Big) 
+\Delta x_i = \frac{1}{2}\Big(x_{i+1} - x_{i}\Big) + \frac{1}{2}\Big(x_{i-1} - x_{i}\Big)
 $$
 
-The difference of differences around $x_i$ definition given is an approximation of the second derivative, and when viewing the polygon vertices as a discrete sequence, it is essentially the second finite difference of the sequence $\{x_i\}$,
-
+The difference of differences around $x_i$ definition given above is an approximation of the second derivative (the 1D Laplacian). When viewing the function values at consecutive vertices as a discrete sequence, $\Delta x_i$ is essentially the [second finite difference][3] of the sequence $\{x_i\}$,
 $$
 \begin{align}
-\Delta^2 x_i &= x^{i+1} - 2 x_{i} + x^{i-1} \\
-             &= \Big(x_{i+1} - x_{i}\Big) + \Big(x_{i-1} - x_{i}\Big) \\
+(D^2 x)_i &= D^+(x_{i}) - D^-(x_{i-1}) \\
+             &= \Big(x_{i+1} - x_{i}\Big) - \Big(x_{i} - x_{i-1}\Big) \\
+             &= \Big(x_{i+1} - x_{i}\Big) + \Big(x_{i-1} - x_{i}\Big). \\
 \end{align}
 $$
 
+$D^+$ and $D^-$ are the forward and backward sequence difference operators, respectively. Yet one more interpretation can be taken from [discrete curve shortening flow][4]. 
 
-When written as a matrix the Laplacian of the sequence is the circulant matrix,
+### Geometric Interpretation -- 1D Case 
+
+Identify the $i$-th vertex with its underlying coordinate representation, $v_i = (x_i, y_i, z_i)$. In the framework of this paper, each coordinate function ($x_i$, $y_i$, and $z_i$) is a function defined on the vertices of a polygon -- in the 1-D case. Consider the picture below of $v_i$ and its 1-neighbors in a polygon.
+
+![](/notes/assets/second-finite-difference.jpg) 
+
+The differences $a = v_{i+1} - v_{i}$ and $b = v_{i-1} - v_{i}$ are vectors with a common base, representing neighboring segments at $v_i$, whose sum is an (approximate) inward pointing normal at $v_i$, between segments and $a$ and $b$. With each iteration vertices are moved in the direction of the inward normal (at convex points) or in the direction of the outward normal (at concave points). In this way variations in the polygonal are flattened, and the polygon as a whole shrinks to a round point -- curve shortening flow. In the  smooth case it is even more clear because $\Delta \gamma = \frac{d^2\gamma}{ds^2} = \kappa \vec{n}$. One of the papers contributions is a two step iteration to prevent shrinkage.
+
+### $\Delta \approx K$ has Real Eigenvalues 
+
+<a name="eigenvalues"></a>
+
+When written as a matrix the discrete Laplacian of the sequence is the circulant matrix,
 $$
 K = -\frac{1}{2}\begin{bmatrix}
 -2 & 1 & 0 & \cdots & 0 & 1\\
@@ -37,11 +49,9 @@ K = -\frac{1}{2}\begin{bmatrix}
 \end{bmatrix}.
 $$
 
-<a name="eigenvalues"></a>
 
-### $\Delta \approx K$ has Real Eigenvalues 
 
-By the Spectral Theorem $K$ symmetric implies that it can be diagonalized by some real orthogonal matrix, $\Lambda = O K O^T$. Therefore, $K$ has real eigenvalues. Though, orthogonally diagonalizing $K$ is *overkill*. 
+By the Spectral Theorem $K$ symmetric implies that it can be diagonalized by some real orthogonal matrix, $\Lambda = O K O^T$. Therefore, $K$ has real eigenvalues. Though, orthogonally diagonalizing $K$ is *overkill*.
 
 *Alternate proof*:
 
@@ -109,11 +119,44 @@ Based on the [previous](#eigenvalues) section, we expected the eigenvalues of $K
 
 
 
+### Smoothing Surfaces
+
+Let $p(x_1, x_2, \cdots, x_n): U \subsetneq \mathbb{R}^n \longrightarrow V \subsetneq M^n$ be local coordinates on $M^n$. Let $p_1(x_1, ) = $
+$$
+\nabla p = 
+\begin{bmatrix}
+\frac{dp_1}{dx_1} & \frac{dp_2}{dx_1} & \cdots & \frac{dp_n}{dx_2} \\
+\frac{dp_1}{dx_2} & \frac{dp_2}{dx_2} & \cdots & \frac{dp_n}{dx_2} \\
+\vdots & \vdots & \vdots & \vdots &\\
+\frac{dp_1}{dx_n} & \frac{dp_2}{dx_n} & \cdots & \frac{dp_n}{dx_n} \\
+\end{bmatrix}
+$$
+Now the Laplace-Beltrami operator
+$$
+div \nabla p = 
+\begin{bmatrix}
+\frac{d}{dx_1} & \frac{d}{dx_2} & \cdots & \frac{d}{dx_n}
+\end{bmatrix}
+\begin{bmatrix}
+\frac{dp_1}{dx_1} & \frac{dp_2}{dx_1} & \cdots & \frac{dp_n}{dx_2} \\
+\frac{dp_1}{dx_2} & \frac{dp_2}{dx_2} & \cdots & \frac{dp_n}{dx_2} \\
+\vdots & \vdots & \vdots & \vdots &\\
+\frac{dp_1}{dx_n} & \frac{dp_2}{dx_n} & \cdots & \frac{dp_n}{dx_n} \\
+\end{bmatrix}
+$$
+
+
 
 
 
 [1]: https://people.math.harvard.edu/~knill/teaching/math22b2019/handouts/lecture17.pdf
 [2]: ../circulant/
+[3]: https://www.wias-berlin.de/people/john/LEHRE/NUMERIK_IV_21_22/num_konv_dom_prob_3.pdf
+[4]: https://github.com/arvsrao/discrete-curve-shortening-flow
+
+
+
+
 
 
 
