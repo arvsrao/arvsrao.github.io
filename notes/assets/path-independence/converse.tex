@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage{tikz} % Required for inserting images
+\usepackage{amsmath, mathtools, cancel}
+
+\usetikzlibrary{decorations.markings, arrows.meta}
+\begin{document}
+
+\begin{tikzpicture}
+  % Coordinates
+  \coordinate (X) at (9.48, 9.53);
+  \coordinate (H) at (0.60, 8.03);
+  \coordinate (I) at (5.34, 8.16);
+  \coordinate (P) at (1.79, 1.89);
+  \coordinate (K) at (10.00, 3.25);
+  \coordinate (L) at (10.50, 6.50);
+  \coordinate (M) at (3.46, 7.67);
+  \coordinate (N) at (8.0, 2.80);
+  \coordinate (V) at (13, 9);
+  \coordinate (T) at (12,10);
+  \coordinate (S) at (12,10.05);
+
+  % Draw paths from p to q and from q to p
+  \draw[red, thick,
+    decoration={
+      markings,
+      mark=at position 0.5 with {\arrow{Classical TikZ Rightarrow[length=3mm]}}
+    },
+    postaction={decorate}
+  ] (P) .. controls (H) and (I) .. (X);
+  \draw[red, thick,
+    decoration={
+      markings,
+      mark=at position 0.5 with {\arrow{Classical TikZ Rightarrow[length=3mm]}}
+    },
+    postaction={decorate}
+  ] (X) .. controls (T) .. (V);
+  \draw[blue, thick,
+    decoration={
+      markings,
+      mark=at position 0.5 with {\arrow{Classical TikZ Rightarrow[length=3mm]}}
+    },
+    postaction={decorate}
+  ] (P) .. controls (K) and (L) .. (V);
+
+  % label the paths
+  \node[above, font=\Huge] at (M) {$\alpha$};
+  \node[above, font=\Huge] at (N) {$\beta_t$};
+  \node[above, font=\Huge] at (S) {$\gamma$};
+
+  % draw points p and q
+  \node[below left, black, font=\huge] at (P) {$p$};
+  \node[above right, black, font=\huge] at (X) {$x$}; 
+  \node[above right, black, font=\huge] at (V) {$q_t$}; 
+  \fill[black] (P) circle (4pt);
+  \fill[black] (X) circle (4pt);
+  \fill[black] (V) circle (4pt);
+\end{tikzpicture}
+
+
+\end{document}
