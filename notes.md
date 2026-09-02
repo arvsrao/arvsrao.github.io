@@ -16,4 +16,4 @@ typora-root-url: ../
 
 3. Reading notes from Petersen's [Riemannian Geometry](/notes/path-independence.md)
 
-   
+4. Structure and properties of [homogenous polynomial space](/notes/harmonic-tabelle.md) $\mathcal{P}_d$
